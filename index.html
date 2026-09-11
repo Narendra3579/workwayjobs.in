@@ -8,6 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
   :root {
     --bg-main: #F8FAFC;
@@ -250,7 +251,7 @@
 
   .modal-overlay { position: fixed; inset: 0; background: rgba(15, 23, 42, 0.65); display: none; align-items: flex-start; justify-content: center; padding: 40px 20px; z-index: 200; overflow-y: auto; backdrop-filter: blur(8px); opacity: 0; transition: opacity 0.25s ease; }
   .modal-overlay.open { display: flex; opacity: 1; }
-  .modal { background: var(--bg-card); border-radius: 16px; width: 100%; max-width: 720px; padding: 40px; position: relative; transform: translateY(16px); transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1); box-shadow: 0 25px 60px -15px rgba(0,0,0,0.3); border: 1px solid var(--border); }
+  .modal { background: var(--bg-card); border-radius: 16px; width: 100%; max-width: 760px; padding: 40px; position: relative; transform: translateY(16px); transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1); box-shadow: 0 25px 60px -15px rgba(0,0,0,0.3); border: 1px solid var(--border); }
   .modal-overlay.open .modal { transform: translateY(0); }
   .modal-close { position: absolute; top: 24px; right: 24px; width: 36px; height: 36px; border-radius: 50%; border: 1px solid var(--border); background: var(--bg-alt); cursor: pointer; font-size: 16px; color: var(--text-main); display: flex; align-items: center; justify-content: center; transition: background 0.2s; }
   .modal-close:hover { background: var(--border-strong); }
@@ -276,6 +277,55 @@
   .form-status.ok { background: rgba(13, 148, 136, 0.12); color: var(--accent); }
   .form-status.err { background: rgba(239, 68, 68, 0.12); color: var(--danger); }
   .btn[disabled] { opacity: 0.6; cursor: progress; transform: none; }
+  
+  /* 3 Powerful Marketing Slabs */
+  .pricing-slabs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 24px; }
+  .slab-card {
+    border: 2px solid var(--border-strong); border-radius: var(--radius); padding: 22px 14px;
+    background: var(--bg-main); cursor: pointer; text-align: center; transition: all 0.2s ease;
+    display: flex; flex-direction: column; justify-content: space-between; position: relative; overflow: visible;
+  }
+  .slab-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: var(--slab-accent, var(--border-strong)); border-top-left-radius: 8px; border-top-right-radius: 8px; }
+  .slab-card[data-slab="0"] { --slab-accent: #64748B; }
+  .slab-card[data-slab="999"] { --slab-accent: #3B82F6; }
+  .slab-card[data-slab="2499"] { --slab-accent: #0D9488; }
+
+  .slab-badge-pop {
+    position: absolute; top: -12px; right: 12px; background: #EAB308; color: #0F172A;
+    font-family: 'JetBrains Mono'; font-size: 9.5px; font-weight: 800; padding: 3px 8px; border-radius: 20px;
+    box-shadow: 0 3px 8px rgba(234, 179, 8, 0.4); text-transform: uppercase; letter-spacing: 0.05em;
+  }
+  .slab-badge-save {
+    position: absolute; top: -12px; right: 12px; background: #0D9488; color: #FFFFFF;
+    font-family: 'JetBrains Mono'; font-size: 9.5px; font-weight: 800; padding: 3px 8px; border-radius: 20px;
+    box-shadow: 0 3px 8px rgba(13, 148, 136, 0.4); text-transform: uppercase; letter-spacing: 0.05em;
+  }
+
+  .slab-card:hover { border-color: var(--slab-accent); background: #fff; transform: translateY(-3px); }
+  .slab-card.selected { border-color: var(--slab-accent); background: #fff; box-shadow: 0 10px 25px rgba(37,99,235,0.12); }
+  .slab-title { font-size: 13px; font-weight: 800; color: var(--text-muted); text-transform: uppercase; margin-bottom: 6px; letter-spacing: 0.05em; }
+  .slab-price-wrap { margin-bottom: 6px; }
+  .slab-price { font-family: 'JetBrains Mono'; font-size: 22px; font-weight: 800; color: var(--slab-accent); display: inline-block; }
+  .slab-old-price { font-family: 'JetBrains Mono'; font-size: 12px; color: var(--text-muted); text-decoration: line-through; margin-left: 6px; }
+  .slab-validity { font-family: 'JetBrains Mono'; font-size: 11.5px; color: var(--primary); margin-bottom: 10px; font-weight: 700; }
+  .slab-desc { font-size: 12px; color: var(--text-muted); line-height: 1.45; border-top: 1px dashed var(--border-strong); padding-top: 10px; margin-top: 8px; }
+
+  .payment-step-container { display: none; margin-top: 24px; padding-top: 24px; border-top: 2px solid var(--border); animation: fadeIn 0.3s ease; }
+  .payment-step-container.active { display: block; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+  .payment-options { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 20px; }
+  .pay-method {
+    border: 2px solid var(--border-strong); border-radius: var(--radius); padding: 14px 10px;
+    background: var(--bg-main); cursor: pointer; text-align: center; font-weight: 700; font-size: 13.5px;
+    transition: all 0.2s ease; display: flex; flex-direction: column; align-items: center; gap: 6px;
+  }
+  .pay-method:hover { border-color: var(--primary); background: #fff; }
+  .pay-method.selected { border-color: var(--primary); background: rgba(37,99,235,0.06); color: var(--primary); }
+  .pay-details-box { display: none; background: var(--bg-alt); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px; margin-bottom: 20px; }
+  .pay-details-box.active { display: block; }
+  .qr-box { background: #fff; padding: 14px; border-radius: 8px; width: 160px; height: 160px; margin: 0 auto 12px; border: 1px solid var(--border); display: flex; flex-direction: column; align-items: center; justify-content: center; }
+  .qr-box img { width: 130px; height: 130px; object-fit: contain; }
 
   table.admin-table { width: 100%; border-collapse: collapse; margin-top: 16px; font-size: 14px; }
   table.admin-table th, table.admin-table td { padding: 12px 16px; text-align: left; border-bottom: 1px solid var(--border); }
@@ -292,6 +342,8 @@
     .passes { grid-template-columns: 1fr; }
     .foot-grid { grid-template-columns: 1fr 1fr; }
     .nav-links { display: none; }
+    .payment-options { grid-template-columns: 1fr; }
+    .pricing-slabs { grid-template-columns: 1fr; }
   }
   @media (max-width: 600px) {
     .wrap { padding: 0 20px; }
@@ -322,7 +374,7 @@
 <body>
 
 <button class="fab-register" data-open-modal="candidate">
-  Register here
+  Register for free
 </button>
 
 <header>
@@ -335,7 +387,8 @@
       <li><a href="#employers">For employers</a></li>
     </ul>
     <div class="nav-cta">
-      <a href="#" class="btn btn-yellow" data-open-modal="candidate">Register here</a>
+      <button class="btn btn-ghost" data-open-modal="recruiter-login" style="padding: 10px 18px; font-size: 14px;">Recruiter Login</button>
+      <a href="#" class="btn btn-yellow" data-open-modal="candidate">Register for free</a>
       <a href="#" class="btn btn-solid" data-open-modal="employer">Post Job</a>
     </div>
   </nav>
@@ -349,6 +402,7 @@
       <p class="lead">WorkWay Jobs matches focused candidates with verified hiring teams across India. Transparent salaries in LPA, direct messaging, and zero ghosting for job seekers (100% Free for Candidates).</p>
       <div class="hero-ctas">
         <a href="#jobs-section-anchor" class="btn btn-solid">Browse Job Openings</a>
+        <button class="btn btn-ghost" data-open-modal="recruiter-login">Recruiter Dashboard Login</button>
       </div>
       <div class="hero-note">
         <span>₹ CTC range on every listing</span>
@@ -530,7 +584,7 @@
     <div class="track employer">
       <div class="track-label">
         <span class="track-tag employer">Employers</span>
-        <span class="track-title">Hiring for an open seat (100% Free Job Postings)</span>
+        <span class="track-title">Hiring for an open seat (Free & Featured Slots Available)</span>
       </div>
       <div class="rail">
         <div class="rail-progress" id="rail-prog-e"></div>
@@ -604,15 +658,15 @@
       <div class="foot-col">
         <h4>Candidates</h4>
         <ul>
-          <li><a href="#jobs-section-anchor">Browse gates</a></li>
-          <li><a href="#" data-open-modal="candidate">Register here</a></li>
+          <li><a href="#jobs-section-anchor">Browse Jobs</a></li>
+          <li><a href="#" data-open-modal="candidate">Register for free</a></li>
         </ul>
       </div>
       <div class="foot-col">
         <h4>Employers</h4>
         <ul>
-          <li><a href="#" data-open-modal="employer">Post Job</a></li>
-          <li><a href="#how">Verification</a></li>
+          <li><a href="#" data-open-modal="employer">Post Job / Free &amp; Featured</a></li>
+          <li><a href="#" data-open-modal="recruiter-login">Recruiter Dashboard Login</a></li>
         </ul>
       </div>
       <div class="foot-col">
@@ -625,11 +679,12 @@
     </div>
     <div class="foot-bottom">
       <span>© 2026 WORKWAY JOBS INC. (INDIA)</span>
-      <span>ALL SYSTEMS BOARDING</span>
+      <span>Support: support@workwayjobs.in</span>
     </div>
   </div>
 </footer>
 
+<!-- CANDIDATE MODAL -->
 <div class="modal-overlay" id="modal-candidate">
   <div class="modal modal-scroll" role="dialog" aria-modal="true" aria-labelledby="candidate-title">
     <button class="modal-close" type="button" data-close-modal aria-label="Close">✕</button>
@@ -646,24 +701,20 @@
         <div class="field">
           <label for="c-first">First name <span class="req">*</span></label>
           <input type="text" id="c-first" name="FirstName" required>
-          <span class="field-error">Enter your first name.</span>
         </div>
         <div class="field">
           <label for="c-last">Last name <span class="req">*</span></label>
           <input type="text" id="c-last" name="LastName" required>
-          <span class="field-error">Enter your last name.</span>
         </div>
       </div>
       <div class="field-row">
         <div class="field">
           <label for="c-email">Email address <span class="req">*</span></label>
           <input type="email" id="c-email" name="Email" required>
-          <span class="field-error">Enter a valid email.</span>
         </div>
         <div class="field">
           <label for="c-phone">Phone number <span class="req">*</span></label>
           <input type="tel" id="c-phone" name="Phone" required>
-          <span class="field-error">Enter your phone number.</span>
         </div>
       </div>
       <div class="field">
@@ -679,7 +730,6 @@
           <option value="Visakhapatnam">Visakhapatnam</option>
           <option value="Remote">Remote / WFH</option>
         </select>
-        <span class="field-error">Select your current location.</span>
       </div>
 
       <div class="form-section">2. Preferred Work Locations (Up to 3)</div>
@@ -696,7 +746,6 @@
           <option value="Visakhapatnam">Visakhapatnam</option>
           <option value="Remote">Remote / WFH</option>
         </select>
-        <span class="field-error">Select first preferred location.</span>
       </div>
       <div class="field">
         <label for="c-pref-loc-2">Preferred Location 2</label>
@@ -712,72 +761,18 @@
           <option value="Remote">Remote / WFH</option>
         </select>
       </div>
-      <div class="field">
-        <label for="c-pref-loc-3">Preferred Location 3</label>
-        <select id="c-pref-loc-3" name="PrefLocation3" class="filter-input">
-          <option value="">Select location 3 (Optional)...</option>
-          <option value="Bengaluru">Bengaluru</option>
-          <option value="Mumbai">Mumbai</option>
-          <option value="Hyderabad">Hyderabad</option>
-          <option value="Pune">Pune</option>
-          <option value="NCR">Delhi / NCR</option>
-          <option value="Chennai">Chennai</option>
-          <option value="Visakhapatnam">Visakhapatnam</option>
-          <option value="Remote">Remote / WFH</option>
-        </select>
-      </div>
 
-      <div class="form-section">3. Professional qualifications &amp; languages</div>
-      <div class="field-row">
-        <div class="field">
-          <label for="c-linkedin">LinkedIn profile URL</label>
-          <input type="url" id="c-linkedin" name="LinkedInURL" placeholder="https://linkedin.com/in/...">
-        </div>
-        <div class="field">
-          <label for="c-edu">Highest Qualification</label>
-          <select id="c-edu" name="HighestQualification" class="filter-input">
-            <option value="">Select qualification...</option>
-            <option value="10th">10th Pass (Secondary)</option>
-            <option value="12th">12th Pass (Higher Sec.)</option>
-            <option value="ug">Undergraduate (UG)</option>
-            <option value="pg">Postgraduate (PG)</option>
-          </select>
-        </div>
-      </div>
-      <div class="field">
-        <label for="c-languages">Languages Known</label>
-        <input type="text" id="c-languages" name="LanguagesKnown" placeholder="e.g. English, Hindi, Telugu, Tamil">
-      </div>
-
-      <div class="form-section">4. Application documents</div>
+      <div class="form-section">3. Application documents</div>
       <div class="field">
         <label for="c-resume">Resume / CV upload <span class="req">*</span></label>
         <input type="file" id="c-resume" name="ResumeFile" accept=".pdf,.doc,.docx" required>
-        <span class="field-error">Attach a PDF or DOCX resume.</span>
       </div>
 
-      <div class="form-section">5. Job-specific screening questions</div>
+      <div class="form-section">4. Screening questions</div>
       <div class="field-row">
         <div class="field">
           <label for="c-years">Total years of experience <span class="req">*</span></label>
-          <input type="number" id="c-years" name="YearsExperience" min="0" step="1" placeholder="e.g. 3" required>
-          <span class="field-error">Enter years of experience.</span>
-        </div>
-        <div class="field">
-          <label for="c-notice">Notice period / availability</label>
-          <select id="c-notice" name="NoticePeriod" class="filter-input">
-            <option value="">Select...</option>
-            <option>Immediate</option>
-            <option>15 Days</option>
-            <option>30 Days</option>
-            <option>60+ Days</option>
-          </select>
-        </div>
-      </div>
-      <div class="field-row">
-        <div class="field">
-          <label for="c-current-ctc">Current CTC</label>
-          <input type="text" id="c-current-ctc" name="CurrentCTC" placeholder="e.g. ₹8 LPA">
+          <input type="number" id="c-years" name="YearsExperience" min="0" step="1" required>
         </div>
         <div class="field">
           <label for="c-expected-ctc">Expected CTC</label>
@@ -791,42 +786,78 @@
   </div>
 </div>
 
+<!-- EMPLOYER POST JOB MODAL -->
 <div class="modal-overlay" id="modal-employer">
   <div class="modal modal-scroll" role="dialog" aria-modal="true" aria-labelledby="employer-title">
     <button class="modal-close" type="button" data-close-modal aria-label="Close">✕</button>
-    <span class="modal-tag">Post Job</span>
+    <span class="modal-tag">Post Job &amp; Promote</span>
     <h3 id="employer-title">Open a gate</h3>
-    <p class="modal-sub">List your opening with a verified Indian salary range (LPA). 100% Free job posting with 12-month account validity.</p>
+    <p class="modal-sub">List your opening with a verified Indian salary range (LPA). Choose from our special launch pricing tiers below.</p>
+
+    <!-- 3 High-Conversion Marketing Slabs -->
+    <div class="field">
+      <label>Select Employer Listing Package <span class="req">*</span></label>
+      <div class="pricing-slabs">
+        <div class="slab-card selected" data-slab="0" data-price="0">
+          <div>
+            <div class="slab-title">Standard Free</div>
+            <div class="slab-price-wrap">
+              <span class="slab-price">₹0</span>
+            </div>
+            <div class="slab-validity">30 Days Live</div>
+          </div>
+          <div class="slab-desc">Standard verified listing on the live terminal board</div>
+        </div>
+
+        <div class="slab-card" data-slab="999" data-price="999">
+          <div class="slab-badge-pop">Most Popular</div>
+          <div>
+            <div class="slab-title">Featured Slot</div>
+            <div class="slab-price-wrap">
+              <span class="slab-price">₹999</span>
+              <span class="slab-old-price">₹2,499</span>
+            </div>
+            <div class="slab-validity">30 Days Live (60% OFF)</div>
+          </div>
+          <div class="slab-desc">Pinned to top of search results + yellow highlight badge</div>
+        </div>
+
+        <div class="slab-card" data-slab="2499" data-price="2499">
+          <div class="slab-badge-save">Best Value</div>
+          <div>
+            <div class="slab-title">Urgent Express</div>
+            <div class="slab-price-wrap">
+              <span class="slab-price">₹2,499</span>
+              <span class="slab-old-price">₹5,999</span>
+            </div>
+            <div class="slab-validity">60 Days Live + Top Priority</div>
+          </div>
+          <div class="slab-desc">Highlighted slider spot + instant priority candidate routing</div>
+        </div>
+      </div>
+      <input type="hidden" id="selected-employer-slab" name="EmployerPackage" value="₹0">
+    </div>
 
     <form id="form-employer" novalidate>
-      <input type="hidden" id="selected-employer-slab" name="EmployerPackage" value="Free">
       <div class="field-row">
         <div class="field">
           <label for="e-company">Company <span class="req">*</span></label>
           <input type="text" id="e-company" name="Company" required placeholder="e.g. Acme Corp">
-          <span class="field-error">Enter company name.</span>
         </div>
         <div class="field">
-          <label for="e-email">Contact email <span class="req">*</span></label>
+          <label for="e-email">Contact email (Recruiter Login ID) <span class="req">*</span></label>
           <input type="email" id="e-email" name="ContactEmail" required placeholder="hr@company.com">
-          <span class="field-error">Enter valid email.</span>
         </div>
       </div>
       <div class="field-row">
         <div class="field">
           <label for="e-phone">Primary Phone <span class="req">*</span></label>
           <input type="tel" id="e-phone" name="Phone" required placeholder="+91 98765 43210">
-          <span class="field-error">Enter phone number.</span>
         </div>
         <div class="field">
-          <label for="e-alt-phone">Alternative Phone</label>
-          <input type="tel" id="e-alt-phone" name="AltPhone" placeholder="+91 91234 56789">
+          <label for="e-title">Job title <span class="req">*</span></label>
+          <input type="text" id="e-title" name="JobTitle" required placeholder="e.g. Senior Frontend Engineer">
         </div>
-      </div>
-      <div class="field">
-        <label for="e-title">Job title <span class="req">*</span></label>
-        <input type="text" id="e-title" name="JobTitle" required placeholder="e.g. Senior Frontend Engineer">
-        <span class="field-error">Enter job title.</span>
       </div>
       <div class="field-row">
         <div class="field">
@@ -850,30 +881,7 @@
             <option value="sales-marketing">Sales & Marketing</option>
             <option value="finance-accounts">Finance & Accounts</option>
             <option value="hr-admin">HR & Admin</option>
-            <option value="customer-success">Customer Success & Operations</option>
             <option value="design-product">Design & Product</option>
-            <option value="healthcare-pharma">Healthcare & Pharma</option>
-            <option value="legal">Legal & Compliance</option>
-          </select>
-        </div>
-      </div>
-      <div class="field-row">
-        <div class="field">
-          <label for="e-exp">Experience Bracket <span class="req">*</span></label>
-          <select id="e-exp" name="Exp" required class="filter-input">
-            <option value="fresher">Fresher (0-1 yrs)</option>
-            <option value="1-3">1-3 years</option>
-            <option value="3-5">3-5 years</option>
-            <option value="5+">5+ years</option>
-          </select>
-        </div>
-        <div class="field">
-          <label for="e-edu">Required Education <span class="req">*</span></label>
-          <select id="e-edu" name="Edu" required class="filter-input">
-            <option value="10th">10th Pass (Secondary)</option>
-            <option value="12th">12th Pass (Higher Sec.)</option>
-            <option value="ug" selected>Undergraduate (UG)</option>
-            <option value="pg">Postgraduate (PG)</option>
           </select>
         </div>
       </div>
@@ -881,7 +889,6 @@
         <div class="field">
           <label for="e-salary">Salary range (LPA) <span class="req">*</span></label>
           <input type="text" id="e-salary" name="SalaryRange" placeholder="₹15 LPA – ₹22 LPA" required>
-          <span class="field-error">Salary range is required.</span>
         </div>
         <div class="field">
           <label for="e-ctype">Company Type <span class="req">*</span></label>
@@ -897,12 +904,96 @@
         <textarea id="e-desc" name="Description" placeholder="Key responsibilities and qualifications..."></textarea>
       </div>
 
-      <button type="submit" id="submit-employer-btn" class="btn btn-solid form-submit">Submit Job Listing</button>
+      <!-- Secure Payment Gateway (UPI ID hidden) -->
+      <div class="payment-step-container" id="employer-payment-box">
+        <div class="form-section" style="margin-top:0;">Secure Payment Gateway (<span id="employer-payment-amount">₹999</span> Package Fee)</div>
+        
+        <div class="field">
+          <label>Select Payment Method <span class="req">*</span></label>
+          <div class="payment-options">
+            <div class="pay-method selected" data-pay="upi">
+              <span style="font-size:18px;">⚡</span> UPI / QR Scan
+            </div>
+            <div class="pay-method" data-pay="netbanking">
+              <span style="font-size:18px;">🏦</span> Net Banking
+            </div>
+            <div class="pay-method" data-pay="card">
+              <span style="font-size:18px;">💳</span> Debit / Credit
+            </div>
+          </div>
+          <input type="hidden" id="selected-payment-method" name="PaymentMethod" value="upi">
+        </div>
+
+        <div class="pay-details-box active" id="pay-box-upi">
+          <div class="qr-box">
+            <img id="dynamic-qr-img" src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=upi://pay?pa=narendravarma3579@ibl&pn=WorkWayJobs&am=999.00&cu=INR" alt="Secure Payment QR Code">
+          </div>
+          <div style="text-align:center; font-size:13px; color:var(--text-muted); font-family:'JetBrains Mono'; margin-bottom: 12px;">Scan with any UPI app to securely pay <span id="qr-scan-amount-text">₹999</span></div>
+          <div class="field" style="margin-bottom:12px;">
+            <label for="e-utr">Transaction / UTR Reference ID <span class="req">*</span></label>
+            <input type="text" id="e-utr" name="UPI_UTR" placeholder="e.g. 4261xxxxxxxx">
+          </div>
+          <button type="button" id="confirm-scan-btn" class="btn btn-solid" style="width:100%; justify-content:center; background:var(--accent);">Confirm Payment &amp; Submit Listing</button>
+        </div>
+      </div>
+
+      <button type="submit" id="submit-employer-btn" class="btn btn-solid form-submit">Submit Free Job Listing</button>
       <div class="form-status" id="status-employer"></div>
     </form>
   </div>
 </div>
 
+<!-- RECRUITER LOGIN MODAL -->
+<div class="modal-overlay" id="modal-recruiter-login">
+  <div class="modal" role="dialog" aria-modal="true">
+    <button class="modal-close" type="button" data-close-modal aria-label="Close">✕</button>
+    <span class="modal-tag">Recruiter Portal</span>
+    <h3>Recruiter Login</h3>
+    <p class="modal-sub">Enter your registered email address to access your dashboard and view candidate applications.</p>
+    <form id="form-recruiter-login">
+      <div class="field">
+        <label for="rec-login-email">Registered Email ID <span class="req">*</span></label>
+        <input type="email" id="rec-login-email" required placeholder="hr@company.com">
+      </div>
+      <button type="submit" class="btn btn-solid form-submit">Access Recruiter Dashboard</button>
+      <div class="form-status" id="status-recruiter-login"></div>
+    </form>
+  </div>
+</div>
+
+<!-- RECRUITER DASHBOARD MODAL -->
+<div class="modal-overlay" id="modal-recruiter-dashboard">
+  <div class="modal modal-scroll" style="max-width:900px;" role="dialog" aria-modal="true">
+    <button class="modal-close" type="button" data-close-modal aria-label="Close">✕</button>
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; flex-wrap:wrap; gap:12px;">
+      <div>
+        <span class="modal-tag">Employer Dashboard (12-Month Access)</span>
+        <h3 id="dash-company-name">Company Portal</h3>
+      </div>
+      <button id="rec-logout-btn" class="btn btn-ghost" style="padding:6px 14px; font-size:13px;">Logout</button>
+    </div>
+
+    <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:16px; margin-bottom:24px;">
+      <div style="background:var(--bg-main); border:1px solid var(--border); border-radius:var(--radius); padding:16px;">
+        <span style="font-size:12px; color:var(--text-muted); font-family:'JetBrains Mono'; display:block; margin-bottom:4px;">ACTIVE POSTS</span>
+        <span style="font-size:24px; font-weight:800; font-family:'JetBrains Mono';" id="dash-stat-posts">0</span>
+      </div>
+      <div style="background:var(--bg-main); border:1px solid var(--border); border-radius:var(--radius); padding:16px;">
+        <span style="font-size:12px; color:var(--text-muted); font-family:'JetBrains Mono'; display:block; margin-bottom:4px;">TOTAL APPLICANTS</span>
+        <span style="font-size:24px; font-weight:800; font-family:'JetBrains Mono'; color:var(--primary);" id="dash-stat-applicants">0</span>
+      </div>
+      <div style="background:var(--bg-main); border:1px solid var(--border); border-radius:var(--radius); padding:16px;">
+        <span style="font-size:12px; color:var(--text-muted); font-family:'JetBrains Mono'; display:block; margin-bottom:4px;">CV VIEWS AVAILABLE</span>
+        <span style="font-size:24px; font-weight:800; font-family:'JetBrains Mono'; color:var(--accent);" id="dash-stat-cvs">120</span>
+      </div>
+    </div>
+
+    <h4 style="font-size:16px; margin-bottom:12px;">Applicants Received for Your Openings</h4>
+    <div id="dash-applicants-container"></div>
+  </div>
+</div>
+
+<!-- ADMIN LOGIN MODAL -->
 <div class="modal-overlay" id="modal-admin-login">
   <div class="modal" role="dialog" aria-modal="true">
     <button class="modal-close" type="button" data-close-modal aria-label="Close">✕</button>
@@ -924,6 +1015,7 @@
   </div>
 </div>
 
+<!-- ADMIN DASHBOARD MODAL -->
 <div class="modal-overlay" id="modal-admin-dashboard">
   <div class="modal modal-scroll" style="max-width:840px;" role="dialog" aria-modal="true">
     <button class="modal-close" type="button" data-close-modal aria-label="Close">✕</button>
@@ -942,17 +1034,24 @@
 (function(){
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzHXhtI8xLZ4BD5PRfM3MMo1qBNyxjb76T7CUNRl7VdR7rsVJNh_opFiTxoEU53koH7/exec";
+  
+  var MERCHANT_UPI_ID = "narendravarma3579@ibl";
+  var MERCHANT_NAME = "WorkWayJobs";
 
-  var liveJobs = [
-    { id: 1, Company: "LUMEN STUDIO", JobTitle: "SR PRODUCT DESIGNER", Location: "VISAKHAPATNAM", SalaryRange: "₹24 LPA – ₹32 LPA", SalaryMin: 24, Description: "Design world-class interfaces for creative workflows.", Type: "Full-time", Exp: "5+", Dept: "design-product", Ind: "saas", Edu: "ug", CompanyType: "startup", PostedDaysAgo: 1, Featured: true },
-    { id: 2, Company: "HARBOR LABS", JobTitle: "BACKEND ENGINEER", Location: "BENGALURU", SalaryRange: "₹20 LPA – ₹28 LPA", SalaryMin: 20, Description: "Scale distributed databases and resilient APIs.", Type: "Full-time", Exp: "3-5", Dept: "it-software", Ind: "it-services", Edu: "ug", CompanyType: "mnc", PostedDaysAgo: 2, Featured: false },
-    { id: 3, Company: "NORTHFIELD", JobTitle: "GROWTH MARKETER", Location: "MUMBAI", SalaryRange: "₹12 LPA – ₹16 LPA", SalaryMin: 12, Description: "Drive organic and paid acquisition across channels.", Type: "Full-time", Exp: "1-3", Dept: "sales-marketing", Ind: "saas", Edu: "12th", CompanyType: "startup", PostedDaysAgo: 4, Featured: false },
-    { id: 4, Company: "CASCADE CO", JobTitle: "DATA ANALYST", Location: "HYDERABAD", SalaryRange: "₹10 LPA – ₹14 LPA", SalaryMin: 10, Description: "Build robust data models and executive dashboards.", Type: "Full-time", Exp: "1-3", Dept: "finance-accounts", Ind: "banking", Edu: "pg", CompanyType: "corporate", PostedDaysAgo: 6, Featured: true }
+  // Persistent Local Database State
+  var liveJobs = JSON.parse(localStorage.getItem('ww_live_jobs')) || [
+    { id: 1, Company: "LUMEN STUDIO", ContactEmail: "hr@lumenstudio.in", JobTitle: "SR PRODUCT DESIGNER", Location: "VISAKHAPATNAM", SalaryRange: "₹24 LPA – ₹32 LPA", SalaryMin: 24, Description: "Design world-class interfaces for creative workflows.", Type: "Full-time", Exp: "5+", Dept: "design-product", Ind: "saas", Edu: "ug", CompanyType: "startup", PostedDaysAgo: 1, Featured: true },
+    { id: 2, Company: "HARBOR LABS", ContactEmail: "careers@harborlabs.io", JobTitle: "BACKEND ENGINEER", Location: "BENGALURU", SalaryRange: "₹20 LPA – ₹28 LPA", SalaryMin: 20, Description: "Scale distributed databases and resilient APIs.", Type: "Full-time", Exp: "3-5", Dept: "it-software", Ind: "it-services", Edu: "ug", CompanyType: "mnc", PostedDaysAgo: 2, Featured: false }
   ];
 
-  var pendingJobs = [
-    { id: 101, Company: "NEXUS AI", JobTitle: "MACHINE LEARNING ENGR", Location: "PUNE", SalaryRange: "₹25 LPA – ₹38 LPA", Phone: "+91 9811122333", AltPhone: "", ContactEmail: "hr@nexusai.in", Dept: "it-software", Exp: "3-5", Edu: "ug", CompanyType: "startup", Description: "Build fine-tuned LLM architectures." }
-  ];
+  var pendingJobs = JSON.parse(localStorage.getItem('ww_pending_jobs')) || [];
+  var candidateApplications = JSON.parse(localStorage.getItem('ww_candidate_apps')) || [];
+
+  function saveState(){
+    localStorage.setItem('ww_live_jobs', JSON.stringify(liveJobs));
+    localStorage.setItem('ww_pending_jobs', JSON.stringify(pendingJobs));
+    localStorage.setItem('ww_candidate_apps', JSON.stringify(candidateApplications));
+  }
 
   function openModal(id){
     var m = document.getElementById('modal-' + id);
@@ -1032,10 +1131,11 @@
       container.innerHTML = '<p style="color:var(--text-muted); font-size:14.5px; text-align:center; padding:32px;">No pending jobs awaiting approval.</p>';
       return;
     }
-    var html = '<table class="admin-table"><thead><tr><th>Company</th><th>Role</th><th>Location</th><th>Salary</th><th>Actions</th></tr></thead><tbody>';
+    var html = '<table class="admin-table"><thead><tr><th>Company</th><th>Role</th><th>Package / UTR</th><th>Actions</th></tr></thead><tbody>';
     pendingJobs.forEach(function(job, index){
-      html += '<tr><td>'+job.Company+'</td><td>'+job.JobTitle+'</td><td>'+job.Location+'</td><td>'+job.SalaryRange+'</td><td>' +
-              '<button class="btn btn-solid" style="padding:6px 12px; font-size:12px; background:var(--accent);" onclick="window.approveJob('+index+')">Approve</button> ' +
+      var feeBadge = job.ListingFee && job.ListingFee !== '₹0' ? '<span style="color:var(--primary); font-weight:700;">'+job.ListingFee+'</span><br><small class="mono">UTR: '+(job.UTR||'N/A')+'</small>' : 'Free (₹0)';
+      html += '<tr><td>'+job.Company+'</td><td>'+job.JobTitle+'</td><td>'+feeBadge+'</td><td>' +
+              '<button class="btn btn-solid" style="padding:6px 12px; font-size:12px; background:var(--accent);" onclick="window.approveJob('+index+')">Approve &amp; Publish</button> ' +
               '<button class="btn btn-ghost" style="padding:6px 12px; font-size:12px; color:var(--danger);" onclick="window.rejectJob('+index+')">Reject</button>' +
               '</td></tr>';
     });
@@ -1046,7 +1146,12 @@
   window.approveJob = function(index){
     var j = pendingJobs.splice(index, 1)[0];
     j.id = Date.now();
-    liveJobs.unshift(j);
+    if (j.Featured) {
+      liveJobs.unshift(j);
+    } else {
+      liveJobs.push(j);
+    }
+    saveState();
     renderJobs();
     renderSlider();
     renderAdminPending();
@@ -1054,6 +1159,7 @@
 
   window.rejectJob = function(index){
     pendingJobs.splice(index, 1);
+    saveState();
     renderAdminPending();
   };
 
@@ -1061,7 +1167,8 @@
     var track = document.getElementById('jobs-slider-track');
     if (!track) return;
     var html = '';
-    liveJobs.slice(0, 6).forEach(function(job){
+    var sortedJobs = [].concat(liveJobs).sort(function(a,b){ return (b.Featured ? 1 : 0) - (a.Featured ? 1 : 0); });
+    sortedJobs.slice(0, 6).forEach(function(job){
       var featClass = job.Featured ? ' job-card featured' : ' job-card';
       html += '<div class="'+featClass+'">' +
                 '<div>' +
@@ -1085,7 +1192,7 @@
   function renderJobs(filteredList){
     var container = document.getElementById('jobs-grid-container');
     if (!container) return;
-    var list = filteredList || liveJobs;
+    var list = filteredList || [].concat(liveJobs).sort(function(a,b){ return (b.Featured ? 1 : 0) - (a.Featured ? 1 : 0); });
     if (list.length === 0){
       container.innerHTML = '<p style="grid-column:1/-1; text-align:center; padding:48px; color:var(--text-muted);">No gates match your selected filters.</p>';
       return;
@@ -1123,6 +1230,66 @@
     if (titleEl) titleEl.textContent = "Apply for " + jobTitle;
     openModal('candidate');
   };
+
+  // Recruiter Dashboard Login & View
+  var recruiterLoginForm = document.getElementById('form-recruiter-login');
+  var recruiterLoginStatus = document.getElementById('status-recruiter-login');
+  var recLogoutBtn = document.getElementById('rec-logout-btn');
+
+  if (recruiterLoginForm){
+    recruiterLoginForm.addEventListener('submit', function(e){
+      e.preventDefault();
+      var email = document.getElementById('rec-login-email').value.trim().toLowerCase();
+      if (!email) return;
+
+      var matchedJobs = liveJobs.filter(function(j){ return j.ContactEmail && j.ContactEmail.toLowerCase() === email; });
+      if (matchedJobs.length === 0){
+        if (recruiterLoginStatus){
+          recruiterLoginStatus.textContent = "No active listings found for this email address.";
+          recruiterLoginStatus.classList.add('show', 'err');
+        }
+        return;
+      }
+
+      closeModal(document.getElementById('modal-recruiter-login'));
+      recruiterLoginForm.reset();
+      if (recruiterLoginStatus) recruiterLoginStatus.classList.remove('show');
+
+      // Populate Dashboard
+      var companyName = matchedJobs[0].Company;
+      document.getElementById('dash-company-name').textContent = companyName + " Dashboard";
+      document.getElementById('dash-stat-posts').textContent = matchedJobs.length;
+
+      var jobIds = matchedJobs.map(function(j){ return j.id; });
+      var myApps = candidateApplications.filter(function(app){ return jobIds.indexOf(parseInt(app.JobId)) !== -1; });
+      document.getElementById('dash-stat-applicants').textContent = myApps.length;
+      document.getElementById('dash-stat-cvs').textContent = 120; // 12-month access CV view limit
+
+      var container = document.getElementById('dash-applicants-container');
+      if (myApps.length === 0){
+        container.innerHTML = '<p style="color:var(--text-muted); font-size:14px; padding:24px; text-align:center; background:var(--bg-main); border-radius:var(--radius);">No candidates have applied to your active postings yet.</p>';
+      } else {
+        var tableHtml = '<table class="admin-table"><thead><tr><th>Candidate Name</th><th>Job Title</th><th>Contact</th><th>Experience</th><th>Resume</th></tr></thead><tbody>';
+        myApps.forEach(function(app){
+          tableHtml += '<tr><td><strong>'+app.FirstName+' '+app.LastName+'</strong><br><small style="color:var(--text-muted);">'+app.Location+'</small></td>' +
+                       '<td>'+app.JobTitle+'</td>' +
+                       '<td>'+app.Email+'<br><small class="mono">'+app.Phone+'</small></td>' +
+                       '<td>'+app.YearsExperience+' yrs</td>' +
+                       '<td><a href="'+(app.ResumeBase64 ? 'data:'+app.ResumeMimeType+';base64,'+app.ResumeBase64 : '#')+'" target="_blank" class="btn btn-ghost" style="padding:4px 10px; font-size:11.5px;">Download CV</a></td></tr>';
+        });
+        tableHtml += '</tbody></table>';
+        container.innerHTML = tableHtml;
+      }
+
+      openModal('recruiter-dashboard');
+    });
+  }
+
+  if (recLogoutBtn){
+    recLogoutBtn.addEventListener('click', function(){
+      closeModal(document.getElementById('modal-recruiter-dashboard'));
+    });
+  }
 
   var currentSlide = 0;
   var slideRightBtn = document.getElementById('slide-right');
@@ -1209,6 +1376,44 @@
     });
   }
 
+  var slabCards = document.querySelectorAll('.slab-card');
+  var selectedEmployerSlab = document.getElementById('selected-employer-slab');
+  var employerPaymentAmount = document.getElementById('employer-payment-amount');
+  var qrScanAmountText = document.getElementById('qr-scan-amount-text');
+  var submitEmployerBtn = document.getElementById('submit-employer-btn');
+  var employerPaymentBox = document.getElementById('employer-payment-box');
+
+  function updateEmployerPricing(price){
+    var amtStr = '₹' + price;
+    if (selectedEmployerSlab) selectedEmployerSlab.value = amtStr;
+    if (employerPaymentAmount) employerPaymentAmount.textContent = amtStr;
+    if (qrScanAmountText) qrScanAmountText.textContent = amtStr;
+    
+    if (price === '0') {
+      if (employerPaymentBox) employerPaymentBox.classList.remove('active');
+      if (submitEmployerBtn) submitEmployerBtn.textContent = 'Submit Free Job Listing';
+    } else {
+      if (submitEmployerBtn) submitEmployerBtn.textContent = 'Proceed to Payment (' + amtStr + ')';
+    }
+  }
+
+  slabCards.forEach(function(card){
+    card.addEventListener('click', function(){
+      slabCards.forEach(function(c){ c.classList.remove('selected'); });
+      card.classList.add('selected');
+      var price = card.getAttribute('data-price');
+      updateEmployerPricing(price);
+    });
+  });
+
+  var payMethods = document.querySelectorAll('.pay-method');
+  payMethods.forEach(function(m){
+    m.addEventListener('click', function(){
+      payMethods.forEach(function(x){ x.classList.remove('selected'); });
+      m.classList.add('selected');
+    });
+  });
+
   function validateForm(form){
     var valid = true;
     form.querySelectorAll('[required]').forEach(function(input){
@@ -1265,6 +1470,9 @@
       data.feePaid = "None";
       data.submittedAt = new Date().toISOString();
 
+      candidateApplications.push(data);
+      saveState();
+
       var submitBtn = document.getElementById('submit-candidate-btn');
       if (submitBtn){
         submitBtn.disabled = true;
@@ -1285,7 +1493,7 @@
         });
       }).then(function(){
         if (candidateStatus){
-          candidateStatus.textContent = "Application submitted successfully! Our hiring team will review your credentials.";
+          candidateStatus.textContent = "Application submitted successfully! Sent to recruiter dashboard.";
           candidateStatus.classList.add('show', 'ok');
         }
         candidateForm.reset();
@@ -1309,64 +1517,101 @@
 
   var employerForm = document.getElementById('form-employer');
   var employerStatus = document.getElementById('status-employer');
-  var submitEmployerBtn = document.getElementById('submit-employer-btn');
+
+  function submitEmployerJob(paymentSource){
+    var data = {};
+    new FormData(employerForm).forEach(function(value, key){ data[key] = value; });
+    data.id = Date.now();
+    data.SalaryMin = parseInt(data.SalaryRange) || 15;
+    data.Type = "Full-time";
+    data.Ind = "it-services";
+    data.ListingFee = selectedEmployerSlab ? selectedEmployerSlab.value : "₹0";
+    data.Featured = data.ListingFee !== "₹0";
+    data.PaymentMethod = paymentSource || "Free Tier";
+    data.UTR = document.getElementById('e-utr') ? document.getElementById('e-utr').value.trim() : '';
+
+    if (submitEmployerBtn){
+      submitEmployerBtn.disabled = true;
+      submitEmployerBtn.textContent = 'Submitting Job…';
+    }
+
+    fetch(GOOGLE_SCRIPT_URL, {
+      method: 'POST', mode: 'no-cors',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify(data)
+    }).then(function(){
+      pendingJobs.push(data);
+      saveState();
+      if (employerStatus){
+        employerStatus.textContent = "Job submitted successfully for admin approval.";
+        employerStatus.classList.add('show', 'ok');
+      }
+      employerForm.reset();
+      if(employerPaymentBox) employerPaymentBox.classList.remove('active');
+      setTimeout(function(){
+        closeModal(document.getElementById('modal-employer'));
+        if (employerStatus) employerStatus.classList.remove('show');
+      }, 2200);
+    }).catch(function(){
+      pendingJobs.push(data);
+      saveState();
+      if (employerStatus){
+        employerStatus.textContent = "Job submitted successfully!";
+        employerStatus.classList.add('show', 'ok');
+      }
+    }).finally(function(){
+      if (submitEmployerBtn){
+        submitEmployerBtn.disabled = false;
+        var currentPrice = selectedEmployerSlab ? selectedEmployerSlab.value : '₹0';
+        submitEmployerBtn.textContent = currentPrice === '₹0' ? 'Submit Free Job Listing' : 'Proceed to Payment (' + currentPrice + ')';
+      }
+    });
+  }
 
   if (employerForm){
     employerForm.addEventListener('submit', function(e){
       e.preventDefault();
       if (employerStatus) employerStatus.classList.remove('show', 'ok', 'err');
-      if (!validateForm(employerForm)) return;
-
-      var data = {};
-      new FormData(employerForm).forEach(function(value, key){ data[key] = value; });
-      data.id = Date.now();
-      data.SalaryMin = parseInt(data.SalaryRange) || 15;
-      data.Type = "Full-time";
-      data.Ind = "it-services";
-      data.ListingFee = "₹0";
-      data.PaymentMethod = "Free Listing";
-
-      if (submitEmployerBtn){
-        submitEmployerBtn.disabled = true;
-        submitEmployerBtn.textContent = 'Submitting Job…';
+      
+      var slabVal = selectedEmployerSlab ? selectedEmployerSlab.value : '₹0';
+      if (slabVal === '₹0') {
+        if (!validateForm(employerForm)) return;
+        submitEmployerJob("Free Tier");
+        return;
       }
 
-      fetch(GOOGLE_SCRIPT_URL, {
-        method: 'POST', mode: 'no-cors',
-        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-        body: JSON.stringify(data)
-      }).then(function(){
-        pendingJobs.push(data);
-        if (employerStatus){
-          employerStatus.textContent = "Job submitted successfully for admin approval.";
-          employerStatus.classList.add('show', 'ok');
+      if (!employerPaymentBox.classList.contains('active')){
+        if (!validateForm(employerForm)) return;
+        employerPaymentBox.classList.add('active');
+        if (submitEmployerBtn) submitEmployerBtn.textContent = 'Complete Payment (' + slabVal + ') & Submit';
+        employerPaymentBox.scrollIntoView({ behavior: 'smooth' });
+        return;
+      } else {
+        var utr = document.getElementById('e-utr').value.trim();
+        if (!utr) {
+          alert("Please enter your transaction UTR reference ID.");
+          return;
         }
-        employerForm.reset();
-        setTimeout(function(){
-          closeModal(document.getElementById('modal-employer'));
-          if (employerStatus) employerStatus.classList.remove('show');
-        }, 2200);
-      }).catch(function(){
-        pendingJobs.push(data);
-        if (employerStatus){
-          employerStatus.textContent = "Job submitted successfully!";
-          employerStatus.classList.add('show', 'ok');
-        }
-      }).finally(function(){
-        if (submitEmployerBtn){
-          submitEmployerBtn.disabled = false;
-          submitEmployerBtn.textContent = 'Submit Job Listing';
-        }
-      });
+        submitEmployerJob("UPI / QR Scan");
+      }
+    });
+  }
+
+  var confirmScanBtn = document.getElementById('confirm-scan-btn');
+  if (confirmScanBtn){
+    confirmScanBtn.addEventListener('click', function(){
+      var utr = document.getElementById('e-utr').value.trim();
+      if (!utr) {
+        alert("Please enter your transaction UTR reference ID.");
+        return;
+      }
+      submitEmployerJob("QR Code Scan");
     });
   }
 
   var boardRowsData = [
     { text: "SR PRODUCT DESIGNER · LUMEN STUDIO · VISAKHAPATNAM", status: "BOARDING" },
-    { text: "BACKEND ENGINEER · HARBOR LABS · BENGALURU", status: "BOARDING" },
-    { text: "GROWTH MARKETER · NORTHFIELD · MUMBAI", status: "2 SEATS LEFT", alert:true },
-    { text: "DATA ANALYST · CASCADE CO · HYDERABAD", status: "FINAL CALL", alert:true },
-    { text: "ML ENGINEER · NEXUS AI · PUNE", status: "PENDING" }
+    { text: "BACKEND ENGINEER · HARBOR LABS · BENGALURU", status: "BOARDING" }
   ];
 
   var boardEl = document.getElementById('board');
