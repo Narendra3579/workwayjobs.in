@@ -903,7 +903,7 @@
           <option value="Chennai">Chennai</option>
           <option value="Visakhapatnam">Visakhapatnam</option>
           <option value="Remote">Remote / WFH</option>
-          <option value="Other">Other (Type custom below)</option>
+          <option value="Custom">Custom</option>
         </select>
         <input type="text" id="c-location-custom" name="LocationCustom" placeholder="Type your custom location..." style="display:none;">
       </div>
@@ -921,7 +921,7 @@
           <option value="Chennai">Chennai</option>
           <option value="Visakhapatnam">Visakhapatnam</option>
           <option value="Remote">Remote / WFH</option>
-          <option value="Other">Other (Type custom below)</option>
+          <option value="Custom">Custom</option>
         </select>
         <input type="text" id="c-pref-loc-1-custom" name="PrefLocation1Custom" placeholder="Type custom location 1..." style="display:none;">
       </div>
@@ -937,7 +937,7 @@
           <option value="Chennai">Chennai</option>
           <option value="Visakhapatnam">Visakhapatnam</option>
           <option value="Remote">Remote / WFH</option>
-          <option value="Other">Other (Type custom below)</option>
+          <option value="Custom">Custom</option>
         </select>
         <input type="text" id="c-pref-loc-2-custom" name="PrefLocation2Custom" placeholder="Type custom location 2..." style="display:none;">
       </div>
@@ -953,7 +953,7 @@
           <option value="Chennai">Chennai</option>
           <option value="Visakhapatnam">Visakhapatnam</option>
           <option value="Remote">Remote / WFH</option>
-          <option value="Other">Other (Type custom below)</option>
+          <option value="Custom">Custom</option>
         </select>
         <input type="text" id="c-pref-loc-3-custom" name="PrefLocation3Custom" placeholder="Type custom location 3..." style="display:none;">
       </div>
@@ -1052,7 +1052,8 @@
       <div class="field-row">
         <div class="field">
           <label for="e-location">Location <span class="req">*</span></label>
-          <select id="e-location" name="Location" required class="filter-input">
+          <select id="e-location" name="LocationSelect" required class="filter-input" style="margin-bottom:8px;">
+            <option value="">Select location...</option>
             <option value="Bengaluru">Bengaluru</option>
             <option value="Mumbai">Mumbai</option>
             <option value="Hyderabad">Hyderabad</option>
@@ -1061,7 +1062,9 @@
             <option value="Chennai">Chennai</option>
             <option value="Visakhapatnam">Visakhapatnam</option>
             <option value="Remote">Remote / WFH</option>
+            <option value="Custom">Custom</option>
           </select>
+          <input type="text" id="e-location-custom" name="LocationCustom" placeholder="Type custom location..." style="display:none;">
         </div>
         <div class="field">
           <label for="e-dept">Department <span class="req">*</span></label>
@@ -1087,6 +1090,7 @@
             <option value="corporate">Corporate</option>
             <option value="mnc">MNC</option>
             <option value="other">Other</option>
+            <option value="custom">Custom</option>
           </select>
         </div>
       </div>
@@ -1451,7 +1455,7 @@
     var cust = document.getElementById(customId);
     if (sel && cust) {
       sel.addEventListener('change', function(){
-        if (sel.value === 'Other') {
+        if (sel.value === 'Custom') {
           cust.style.display = 'block';
           cust.setAttribute('required', 'true');
         } else {
@@ -1466,6 +1470,7 @@
   setupCustomLocationToggle('c-pref-loc-1', 'c-pref-loc-1-custom');
   setupCustomLocationToggle('c-pref-loc-2', 'c-pref-loc-2-custom');
   setupCustomLocationToggle('c-pref-loc-3', 'c-pref-loc-3-custom');
+  setupCustomLocationToggle('e-location', 'e-location-custom');
 
   var recruiterLoginForm = document.getElementById('form-recruiter-login');
   var recruiterLoginStatus = document.getElementById('status-recruiter-login');
@@ -1516,7 +1521,7 @@
           if (app.ResumeBase64) {
             resumeLinkHtml = 'data:' + (app.ResumeMimeType || 'application/pdf') + ';base64,' + app.ResumeBase64;
           }
-          var appIdKey = app.Email + '_' + app.JobId;
+          var appIdKey = email + '_' + (app.Email || '') + '_' + app.JobId;
           tableHtml += '<tr><td><strong>'+app.FirstName+' '+app.LastName+'</strong><br><small style="color:var(--text-muted);">'+app.Location+'</small></td>' +
                        '<td>'+app.JobTitle+'</td>' +
                        '<td>'+app.Email+'<br><small class="mono">'+app.Phone+'</small></td>' +
@@ -1748,20 +1753,11 @@
         data[key] = value;
       });
 
-      // Resolve custom locations if 'Other' was selected
-      if (data.LocationSelect === 'Other') {
-        data.Location = data.LocationCustom || 'Other';
-      } else {
-        data.Location = data.LocationSelect;
-      }
-      if (data.PrefLocation1Select === 'Other') data.PrefLocation1 = data.PrefLocation1Custom || 'Other';
-      else data.PrefLocation1 = data.PrefLocation1Select;
-
-      if (data.PrefLocation2Select === 'Other') data.PrefLocation2 = data.PrefLocation2Custom || 'Other';
-      else data.PrefLocation2 = data.PrefLocation2Select;
-
-      if (data.PrefLocation3Select === 'Other') data.PrefLocation3 = data.PrefLocation3Custom || 'Other';
-      else data.PrefLocation3 = data.PrefLocation3Select;
+      // Resolve custom locations
+      data.Location = data.LocationSelect === 'Custom' ? (data.LocationCustom || 'Custom') : data.LocationSelect;
+      data.PrefLocation1 = data.PrefLocation1Select === 'Custom' ? (data.PrefLocation1Custom || 'Custom') : data.PrefLocation1Select;
+      data.PrefLocation2 = data.PrefLocation2Select === 'Custom' ? (data.PrefLocation2Custom || 'Custom') : data.PrefLocation2Select;
+      data.PrefLocation3 = data.PrefLocation3Select === 'Custom' ? (data.PrefLocation3Custom || 'Custom') : data.PrefLocation3Select;
 
       data.sheet = "Candidates";
       data.feePaid = "None";
@@ -1819,6 +1815,7 @@
     var data = {};
     new FormData(employerForm).forEach(function(value, key){ data[key] = value; });
     data.id = Date.now();
+    data.Location = data.LocationSelect === 'Custom' ? (data.LocationCustom || 'Custom') : data.LocationSelect;
     data.SalaryMin = parseInt(data.SalaryRange) || 15;
     data.Type = "Full-time";
     data.Ind = "it-services";
