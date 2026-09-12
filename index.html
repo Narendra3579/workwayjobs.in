@@ -115,7 +115,7 @@
   .btn-ghost { background: var(--bg-card); border-color: var(--border-strong); color: var(--text-main); }
   .btn-ghost:hover { background: var(--bg-alt); border-color: var(--text-main); }
 
-  .mobile-menu-btn { display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; border-radius: var(--radius); border: 1px solid var(--border-strong); background: var(--bg-card); cursor: pointer; font-size: 16px; z-index: 260; position: relative; }
+  .mobile-menu-btn { display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; border-radius: var(--radius); border: 1px solid var(--border-strong); background: var(--bg-card); cursor: pointer; font-size: 16px; }
   @media(min-width: 640px) { .mobile-menu-btn { width: 40px; height: 40px; font-size: 18px; } }
   @media(min-width: 1024px) { .mobile-menu-btn { display: none; } }
 
@@ -646,13 +646,19 @@
           <option value="">Department: All</option>
           <option value="it-software">IT & Software</option>
           <option value="engineering">Engineering & Core</option>
-          <option value="sales-marketing">Sales & Marketing</option>
+          <option value="sales-business">Sales & Business Development</option>
+          <option value="marketing-communications">Marketing & Communications</option>
           <option value="finance-accounts">Finance & Accounts</option>
           <option value="hr-admin">HR & Admin</option>
-          <option value="customer-success">Customer Success & Operations</option>
+          <option value="customer-success">Customer Success, Operations & Support</option>
           <option value="design-product">Design & Product</option>
-          <option value="healthcare-pharma">Healthcare & Pharma</option>
-          <option value="legal">Legal & Compliance</option>
+          <option value="data-analytics">Data Science & Analytics</option>
+          <option value="healthcare-pharma">Healthcare, Pharma & Life Sciences</option>
+          <option value="legal-regulatory">Legal & Regulatory</option>
+          <option value="supply-chain-logistics">Supply Chain & Logistics</option>
+          <option value="hospitality-travel">Hospitality & Travel</option>
+          <option value="teaching-education">Teaching & Education</option>
+          <option value="other">Other</option>
         </select>
       </div>
       <style>
@@ -1070,10 +1076,19 @@
           <select id="e-dept" name="Dept" required class="filter-input">
             <option value="it-software">IT & Software</option>
             <option value="engineering">Engineering & Core</option>
-            <option value="sales-marketing">Sales & Marketing</option>
+            <option value="sales-business">Sales & Business Development</option>
+            <option value="marketing-communications">Marketing & Communications</option>
             <option value="finance-accounts">Finance & Accounts</option>
             <option value="hr-admin">HR & Admin</option>
+            <option value="customer-success">Customer Success, Operations & Support</option>
             <option value="design-product">Design & Product</option>
+            <option value="data-analytics">Data Science & Analytics</option>
+            <option value="healthcare-pharma">Healthcare, Pharma & Life Sciences</option>
+            <option value="legal-regulatory">Legal & Regulatory</option>
+            <option value="supply-chain-logistics">Supply Chain & Logistics</option>
+            <option value="hospitality-travel">Hospitality & Travel</option>
+            <option value="teaching-education">Teaching & Education</option>
+            <option value="other">Other</option>
           </select>
         </div>
       </div>
@@ -1390,7 +1405,10 @@
                 '<div>' +
                   '<div class="job-card-top">' +
                     '<span class="job-company-badge">'+job.Company+'</span>' +
-                    '<span class="job-loc">'+job.Location+'</span>' +
+                    '<div style="display:flex; align-items:center; gap:8px;">' +
+                      '<span class="job-loc">'+job.Location+'</span>' +
+                      '<button class="btn btn-ghost" style="padding:4px 8px; font-size:11px;" title="Share Job" onclick="window.shareJob(\''+job.JobTitle.replace(/'/g, "\\'")+'\', \''+job.Company.replace(/'/g, "\\'")+'\', '+job.id+')"><i class="fa-solid fa-share-nodes"></i></button>' +
+                    '</div>' +
                   '</div>' +
                   '<h3>'+job.JobTitle+'</h3>' +
                   '<div class="job-salary">'+job.SalaryRange+'</div>' +
@@ -1420,7 +1438,10 @@
                 '<div>' +
                   '<div class="job-card-top">' +
                     '<span class="job-company-badge">'+job.Company+'</span>' +
-                    '<span class="job-loc">'+job.Location+'</span>' +
+                    '<div style="display:flex; align-items:center; gap:8px;">' +
+                      '<span class="job-loc">'+job.Location+'</span>' +
+                      '<button class="btn btn-ghost" style="padding:4px 8px; font-size:11px;" title="Share Job" onclick="window.shareJob(\''+job.JobTitle.replace(/'/g, "\\'")+'\', \''+job.Company.replace(/'/g, "\\'")+'\', '+job.id+')"><i class="fa-solid fa-share-nodes"></i></button>' +
+                    '</div>' +
                   '</div>' +
                   '<h3>'+job.JobTitle+'</h3>' +
                   '<div class="job-salary">'+job.SalaryRange+'</div>' +
@@ -1435,6 +1456,22 @@
     container.innerHTML = html;
   }
 
+  window.shareJob = function(title, company, id){
+    var shareUrl = window.location.origin + window.location.pathname + '#job-' + id;
+    var shareText = 'Check out this opening for ' + title + ' at ' + company + ' on WorkWay Jobs: ' + shareUrl;
+    if (navigator.share) {
+      navigator.share({ title: title + ' at ' + company, text: shareText, url: shareUrl }).catch(function(){});
+    } else {
+      var dummy = document.createElement('textarea');
+      document.body.appendChild(dummy);
+      dummy.value = shareText;
+      dummy.select();
+      document.execCommand('copy');
+      document.body.removeChild(dummy);
+      alert("Job link copied to clipboard!");
+    }
+  };
+
   window.applyForJob = function(jobId, jobTitle, company){
     var jobIdEl = document.getElementById('c-job-id');
     var jobTitleEl = document.getElementById('c-job-title');
@@ -1447,7 +1484,6 @@
     openModal('candidate');
   };
 
-  // Toggle custom location inputs for candidate form
   function setupCustomLocationToggle(selectId, customId) {
     var sel = document.getElementById(selectId);
     var cust = document.getElementById(customId);
