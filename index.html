@@ -96,7 +96,7 @@
   }
   .nav-links a:hover::after { transform: scaleX(1); }
 
-  .nav-cta { display: flex; align-items: center; gap: 8px; }
+  .nav-cta { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; justify-content: flex-end; }
   @media(min-width: 640px) { .nav-cta { gap: 10px; } }
 
   .btn {
@@ -1093,7 +1093,7 @@
         <textarea id="e-desc" name="Description" placeholder="Key responsibilities and qualifications..."></textarea>
       </div>
 
-      <!-- Secure Payment Gateway (UPI ID hidden) -->
+      <!-- Secure Payment Gateway -->
       <div class="payment-step-container" id="employer-payment-box">
         <div class="form-section" style="margin-top:0;">Secure Payment Gateway (<span id="employer-payment-amount">₹999</span> Package Fee)</div>
         
@@ -1496,7 +1496,7 @@
                        '<td>'+app.JobTitle+'</td>' +
                        '<td>'+app.Email+'<br><small class="mono">'+app.Phone+'</small></td>' +
                        '<td>'+app.YearsExperience+' yrs</td>' +
-                       '<td><a href="'+resumeLinkHtml+'" download="'+(app.ResumeFileName || 'Resume.pdf')+'" class="btn btn-solid" style="padding:5px 10px; font-size:11px; background:var(--accent);" onclick="window.trackCvDownload(\''+email+'\')">Download CV</a></td></tr>';
+                       '<td><a href="'+resumeLinkHtml+'" download="'+(app.ResumeFileName || 'Resume.pdf')+'" class="btn btn-solid" style="padding:5px 10px; font-size:11px; background:var(--accent);" onclick="return window.trackCvDownload(\''+email+'\')">Download CV</a></td></tr>';
         });
         tableHtml += '</tbody></table>';
         container.innerHTML = tableHtml;
@@ -1511,13 +1511,13 @@
     var currentCvs = parseInt(localStorage.getItem(cvKey) || 120, 10);
     if (currentCvs <= 0){
       alert("You have 0 CV views remaining. Please upgrade your recruiter package.");
-      event.preventDefault();
-      return;
+      return false;
     }
     currentCvs--;
     localStorage.setItem(cvKey, currentCvs);
     var cvsEl = document.getElementById('dash-stat-cvs');
     if (cvsEl) cvsEl.textContent = currentCvs;
+    return true;
   };
 
   if (recLogoutBtn){
