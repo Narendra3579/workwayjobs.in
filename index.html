@@ -532,7 +532,6 @@
       <li><a href="#employers">For employers</a></li>
     </ul>
     <div class="nav-cta">
-      <a href="#" class="btn btn-yellow" data-open-modal="candidate">Register for free</a>
       <button class="btn btn-ghost" data-open-modal="recruiter-login" style="font-size: 11.5px; padding: 7px 10px;">Recruiter Login</button>
       <a href="#" class="btn btn-solid" data-open-modal="employer">Post Job</a>
       <button class="mobile-menu-btn" id="mobile-menu-toggle" aria-label="Open Menu">
@@ -556,10 +555,7 @@
       <li><a href="#employers" class="mobile-nav-link" style="font-size:16px; font-weight:700;">For employers</a></li>
     </ul>
     <div style="display:flex; flex-direction:column; gap:10px; margin-top:auto; padding-top:20px; border-top:1px solid var(--border);">
-      <div style="display:flex; gap:8px;">
-        <a href="#" class="btn btn-yellow" data-open-modal="candidate" style="flex:1; justify-content:center;">Register for free</a>
-        <button class="btn btn-ghost" data-open-modal="recruiter-login" style="flex:1; justify-content:center; font-size:11.5px;">Recruiter Login</button>
-      </div>
+      <button class="btn btn-ghost" data-open-modal="recruiter-login" style="width:100%; justify-content:center; font-size:11.5px;">Recruiter Login</button>
       <a href="#" class="btn btn-solid" data-open-modal="employer" style="width:100%; justify-content:center;">Post Job</a>
     </div>
   </div>
@@ -1492,11 +1488,12 @@
           if (app.ResumeBase64) {
             resumeLinkHtml = 'data:' + (app.ResumeMimeType || 'application/pdf') + ';base64,' + app.ResumeBase64;
           }
+          var appIdKey = app.Email + '_' + app.JobId;
           tableHtml += '<tr><td><strong>'+app.FirstName+' '+app.LastName+'</strong><br><small style="color:var(--text-muted);">'+app.Location+'</small></td>' +
                        '<td>'+app.JobTitle+'</td>' +
                        '<td>'+app.Email+'<br><small class="mono">'+app.Phone+'</small></td>' +
                        '<td>'+app.YearsExperience+' yrs</td>' +
-                       '<td><a href="'+resumeLinkHtml+'" download="'+(app.ResumeFileName || 'Resume.pdf')+'" class="btn btn-solid" style="padding:5px 10px; font-size:11px; background:var(--accent);" onclick="return window.trackCvDownload(\''+email+'\')">Download CV</a></td></tr>';
+                       '<td><a href="'+resumeLinkHtml+'" download="'+(app.ResumeFileName || 'Resume.pdf')+'" class="btn btn-solid" style="padding:5px 10px; font-size:11px; background:var(--accent);" onclick="return window.trackCvDownload(\''+email+'\', \''+appIdKey+'\')">Download CV</a></td></tr>';
         });
         tableHtml += '</tbody></table>';
         container.innerHTML = tableHtml;
@@ -1506,17 +1503,26 @@
     });
   }
 
-  window.trackCvDownload = function(email){
+  window.trackCvDownload = function(email, appIdKey){
+    var downloadedKey = 'ww_downloaded_' + email;
+    var downloadedSet = JSON.parse(localStorage.getItem(downloadedKey) || '[]');
+    
     var cvKey = 'ww_cv_views_' + email;
     var currentCvs = parseInt(localStorage.getItem(cvKey) || 120, 10);
-    if (currentCvs <= 0){
-      alert("You have 0 CV views remaining. Please upgrade your recruiter package.");
-      return false;
+
+    if (downloadedSet.indexOf(appIdKey) === -1) {
+      if (currentCvs <= 0){
+        alert("You have 0 CV views remaining. Please upgrade your recruiter package.");
+        return false;
+      }
+      currentCvs--;
+      localStorage.setItem(cvKey, currentCvs);
+      downloadedSet.push(appIdKey);
+      localStorage.setItem(downloadedKey, JSON.stringify(downloadedSet));
+      
+      var cvsEl = document.getElementById('dash-stat-cvs');
+      if (cvsEl) cvsEl.textContent = currentCvs;
     }
-    currentCvs--;
-    localStorage.setItem(cvKey, currentCvs);
-    var cvsEl = document.getElementById('dash-stat-cvs');
-    if (cvsEl) cvsEl.textContent = currentCvs;
     return true;
   };
 
