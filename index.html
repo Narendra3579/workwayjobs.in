@@ -132,14 +132,14 @@
   .mobile-drawer.open .mobile-drawer-content { transform: translateX(0); }
 
   .fab-register {
-    position: fixed; bottom: 84px; right: 24px; z-index: 90;
+    position: fixed; bottom: 104px; right: 24px; z-index: 90;
     background: var(--yellow-btn); color: #0F172A; font-weight: 800; font-size: 13.5px;
     padding: 12px 20px; border-radius: 50px; border: 2px solid #FFFFFF;
     box-shadow: 0 10px 25px rgba(234, 179, 8, 0.45);
     display: inline-flex; align-items: center; gap: 8px; cursor: pointer;
     transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
   }
-  @media(min-width: 768px) { .fab-register { bottom: 92px; right: 32px; font-size: 15px; padding: 14px 26px; } }
+  @media(min-width: 768px) { .fab-register { bottom: 112px; right: 32px; font-size: 15px; padding: 14px 26px; } }
   .fab-register:hover { background: var(--yellow-btn-hover); transform: translateY(-4px); box-shadow: 0 15px 30px rgba(234, 179, 8, 0.6); }
 
   /* Logo Marquee Ticker Styles */
@@ -393,8 +393,8 @@
   .final .btn-solid { background: #38BDF8; color: #0F172A; }
   .final .btn-solid:hover { background: #7DD3FC; }
 
-  footer { border-top: 1px solid var(--border); padding: 48px 0 84px; background: var(--bg-card); }
-  @media(min-width: 768px) { footer { padding: 64px 0 96px; } }
+  footer { border-top: 1px solid var(--border); padding: 48px 0 104px; background: var(--bg-card); }
+  @media(min-width: 768px) { footer { padding: 64px 0 116px; } }
   .foot-grid { display: grid; grid-template-columns: 1fr; gap: 36px; margin-bottom: 40px; }
   @media(min-width: 768px) { .foot-grid { grid-template-columns: 1.5fr repeat(3, 1fr); gap: 48px; margin-bottom: 48px; } }
   .foot-brand p { font-size: 13.5px; color: var(--text-muted); margin-top: 12px; max-width: 280px; line-height: 1.6; }
@@ -406,7 +406,7 @@
   .foot-col a { font-size: 14px; text-decoration: none; color: var(--text-main); font-weight: 500; transition: color 0.2s; }
   @media(min-width: 768px) { .foot-col a { font-size: 14.5px; } }
   .foot-col a:hover { color: var(--primary); }
-  .foot-bottom { display: flex; flex-direction: column; gap: 6px; justify-content: center; align-items: center; padding-top: 28px; border-top: 1px solid var(--border); font-family: 'JetBrains Mono'; font-size: 11.5px; color: var(--text-muted); text-align: center; }
+  .foot-bottom { display: flex; flex-direction: column; gap: 4px; justify-content: flex-start; align-items: flex-start; padding-top: 28px; border-top: 1px solid var(--border); font-family: 'JetBrains Mono'; font-size: 11.5px; color: var(--text-muted); text-align: left; }
   @media(min-width: 768px) { .foot-bottom { padding-top: 32px; font-size: 12px; } }
 
   .modal-overlay { position: fixed; inset: 0; background: rgba(15, 23, 42, 0.65); display: none; align-items: flex-end; justify-content: center; padding: 0; z-index: 300; overflow-y: auto; backdrop-filter: blur(8px); opacity: 0; transition: opacity 0.25s ease; }
@@ -553,8 +553,7 @@
       <li><a href="#employers">For employers</a></li>
     </ul>
     <div class="nav-cta">
-      <button class="btn btn-ghost" data-open-modal="recruiter-login" style="font-size: 11.5px; padding: 7px 10px;">Recruiter Login</button>
-      <a href="#" class="btn btn-solid" data-open-modal="employer">Post Job</a>
+      <a href="#" class="btn btn-solid" data-open-modal="employer">For Employer</a>
       <button class="mobile-menu-btn" id="mobile-menu-toggle" aria-label="Open Menu">
         <i class="fa-solid fa-bars"></i>
       </button>
@@ -576,13 +575,11 @@
       <li><a href="#employers" class="mobile-nav-link" style="font-size:16px; font-weight:700;">For employers</a></li>
     </ul>
     <div style="display:flex; flex-direction:column; gap:10px; margin-top:auto; padding-top:20px; border-top:1px solid var(--border);">
-      <button class="btn btn-ghost" data-open-modal="recruiter-login" style="width:100%; justify-content:center; font-size:11.5px;">Recruiter Login</button>
-      <a href="#" class="btn btn-solid" data-open-modal="employer" style="width:100%; justify-content:center;">Post Job</a>
+      <a href="#" class="btn btn-solid" data-open-modal="employer" style="width:100%; justify-content:center;">For Employer</a>
     </div>
   </div>
 </div>
 
-<!-- Auto-Scrolling Top Companies Marquee Ticker (Positioned at the very top under Header) -->
 <div class="logo-ticker">
   <div class="wrap" style="text-align: center; margin-bottom: 20px;">
     <p style="font-family: 'JetBrains Mono'; font-size: 11.5px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--text-muted); font-weight: 700;">Trusted by Top IT Giants, MNCs &amp; Healthcare Leaders Across India</p>
@@ -597,6 +594,8 @@
       <div class="company-pill"><img src="https://www.google.com/s2/favicons?domain=ibm.com&sz=64" alt="IBM" style="width:20px; height:20px; object-fit:contain;" onerror="this.style.display='none'"> IBM INDIA</div>
       <div class="company-pill"><img src="https://www.google.com/s2/favicons?domain=cognizant.com&sz=64" alt="Cognizant" style="width:20px; height:20px; object-fit:contain;" onerror="this.style.display='none'"> COGNIZANT</div>
       <div class="company-pill"><img src="https://www.google.com/s2/favicons?domain=capgemini.com&sz=64" alt="Capgemini" style="width:20px; height:20px; object-fit:contain;" onerror="this.style.display='none'"> CAPGEMINI</div>
+      <div class="company-pill"><img src="https://www.google.com/s2/favicons?domain=deloitte.com&sz=64" alt="Deloitte" style="width:20px; height:20px; object-fit:contain;" onerror="this.style.display='none'"> DELOITTE</div>
+      <div class="company-pill"><img src="https://www.google.com/s2/favicons?domain=amazon.com&sz=64" alt="Amazon" style="width:20px; height:20px; object-fit:contain;" onerror="this.style.display='none'"> AMAZON INDIA</div>
       <!-- Duplicate set for seamless infinite loop -->
       <div class="company-pill"><img src="https://www.google.com/s2/favicons?domain=infosys.com&sz=64" alt="Infosys" style="width:20px; height:20px; object-fit:contain;" onerror="this.style.display='none'"> INFOSYS</div>
       <div class="company-pill"><img src="https://www.google.com/s2/favicons?domain=wipro.com&sz=64" alt="Wipro" style="width:20px; height:20px; object-fit:contain;" onerror="this.style.display='none'"> WIPRO</div>
@@ -606,6 +605,8 @@
       <div class="company-pill"><img src="https://www.google.com/s2/favicons?domain=ibm.com&sz=64" alt="IBM" style="width:20px; height:20px; object-fit:contain;" onerror="this.style.display='none'"> IBM INDIA</div>
       <div class="company-pill"><img src="https://www.google.com/s2/favicons?domain=cognizant.com&sz=64" alt="Cognizant" style="width:20px; height:20px; object-fit:contain;" onerror="this.style.display='none'"> COGNIZANT</div>
       <div class="company-pill"><img src="https://www.google.com/s2/favicons?domain=capgemini.com&sz=64" alt="Capgemini" style="width:20px; height:20px; object-fit:contain;" onerror="this.style.display='none'"> CAPGEMINI</div>
+      <div class="company-pill"><img src="https://www.google.com/s2/favicons?domain=deloitte.com&sz=64" alt="Deloitte" style="width:20px; height:20px; object-fit:contain;" onerror="this.style.display='none'"> DELOITTE</div>
+      <div class="company-pill"><img src="https://www.google.com/s2/favicons?domain=amazon.com&sz=64" alt="Amazon" style="width:20px; height:20px; object-fit:contain;" onerror="this.style.display='none'"> AMAZON INDIA</div>
     </div>
   </div>
 </div>
@@ -618,7 +619,7 @@
       <p class="lead">WorkWay Jobs matches focused candidates with verified hiring teams across India. Transparent salaries in LPA, direct messaging, and zero ghosting for job seekers (100% Free for Candidates).</p>
       <div class="hero-ctas">
         <a href="#jobs-section-anchor" class="btn btn-solid">Browse Job Openings</a>
-        <button class="btn btn-ghost" data-open-modal="recruiter-login">Recruiter Dashboard Login</button>
+        <a href="#" class="btn btn-ghost" data-open-modal="employer">For Employer</a>
       </div>
       <div class="hero-note">
         <span>₹ CTC range on every listing</span>
@@ -871,7 +872,7 @@
     <p>Ten minutes to find your opening, or post a job to open your first gate today.</p>
     <div class="hero-ctas">
       <a href="#jobs-section-anchor" class="btn btn-solid">Browse Job Openings</a>
-      <a href="#" class="btn btn-ghost" data-open-modal="employer">Post Job</a>
+      <a href="#" class="btn btn-ghost" data-open-modal="employer">For Employer</a>
     </div>
   </div>
 </section>
@@ -893,8 +894,7 @@
       <div class="foot-col">
         <h4>Employers</h4>
         <ul>
-          <li><a href="#" data-open-modal="employer">Post Job / Free &amp; Featured</a></li>
-          <li><a href="#" data-open-modal="recruiter-login">Recruiter Dashboard Login</a></li>
+          <li><a href="#" data-open-modal="employer">For Employer (Post Job &amp; Login)</a></li>
         </ul>
       </div>
       <div class="foot-col">
@@ -905,9 +905,9 @@
         </ul>
       </div>
     </div>
-    <div class="foot-bottom" style="align-items: flex-start; text-align: left;">
+    <div class="foot-bottom">
       <span>© 2026 WORKWAY JOBS INC. (INDIA)</span>
-      <span style="margin-top: 4px;">Support: support@workwayjobs.in</span>
+      <span>Support: support@workwayjobs.in</span>
     </div>
   </div>
 </footer>
@@ -1035,9 +1035,14 @@
 <div class="modal-overlay" id="modal-employer">
   <div class="modal modal-scroll" role="dialog" aria-modal="true" aria-labelledby="employer-title">
     <button class="modal-close" type="button" data-close-modal aria-label="Close">✕</button>
-    <span class="modal-tag">Post Job &amp; Promote</span>
-    <h3 id="employer-title">Open a gate</h3>
-    <p class="modal-sub">List your opening with a verified Indian salary range (LPA). Choose from our special launch pricing tiers below.</p>
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; flex-wrap:wrap; gap:10px;">
+      <div>
+        <span class="modal-tag">Employer Portal</span>
+        <h3 id="employer-title">Post Job or Login</h3>
+      </div>
+      <button type="button" class="btn btn-ghost" data-open-modal="recruiter-login" style="padding:6px 12px; font-size:12px;">Recruiter Login</button>
+    </div>
+    <p class="modal-sub">List your opening with a verified Indian salary range (LPA) or log into your existing dashboard.</p>
 
     <div class="field">
       <label>Select Employer Listing Package <span class="req">*</span></label>
@@ -1261,11 +1266,11 @@
     <form id="form-admin-login">
       <div class="field">
         <label for="admin-user">Username</label>
-        <input type="text" id="admin-user" required placeholder="admin">
+        <input type="text" id="admin-user" required placeholder="Username">
       </div>
       <div class="field">
         <label for="admin-pass">Password</label>
-        <input type="password" id="admin-pass" required placeholder="gate2026">
+        <input type="password" id="admin-pass" required placeholder="Password">
       </div>
       <button type="submit" class="btn btn-solid form-submit">Login to Console</button>
       <div class="form-status" id="status-admin"></div>
@@ -1283,14 +1288,6 @@
         <h3>Job Postings &amp; Management</h3>
       </div>
       <button id="admin-logout-btn" class="btn btn-ghost" style="padding:6px 14px; font-size:13px;">Logout</button>
-    </div>
-
-    <div style="background:var(--bg-main); border:1px solid var(--border); border-radius:var(--radius); padding:16px; margin-bottom:24px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
-      <div>
-        <span style="font-family:'JetBrains Mono'; font-size:11px; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.05em; display:block; margin-bottom:4px;">Platform Support Email</span>
-        <strong style="font-size:15px; font-family:'JetBrains Mono'; color:var(--primary);">support@workwayjobs.in</strong>
-      </div>
-      <a href="mailto:support@workwayjobs.in" class="btn btn-solid" style="padding:7px 14px; font-size:12px;">Email Support Inbox</a>
     </div>
 
     <h4 style="font-size:15px; margin-bottom:10px; color:var(--primary);">Pending Approvals</h4>
@@ -1398,14 +1395,14 @@
       var u = document.getElementById('admin-user').value.trim();
       var p = document.getElementById('admin-pass').value.trim();
       var st = document.getElementById('status-admin');
-      if (u === 'admin' && p === 'gate2026'){
+      if (u === 'Varma@HR' && p === 'Trader@123'){
         closeModal(document.getElementById('modal-admin-login'));
         formAdminLogin.reset();
         if (st) st.classList.remove('show');
         renderAdminConsole();
         openModal('admin-dashboard');
       } else if (st) {
-        st.textContent = "Invalid username or password (try admin / gate2026)";
+        st.textContent = "Invalid username or password";
         st.classList.add('show', 'err');
       }
     });
