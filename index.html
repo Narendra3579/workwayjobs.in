@@ -132,15 +132,37 @@
   .mobile-drawer.open .mobile-drawer-content { transform: translateX(0); }
 
   .fab-register {
-    position: fixed; bottom: 24px; right: 24px; z-index: 90;
+    position: fixed; bottom: 84px; right: 24px; z-index: 90;
     background: var(--yellow-btn); color: #0F172A; font-weight: 800; font-size: 13.5px;
     padding: 12px 20px; border-radius: 50px; border: 2px solid #FFFFFF;
     box-shadow: 0 10px 25px rgba(234, 179, 8, 0.45);
     display: inline-flex; align-items: center; gap: 8px; cursor: pointer;
     transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
   }
-  @media(min-width: 768px) { .fab-register { bottom: 32px; right: 32px; font-size: 15px; padding: 14px 26px; } }
+  @media(min-width: 768px) { .fab-register { bottom: 92px; right: 32px; font-size: 15px; padding: 14px 26px; } }
   .fab-register:hover { background: var(--yellow-btn-hover); transform: translateY(-4px); box-shadow: 0 15px 30px rgba(234, 179, 8, 0.6); }
+
+  /* Logo Marquee Ticker Styles */
+  .logo-ticker {
+    padding: 36px 0; background: var(--bg-card); border-bottom: 1px solid var(--border);
+    overflow: hidden; position: relative; width: 100%;
+  }
+  .ticker-wrap { width: 100%; overflow: hidden; white-space: nowrap; position: relative; }
+  .ticker-wrap::before, .ticker-wrap::after {
+    content: ""; position: absolute; top: 0; bottom: 0; width: 80px; z-index: 2; pointer-events: none;
+  }
+  .ticker-wrap::before { left: 0; background: linear-gradient(to right, var(--bg-card), transparent); }
+  .ticker-wrap::after { right: 0; background: linear-gradient(to left, var(--bg-card), transparent); }
+
+  .ticker-track { display: inline-flex; gap: 36px; animation: marqueeScroll 30s linear infinite; will-change: transform; }
+  .ticker-track:hover { animation-play-state: paused; }
+  @keyframes marqueeScroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+  .company-pill {
+    background: var(--bg-main); border: 1px solid var(--border-strong); padding: 12px 24px; border-radius: 10px;
+    font-weight: 800; font-size: 14.5px; color: var(--text-main); font-family: 'JetBrains Mono';
+    display: inline-flex; align-items: center; gap: 12px; box-shadow: 0 2px 6px rgba(0,0,0,0.02); flex: 0 0 auto;
+  }
 
   .hero { padding: 48px 0; position: relative; }
   @media(min-width: 768px) { .hero { padding: 80px 0 60px; } }
@@ -207,29 +229,7 @@
   .board-foot { display: flex; justify-content: space-between; margin-top: 16px; font-family: 'JetBrains Mono'; font-size: 11px; color: #64748B; }
   @media(min-width: 768px) { .board-foot { margin-top: 20px; font-size: 11.5px; } }
 
-  /* Logo Marquee Ticker Styles */
-  .logo-ticker {
-    padding: 36px 0; background: var(--bg-card); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
-    overflow: hidden; position: relative; width: 100%;
-  }
-  .ticker-wrap { width: 100%; overflow: hidden; white-space: nowrap; position: relative; }
-  .ticker-wrap::before, .ticker-wrap::after {
-    content: ""; position: absolute; top: 0; bottom: 0; width: 80px; z-index: 2; pointer-events: none;
-  }
-  .ticker-wrap::before { left: 0; background: linear-gradient(to right, var(--bg-card), transparent); }
-  .ticker-wrap::after { right: 0; background: linear-gradient(to left, var(--bg-card), transparent); }
-
-  .ticker-track { display: inline-flex; gap: 36px; animation: marqueeScroll 30s linear infinite; will-change: transform; }
-  .ticker-track:hover { animation-play-state: paused; }
-  @keyframes marqueeScroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
-
-  .company-pill {
-    background: var(--bg-main); border: 1px solid var(--border-strong); padding: 12px 24px; border-radius: 10px;
-    font-weight: 800; font-size: 14.5px; color: var(--text-main); font-family: 'JetBrains Mono';
-    display: inline-flex; align-items: center; gap: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.02); flex: 0 0 auto;
-  }
-
-  .stats { background: var(--bg-card); border-bottom: 1px solid var(--border); }
+  .stats { background: var(--bg-card); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
   .stats .wrap { display: grid; grid-template-columns: 1fr; gap: 24px; padding: 32px 20px; }
   @media(min-width: 768px) { .stats .wrap { grid-template-columns: repeat(3, 1fr); padding: 40px 48px; gap: 0; } }
 
@@ -393,8 +393,8 @@
   .final .btn-solid { background: #38BDF8; color: #0F172A; }
   .final .btn-solid:hover { background: #7DD3FC; }
 
-  footer { border-top: 1px solid var(--border); padding: 48px 0 28px; background: var(--bg-card); }
-  @media(min-width: 768px) { footer { padding: 64px 0 36px; } }
+  footer { border-top: 1px solid var(--border); padding: 48px 0 84px; background: var(--bg-card); }
+  @media(min-width: 768px) { footer { padding: 64px 0 96px; } }
   .foot-grid { display: grid; grid-template-columns: 1fr; gap: 36px; margin-bottom: 40px; }
   @media(min-width: 768px) { .foot-grid { grid-template-columns: 1.5fr repeat(3, 1fr); gap: 48px; margin-bottom: 48px; } }
   .foot-brand p { font-size: 13.5px; color: var(--text-muted); margin-top: 12px; max-width: 280px; line-height: 1.6; }
@@ -406,8 +406,8 @@
   .foot-col a { font-size: 14px; text-decoration: none; color: var(--text-main); font-weight: 500; transition: color 0.2s; }
   @media(min-width: 768px) { .foot-col a { font-size: 14.5px; } }
   .foot-col a:hover { color: var(--primary); }
-  .foot-bottom { display: flex; flex-direction: column; gap: 12px; justify-content: space-between; align-items: center; padding-top: 24px; border-top: 1px solid var(--border); font-family: 'JetBrains Mono'; font-size: 11.5px; color: var(--text-muted); text-align: center; }
-  @media(min-width: 768px) { .foot-bottom { flex-direction: row; text-align: left; padding-top: 28px; font-size: 12px; } }
+  .foot-bottom { display: flex; flex-direction: column; gap: 6px; justify-content: center; align-items: center; padding-top: 28px; border-top: 1px solid var(--border); font-family: 'JetBrains Mono'; font-size: 11.5px; color: var(--text-muted); text-align: center; }
+  @media(min-width: 768px) { .foot-bottom { padding-top: 32px; font-size: 12px; } }
 
   .modal-overlay { position: fixed; inset: 0; background: rgba(15, 23, 42, 0.65); display: none; align-items: flex-end; justify-content: center; padding: 0; z-index: 300; overflow-y: auto; backdrop-filter: blur(8px); opacity: 0; transition: opacity 0.25s ease; }
   @media(min-width: 768px) { .modal-overlay { align-items: flex-start; padding: 40px 20px; } }
@@ -582,34 +582,30 @@
   </div>
 </div>
 
-<!-- Auto-Scrolling Top Companies Marquee Ticker (Positioned at the top right under Header) -->
+<!-- Auto-Scrolling Top Companies Marquee Ticker (Positioned at the very top under Header) -->
 <div class="logo-ticker">
   <div class="wrap" style="text-align: center; margin-bottom: 20px;">
     <p style="font-family: 'JetBrains Mono'; font-size: 11.5px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--text-muted); font-weight: 700;">Trusted by Top IT Giants, MNCs &amp; Healthcare Leaders Across India</p>
   </div>
   <div class="ticker-wrap">
     <div class="ticker-track">
-      <div class="company-pill"><i class="fa-solid fa-bolt" style="color: var(--primary);"></i> TCS (TATA CONSULTANCY)</div>
-      <div class="company-pill"><i class="fa-solid fa-code" style="color: var(--accent);"></i> INFOSYS</div>
-      <div class="company-pill"><i class="fa-solid fa-globe" style="color: #3B82F6;"></i> WIPRO</div>
-      <div class="company-pill"><i class="fa-solid fa-laptop-code" style="color: #8B5CF6;"></i> ACCENTURE MNC</div>
-      <div class="company-pill"><i class="fa-solid fa-stethoscope" style="color: #EC4899;"></i> APOLLO HOSPITALS</div>
-      <div class="company-pill"><i class="fa-solid fa-pills" style="color: #10B981;"></i> SUN PHARMA</div>
-      <div class="company-pill"><i class="fa-solid fa-microchip" style="color: #F59E0B;"></i> COGNIZANT MNC</div>
-      <div class="company-pill"><i class="fa-solid fa-hospital" style="color: #06B6D4;"></i> FORTIS HEALTHCARE</div>
-      <div class="company-pill"><i class="fa-solid fa-database" style="color: #6366F1;"></i> HCL TECHNOLOGIES</div>
-      <div class="company-pill"><i class="fa-solid fa-network-wired" style="color: #3B82F6;"></i> TECH MAHINDRA</div>
+      <div class="company-pill"><img src="https://www.google.com/s2/favicons?domain=infosys.com&sz=64" alt="Infosys" style="width:20px; height:20px; object-fit:contain;" onerror="this.style.display='none'"> INFOSYS</div>
+      <div class="company-pill"><img src="https://www.google.com/s2/favicons?domain=wipro.com&sz=64" alt="Wipro" style="width:20px; height:20px; object-fit:contain;" onerror="this.style.display='none'"> WIPRO</div>
+      <div class="company-pill"><img src="https://www.google.com/s2/favicons?domain=accenture.com&sz=64" alt="Accenture" style="width:20px; height:20px; object-fit:contain;" onerror="this.style.display='none'"> ACCENTURE</div>
+      <div class="company-pill"><img src="https://www.google.com/s2/favicons?domain=apollohospitals.com&sz=64" alt="Apollo" style="width:20px; height:20px; object-fit:contain;" onerror="this.style.display='none'"> APOLLO HOSPITALS</div>
+      <div class="company-pill"><img src="https://www.google.com/s2/favicons?domain=techmahindra.com&sz=64" alt="Tech Mahindra" style="width:20px; height:20px; object-fit:contain;" onerror="this.style.display='none'"> TECH MAHINDRA</div>
+      <div class="company-pill"><img src="https://www.google.com/s2/favicons?domain=ibm.com&sz=64" alt="IBM" style="width:20px; height:20px; object-fit:contain;" onerror="this.style.display='none'"> IBM INDIA</div>
+      <div class="company-pill"><img src="https://www.google.com/s2/favicons?domain=cognizant.com&sz=64" alt="Cognizant" style="width:20px; height:20px; object-fit:contain;" onerror="this.style.display='none'"> COGNIZANT</div>
+      <div class="company-pill"><img src="https://www.google.com/s2/favicons?domain=capgemini.com&sz=64" alt="Capgemini" style="width:20px; height:20px; object-fit:contain;" onerror="this.style.display='none'"> CAPGEMINI</div>
       <!-- Duplicate set for seamless infinite loop -->
-      <div class="company-pill"><i class="fa-solid fa-bolt" style="color: var(--primary);"></i> TCS (TATA CONSULTANCY)</div>
-      <div class="company-pill"><i class="fa-solid fa-code" style="color: var(--accent);"></i> INFOSYS</div>
-      <div class="company-pill"><i class="fa-solid fa-globe" style="color: #3B82F6;"></i> WIPRO</div>
-      <div class="company-pill"><i class="fa-solid fa-laptop-code" style="color: #8B5CF6;"></i> ACCENTURE MNC</div>
-      <div class="company-pill"><i class="fa-solid fa-stethoscope" style="color: #EC4899;"></i> APOLLO HOSPITALS</div>
-      <div class="company-pill"><i class="fa-solid fa-pills" style="color: #10B981;"></i> SUN PHARMA</div>
-      <div class="company-pill"><i class="fa-solid fa-microchip" style="color: #F59E0B;"></i> COGNIZANT MNC</div>
-      <div class="company-pill"><i class="fa-solid fa-hospital" style="color: #06B6D4;"></i> FORTIS HEALTHCARE</div>
-      <div class="company-pill"><i class="fa-solid fa-database" style="color: #6366F1;"></i> HCL TECHNOLOGIES</div>
-      <div class="company-pill"><i class="fa-solid fa-network-wired" style="color: #3B82F6;"></i> TECH MAHINDRA</div>
+      <div class="company-pill"><img src="https://www.google.com/s2/favicons?domain=infosys.com&sz=64" alt="Infosys" style="width:20px; height:20px; object-fit:contain;" onerror="this.style.display='none'"> INFOSYS</div>
+      <div class="company-pill"><img src="https://www.google.com/s2/favicons?domain=wipro.com&sz=64" alt="Wipro" style="width:20px; height:20px; object-fit:contain;" onerror="this.style.display='none'"> WIPRO</div>
+      <div class="company-pill"><img src="https://www.google.com/s2/favicons?domain=accenture.com&sz=64" alt="Accenture" style="width:20px; height:20px; object-fit:contain;" onerror="this.style.display='none'"> ACCENTURE</div>
+      <div class="company-pill"><img src="https://www.google.com/s2/favicons?domain=apollohospitals.com&sz=64" alt="Apollo" style="width:20px; height:20px; object-fit:contain;" onerror="this.style.display='none'"> APOLLO HOSPITALS</div>
+      <div class="company-pill"><img src="https://www.google.com/s2/favicons?domain=techmahindra.com&sz=64" alt="Tech Mahindra" style="width:20px; height:20px; object-fit:contain;" onerror="this.style.display='none'"> TECH MAHINDRA</div>
+      <div class="company-pill"><img src="https://www.google.com/s2/favicons?domain=ibm.com&sz=64" alt="IBM" style="width:20px; height:20px; object-fit:contain;" onerror="this.style.display='none'"> IBM INDIA</div>
+      <div class="company-pill"><img src="https://www.google.com/s2/favicons?domain=cognizant.com&sz=64" alt="Cognizant" style="width:20px; height:20px; object-fit:contain;" onerror="this.style.display='none'"> COGNIZANT</div>
+      <div class="company-pill"><img src="https://www.google.com/s2/favicons?domain=capgemini.com&sz=64" alt="Capgemini" style="width:20px; height:20px; object-fit:contain;" onerror="this.style.display='none'"> CAPGEMINI</div>
     </div>
   </div>
 </div>
@@ -698,20 +694,20 @@
         </select>
         <select id="filter-dept" class="filter-input">
           <option value="">Department: All</option>
-          <option value="it-software">IT & Software</option>
-          <option value="engineering">Engineering & Core</option>
-          <option value="sales-business">Sales & Business Development</option>
-          <option value="marketing-communications">Marketing & Communications</option>
-          <option value="finance-accounts">Finance & Accounts</option>
-          <option value="hr-admin">HR & Admin</option>
-          <option value="customer-success">Customer Success, Operations & Support</option>
-          <option value="design-product">Design & Product</option>
-          <option value="data-analytics">Data Science & Analytics</option>
-          <option value="healthcare-pharma">Healthcare, Pharma & Life Sciences</option>
-          <option value="legal-regulatory">Legal & Regulatory</option>
-          <option value="supply-chain-logistics">Supply Chain & Logistics</option>
-          <option value="hospitality-travel">Hospitality & Travel</option>
-          <option value="teaching-education">Teaching & Education</option>
+          <option value="it-software">IT & Software - Developer / Testing / Sysadmin</option>
+          <option value="engineering">Engineering - Hardware / Civil / Mechanical</option>
+          <option value="sales-business">Sales / BD / Corporate Communications</option>
+          <option value="marketing-communications">Marketing / Advertising / PR / Media</option>
+          <option value="finance-accounts">Finance / Accounts / Audit / Tax</option>
+          <option value="hr-admin">HR / Recruitment / Admin / IR</option>
+          <option value="customer-success">Customer Success / Operations / BPO / Support</option>
+          <option value="design-product">Design / UX / Product / Animation</option>
+          <option value="data-analytics">Data Science / Analytics / AI / ML</option>
+          <option value="healthcare-pharma">Healthcare / Pharma / Medical / R&D</option>
+          <option value="legal-regulatory">Legal / Regulatory / Compliance</option>
+          <option value="supply-chain-logistics">Supply Chain / Logistics / Procurement</option>
+          <option value="hospitality-travel">Hospitality / Travel / Airlines</option>
+          <option value="teaching-education">Teaching / Education / Training</option>
           <option value="other">Other</option>
         </select>
       </div>
@@ -909,9 +905,9 @@
         </ul>
       </div>
     </div>
-    <div class="foot-bottom">
+    <div class="foot-bottom" style="align-items: flex-start; text-align: left;">
       <span>© 2026 WORKWAY JOBS INC. (INDIA)</span>
-      <span>Support: support@workwayjobs.in</span>
+      <span style="margin-top: 4px;">Support: support@workwayjobs.in</span>
     </div>
   </div>
 </footer>
@@ -1128,20 +1124,20 @@
         <div class="field">
           <label for="e-dept">Department <span class="req">*</span></label>
           <select id="e-dept" name="Dept" required class="filter-input">
-            <option value="it-software">IT & Software</option>
-            <option value="engineering">Engineering & Core</option>
-            <option value="sales-business">Sales & Business Development</option>
-            <option value="marketing-communications">Marketing & Communications</option>
-            <option value="finance-accounts">Finance & Accounts</option>
-            <option value="hr-admin">HR & Admin</option>
-            <option value="customer-success">Customer Success, Operations & Support</option>
-            <option value="design-product">Design & Product</option>
-            <option value="data-analytics">Data Science & Analytics</option>
-            <option value="healthcare-pharma">Healthcare, Pharma & Life Sciences</option>
-            <option value="legal-regulatory">Legal & Regulatory</option>
-            <option value="supply-chain-logistics">Supply Chain & Logistics</option>
-            <option value="hospitality-travel">Hospitality & Travel</option>
-            <option value="teaching-education">Teaching & Education</option>
+            <option value="it-software">IT & Software - Developer / Testing / Sysadmin</option>
+            <option value="engineering">Engineering - Hardware / Civil / Mechanical</option>
+            <option value="sales-business">Sales / BD / Corporate Communications</option>
+            <option value="marketing-communications">Marketing / Advertising / PR / Media</option>
+            <option value="finance-accounts">Finance / Accounts / Audit / Tax</option>
+            <option value="hr-admin">HR / Recruitment / Admin / IR</option>
+            <option value="customer-success">Customer Success / Operations / BPO / Support</option>
+            <option value="design-product">Design / UX / Product / Animation</option>
+            <option value="data-analytics">Data Science / Analytics / AI / ML</option>
+            <option value="healthcare-pharma">Healthcare / Pharma / Medical / R&D</option>
+            <option value="legal-regulatory">Legal / Regulatory / Compliance</option>
+            <option value="supply-chain-logistics">Supply Chain / Logistics / Procurement</option>
+            <option value="hospitality-travel">Hospitality / Travel / Airlines</option>
+            <option value="teaching-education">Teaching / Education / Training</option>
             <option value="other">Other</option>
           </select>
         </div>
@@ -1281,12 +1277,20 @@
 <div class="modal-overlay" id="modal-admin-dashboard">
   <div class="modal modal-scroll" style="max-width:900px;" role="dialog" aria-modal="true">
     <button class="modal-close" type="button" data-close-modal aria-label="Close">✕</button>
-    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; flex-wrap:wrap; gap:12px;">
       <div>
         <span class="modal-tag">Moderation Console</span>
         <h3>Job Postings &amp; Management</h3>
       </div>
       <button id="admin-logout-btn" class="btn btn-ghost" style="padding:6px 14px; font-size:13px;">Logout</button>
+    </div>
+
+    <div style="background:var(--bg-main); border:1px solid var(--border); border-radius:var(--radius); padding:16px; margin-bottom:24px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+      <div>
+        <span style="font-family:'JetBrains Mono'; font-size:11px; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.05em; display:block; margin-bottom:4px;">Platform Support Email</span>
+        <strong style="font-size:15px; font-family:'JetBrains Mono'; color:var(--primary);">support@workwayjobs.in</strong>
+      </div>
+      <a href="mailto:support@workwayjobs.in" class="btn btn-solid" style="padding:7px 14px; font-size:12px;">Email Support Inbox</a>
     </div>
 
     <h4 style="font-size:15px; margin-bottom:10px; color:var(--primary);">Pending Approvals</h4>
