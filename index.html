@@ -115,7 +115,7 @@
   .btn-ghost { background: var(--bg-card); border-color: var(--border-strong); color: var(--text-main); }
   .btn-ghost:hover { background: var(--bg-alt); border-color: var(--text-main); }
 
-  .mobile-menu-btn { display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; border-radius: var(--radius); border: 1px solid var(--border-strong); background: var(--bg-card); cursor: pointer; font-size: 16px; }
+  .mobile-menu-btn { display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; border-radius: var(--radius); border: 1px solid var(--border-strong); background: var(--bg-card); cursor: pointer; font-size: 16px; z-index: 260; position: relative; }
   @media(min-width: 640px) { .mobile-menu-btn { width: 40px; height: 40px; font-size: 18px; } }
   @media(min-width: 1024px) { .mobile-menu-btn { display: none; } }
 
@@ -235,20 +235,20 @@
   @media(min-width: 768px) { .sec-head p { font-size: 17px; } }
 
   .jobs-section { background: linear-gradient(180deg, var(--bg-card) 0%, var(--bg-main) 100%); border-top: 2px solid var(--primary); border-bottom: 2px solid var(--primary); }
-  .jobs-slider-wrap { position: relative; overflow: hidden; margin-bottom: 36px; padding: 10px 0; }
-  @media(min-width: 768px) { .jobs-slider-wrap { margin-bottom: 48px; } }
+  .jobs-slider-wrap { position: relative; overflow-x: auto; -webkit-overflow-scrolling: touch; margin-bottom: 36px; padding: 10px 0; scroll-snap-type: x mandatory; }
+  @media(min-width: 768px) { .jobs-slider-wrap { margin-bottom: 48px; overflow-x: hidden; } }
 
-  .jobs-track { display: flex; gap: 20px; transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
+  .jobs-track { display: flex; gap: 20px; transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1); will-change: transform; }
   @media(min-width: 768px) { .jobs-track { gap: 24px; } }
 
   .job-card {
-    min-width: 280px; max-width: 340px; flex: 1;
+    min-width: 280px; max-width: 340px; flex: 0 0 auto; scroll-snap-align: start;
     background: var(--bg-card); border: 1px solid var(--border-strong);
     border-radius: var(--radius); padding: 20px; display: flex; flex-direction: column; justify-content: space-between;
     box-shadow: var(--shadow); transition: transform 0.2s ease, box-shadow 0.2s ease;
     position: relative; overflow: hidden;
   }
-  @media(min-width: 768px) { .job-card { min-width: 360px; max-width: 390px; padding: 28px; } }
+  @media(min-width: 768px) { .job-card { min-width: 360px; max-width: 390px; padding: 28px; flex: 1; } }
 
   .job-card.featured { border-color: var(--yellow-btn); border-width: 2px; }
   .job-card.featured::before {
@@ -275,8 +275,7 @@
 
   .slider-controls { display: flex; gap: 10px; justify-content: flex-end; margin-bottom: 16px; }
   @media(min-width: 768px) { .slider-controls { gap: 12px; margin-bottom: 20px; } }
-  .slider-btn { width: 36px; height: 36px; border-radius: 50%; border: 1px solid var(--border-strong); background: var(--bg-card); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700; transition: all 0.2s; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
-  @media(min-width: 768px) { .slider-btn { width: 42px; height: 42px; font-size: 18px; } }
+  .slider-btn { width: 42px; height: 42px; border-radius: 50%; border: 1px solid var(--border-strong); background: var(--bg-card); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: 700; transition: all 0.2s; box-shadow: 0 2px 5px rgba(0,0,0,0.05); z-index: 10; user-select: none; }
   .slider-btn:hover { background: var(--primary); color: #fff; border-color: var(--primary); }
 
   .filter-panel { background: var(--bg-card); border: 2px solid var(--border); border-radius: 14px; padding: 20px; margin-bottom: 32px; box-shadow: 0 10px 30px rgba(0,0,0,0.03); }
@@ -1090,7 +1089,6 @@
             <option value="corporate">Corporate</option>
             <option value="mnc">MNC</option>
             <option value="other">Other</option>
-            <option value="custom">Custom</option>
           </select>
         </div>
       </div>
@@ -1572,16 +1570,19 @@
     slideRightBtn.addEventListener('click', function(){
       var track = document.getElementById('jobs-slider-track');
       if (!track) return;
-      currentSlide = Math.min(currentSlide + 1, Math.max(0, liveJobs.length - 3));
-      track.style.transform = 'translateX(-' + (currentSlide * 350) + 'px)';
+      var cardWidth = track.querySelector('.job-card') ? track.querySelector('.job-card').offsetWidth + 20 : 360;
+      var maxSlide = Math.max(0, liveJobs.length - (window.innerWidth >= 768 ? 2 : 1));
+      currentSlide = Math.min(currentSlide + 1, maxSlide);
+      track.style.transform = 'translateX(-' + (currentSlide * cardWidth) + 'px)';
     });
   }
   if (slideLeftBtn){
     slideLeftBtn.addEventListener('click', function(){
       var track = document.getElementById('jobs-slider-track');
       if (!track) return;
+      var cardWidth = track.querySelector('.job-card') ? track.querySelector('.job-card').offsetWidth + 20 : 360;
       currentSlide = Math.max(0, currentSlide - 1);
-      track.style.transform = 'translateX(-' + (currentSlide * 350) + 'px)';
+      track.style.transform = 'translateX(-' + (currentSlide * cardWidth) + 'px)';
     });
   }
 
@@ -1712,7 +1713,6 @@
     return valid;
   }
 
-  // Restrict phone inputs to numeric only and max 10 digits
   ['c-phone', 'e-phone'].forEach(function(id){
     var el = document.getElementById(id);
     if (el) {
@@ -1753,7 +1753,6 @@
         data[key] = value;
       });
 
-      // Resolve custom locations
       data.Location = data.LocationSelect === 'Custom' ? (data.LocationCustom || 'Custom') : data.LocationSelect;
       data.PrefLocation1 = data.PrefLocation1Select === 'Custom' ? (data.PrefLocation1Custom || 'Custom') : data.PrefLocation1Select;
       data.PrefLocation2 = data.PrefLocation2Select === 'Custom' ? (data.PrefLocation2Custom || 'Custom') : data.PrefLocation2Select;
