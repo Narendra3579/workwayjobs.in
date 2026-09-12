@@ -1207,7 +1207,7 @@
     <button class="modal-close" type="button" data-close-modal aria-label="Close">✕</button>
     <span class="modal-tag">Backend Access</span>
     <h3>Admin Login</h3>
-    <p class="modal-sub">Enter credentials to moderate pending job postings.</p>
+    <p class="modal-sub">Enter credentials to moderate active and pending job postings.</p>
     <form id="form-admin-login">
       <div class="field">
         <label for="admin-user">Username</label>
@@ -1225,16 +1225,21 @@
 
 <!-- ADMIN DASHBOARD MODAL -->
 <div class="modal-overlay" id="modal-admin-dashboard">
-  <div class="modal modal-scroll" style="max-width:840px;" role="dialog" aria-modal="true">
+  <div class="modal modal-scroll" style="max-width:900px;" role="dialog" aria-modal="true">
     <button class="modal-close" type="button" data-close-modal aria-label="Close">✕</button>
     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
       <div>
         <span class="modal-tag">Moderation Console</span>
-        <h3>Pending Job Postings</h3>
+        <h3>Job Postings &amp; Management</h3>
       </div>
       <button id="admin-logout-btn" class="btn btn-ghost" style="padding:6px 14px; font-size:13px;">Logout</button>
     </div>
-    <div id="admin-pending-container" style="overflow-x:auto;"></div>
+
+    <h4 style="font-size:15px; margin-bottom:10px; color:var(--primary);">Pending Approvals</h4>
+    <div id="admin-pending-container" style="overflow-x:auto; margin-bottom:28px;"></div>
+
+    <h4 style="font-size:15px; margin-bottom:10px; color:var(--text-main);">Live Active Jobs (Click Remove to Delete)</h4>
+    <div id="admin-live-container" style="overflow-x:auto;"></div>
   </div>
 </div>
 
@@ -1339,7 +1344,7 @@
         closeModal(document.getElementById('modal-admin-login'));
         formAdminLogin.reset();
         if (st) st.classList.remove('show');
-        renderAdminPending();
+        renderAdminConsole();
         openModal('admin-dashboard');
       } else if (st) {
         st.textContent = "Invalid username or password (try admin / gate2026)";
@@ -1355,19 +1360,41 @@
     });
   }
 
+  function renderAdminConsole(){
+    renderAdminPending();
+    renderAdminLiveJobs();
+  }
+
   function renderAdminPending(){
     var container = document.getElementById('admin-pending-container');
     if (!container) return;
     if (pendingJobs.length === 0){
-      container.innerHTML = '<p style="color:var(--text-muted); font-size:14px; text-align:center; padding:28px;">No pending jobs awaiting approval.</p>';
+      container.innerHTML = '<p style="color:var(--text-muted); font-size:13px; padding:12px;">No pending jobs awaiting approval.</p>';
       return;
     }
     var html = '<table class="admin-table"><thead><tr><th>Company</th><th>Role</th><th>Package / UTR</th><th>Actions</th></tr></thead><tbody>';
     pendingJobs.forEach(function(job, index){
       var feeBadge = job.ListingFee && job.ListingFee !== '₹0' ? '<span style="color:var(--primary); font-weight:700;">'+job.ListingFee+'</span><br><small class="mono">UTR: '+(job.UTR||'N/A')+'</small>' : 'Free (₹0)';
       html += '<tr><td>'+job.Company+'</td><td>'+job.JobTitle+'</td><td>'+feeBadge+'</td><td>' +
-              '<button class="btn btn-solid" style="padding:6px 12px; font-size:12px; background:var(--accent);" onclick="window.approveJob('+index+')">Approve &amp; Publish</button> ' +
-              '<button class="btn btn-ghost" style="padding:6px 12px; font-size:12px; color:var(--danger);" onclick="window.rejectJob('+index+')">Reject</button>' +
+              '<button class="btn btn-solid" style="padding:5px 10px; font-size:11px; background:var(--accent);" onclick="window.approveJob('+index+')">Approve</button> ' +
+              '<button class="btn btn-ghost" style="padding:5px 10px; font-size:11px; color:var(--danger);" onclick="window.rejectJob('+index+')">Reject</button>' +
+              '</td></tr>';
+    });
+    html += '</tbody></table>';
+    container.innerHTML = html;
+  }
+
+  function renderAdminLiveJobs(){
+    var container = document.getElementById('admin-live-container');
+    if (!container) return;
+    if (liveJobs.length === 0){
+      container.innerHTML = '<p style="color:var(--text-muted); font-size:13px; padding:12px;">No active live jobs on website.</p>';
+      return;
+    }
+    var html = '<table class="admin-table"><thead><tr><th>Company</th><th>Role</th><th>Location</th><th>Action</th></tr></thead><tbody>';
+    liveJobs.forEach(function(job, index){
+      html += '<tr><td>'+job.Company+'</td><td>'+job.JobTitle+'</td><td>'+job.Location+'</td><td>' +
+              '<button class="btn btn-ghost" style="padding:5px 10px; font-size:11px; color:var(--danger);" onclick="window.removeLiveJob('+index+')">Remove Job</button>' +
               '</td></tr>';
     });
     html += '</tbody></table>';
@@ -1385,13 +1412,23 @@
     saveState();
     renderJobs();
     renderSlider();
-    renderAdminPending();
+    renderAdminConsole();
   };
 
   window.rejectJob = function(index){
     pendingJobs.splice(index, 1);
     saveState();
     renderAdminPending();
+  };
+
+  window.removeLiveJob = function(index){
+    if (confirm("Are you sure you want to remove this job from the website?")) {
+      liveJobs.splice(index, 1);
+      saveState();
+      renderJobs();
+      renderSlider();
+      renderAdminLiveJobs();
+    }
   };
 
   function renderSlider(){
@@ -1405,9 +1442,9 @@
                 '<div>' +
                   '<div class="job-card-top">' +
                     '<span class="job-company-badge">'+job.Company+'</span>' +
-                    '<div style="display:flex; align-items:center; gap:8px;">' +
+                    '<div style="display:flex; align-items:center; gap:6px;">' +
                       '<span class="job-loc">'+job.Location+'</span>' +
-                      '<button class="btn btn-ghost" style="padding:4px 8px; font-size:11px;" title="Share Job" onclick="window.shareJob(\''+job.JobTitle.replace(/'/g, "\\'")+'\', \''+job.Company.replace(/'/g, "\\'")+'\', '+job.id+')"><i class="fa-solid fa-share-nodes"></i></button>' +
+                      '<button class="btn btn-ghost" style="padding:4px 7px; font-size:11px;" title="Share Job" onclick="window.shareJob(\''+job.JobTitle.replace(/'/g, "\\'")+'\', \''+job.Company.replace(/'/g, "\\'")+'\', '+job.id+')"><i class="fa-solid fa-share-nodes"></i></button>' +
                     '</div>' +
                   '</div>' +
                   '<h3>'+job.JobTitle+'</h3>' +
@@ -1438,9 +1475,9 @@
                 '<div>' +
                   '<div class="job-card-top">' +
                     '<span class="job-company-badge">'+job.Company+'</span>' +
-                    '<div style="display:flex; align-items:center; gap:8px;">' +
+                    '<div style="display:flex; align-items:center; gap:6px;">' +
                       '<span class="job-loc">'+job.Location+'</span>' +
-                      '<button class="btn btn-ghost" style="padding:4px 8px; font-size:11px;" title="Share Job" onclick="window.shareJob(\''+job.JobTitle.replace(/'/g, "\\'")+'\', \''+job.Company.replace(/'/g, "\\'")+'\', '+job.id+')"><i class="fa-solid fa-share-nodes"></i></button>' +
+                      '<button class="btn btn-ghost" style="padding:4px 7px; font-size:11px;" title="Share Job" onclick="window.shareJob(\''+job.JobTitle.replace(/'/g, "\\'")+'\', \''+job.Company.replace(/'/g, "\\'")+'\', '+job.id+')"><i class="fa-solid fa-share-nodes"></i></button>' +
                     '</div>' +
                   '</div>' +
                   '<h3>'+job.JobTitle+'</h3>' +
@@ -1468,7 +1505,7 @@
       dummy.select();
       document.execCommand('copy');
       document.body.removeChild(dummy);
-      alert("Job link copied to clipboard!");
+      alert("Job link copied to clipboard! Anyone who opens it will be taken directly to apply.");
     }
   };
 
@@ -1483,6 +1520,19 @@
     if (titleEl) titleEl.textContent = "Apply for " + jobTitle;
     openModal('candidate');
   };
+
+  function checkHashForJob(){
+    var hash = window.location.hash;
+    if (hash && hash.indexOf('#job-') === 0) {
+      var jobIdStr = hash.replace('#job-', '');
+      var targetJob = liveJobs.find(function(j){ return String(j.id) === jobIdStr; });
+      if (targetJob) {
+        setTimeout(function(){
+          window.applyForJob(targetJob.id, targetJob.JobTitle, targetJob.Company);
+        }, 400);
+      }
+    }
+  }
 
   function setupCustomLocationToggle(selectId, customId) {
     var sel = document.getElementById(selectId);
@@ -2034,6 +2084,7 @@
 
   renderSlider();
   renderJobs();
+  checkHashForJob();
 })();
 </script>
 
