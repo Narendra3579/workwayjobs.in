@@ -709,6 +709,7 @@
             <option value="startup">Startup</option>
             <option value="corporate">Corporate</option>
             <option value="mnc">MNC</option>
+            <option value="other">Other</option>
           </select>
         </div>
         <div>
@@ -885,13 +886,14 @@
           <input type="email" id="c-email" name="Email" required>
         </div>
         <div class="field">
-          <label for="c-phone">Phone number <span class="req">*</span></label>
-          <input type="tel" id="c-phone" name="Phone" required>
+          <label for="c-phone">Phone number (10 digits) <span class="req">*</span></label>
+          <input type="tel" id="c-phone" name="Phone" maxlength="10" placeholder="e.g. 9876543210" required>
+          <span class="field-error">Please enter a valid 10-digit phone number.</span>
         </div>
       </div>
       <div class="field">
         <label for="c-location">Current city / location <span class="req">*</span></label>
-        <select id="c-location" name="Location" required class="filter-input">
+        <select id="c-location" name="LocationSelect" required class="filter-input" style="margin-bottom:8px;">
           <option value="">Select current location...</option>
           <option value="Bengaluru">Bengaluru</option>
           <option value="Mumbai">Mumbai</option>
@@ -901,13 +903,15 @@
           <option value="Chennai">Chennai</option>
           <option value="Visakhapatnam">Visakhapatnam</option>
           <option value="Remote">Remote / WFH</option>
+          <option value="Other">Other (Type custom below)</option>
         </select>
+        <input type="text" id="c-location-custom" name="LocationCustom" placeholder="Type your custom location..." style="display:none;">
       </div>
 
       <div class="form-section">2. Preferred Work Locations (Up to 3)</div>
       <div class="field">
         <label for="c-pref-loc-1">Preferred Location 1 <span class="req">*</span></label>
-        <select id="c-pref-loc-1" name="PrefLocation1" required class="filter-input">
+        <select id="c-pref-loc-1" name="PrefLocation1Select" required class="filter-input" style="margin-bottom:8px;">
           <option value="">Select location 1...</option>
           <option value="Bengaluru">Bengaluru</option>
           <option value="Mumbai">Mumbai</option>
@@ -917,11 +921,13 @@
           <option value="Chennai">Chennai</option>
           <option value="Visakhapatnam">Visakhapatnam</option>
           <option value="Remote">Remote / WFH</option>
+          <option value="Other">Other (Type custom below)</option>
         </select>
+        <input type="text" id="c-pref-loc-1-custom" name="PrefLocation1Custom" placeholder="Type custom location 1..." style="display:none;">
       </div>
       <div class="field">
         <label for="c-pref-loc-2">Preferred Location 2</label>
-        <select id="c-pref-loc-2" name="PrefLocation2" class="filter-input">
+        <select id="c-pref-loc-2" name="PrefLocation2Select" class="filter-input" style="margin-bottom:8px;">
           <option value="">Select location 2 (Optional)...</option>
           <option value="Bengaluru">Bengaluru</option>
           <option value="Mumbai">Mumbai</option>
@@ -931,11 +937,13 @@
           <option value="Chennai">Chennai</option>
           <option value="Visakhapatnam">Visakhapatnam</option>
           <option value="Remote">Remote / WFH</option>
+          <option value="Other">Other (Type custom below)</option>
         </select>
+        <input type="text" id="c-pref-loc-2-custom" name="PrefLocation2Custom" placeholder="Type custom location 2..." style="display:none;">
       </div>
       <div class="field">
         <label for="c-pref-loc-3">Preferred Location 3</label>
-        <select id="c-pref-loc-3" name="PrefLocation3" class="filter-input">
+        <select id="c-pref-loc-3" name="PrefLocation3Select" class="filter-input" style="margin-bottom:8px;">
           <option value="">Select location 3 (Optional)...</option>
           <option value="Bengaluru">Bengaluru</option>
           <option value="Mumbai">Mumbai</option>
@@ -945,7 +953,9 @@
           <option value="Chennai">Chennai</option>
           <option value="Visakhapatnam">Visakhapatnam</option>
           <option value="Remote">Remote / WFH</option>
+          <option value="Other">Other (Type custom below)</option>
         </select>
+        <input type="text" id="c-pref-loc-3-custom" name="PrefLocation3Custom" placeholder="Type custom location 3..." style="display:none;">
       </div>
 
       <div class="form-section">3. Application documents</div>
@@ -955,15 +965,9 @@
       </div>
 
       <div class="form-section">4. Screening questions</div>
-      <div class="field-row">
-        <div class="field">
-          <label for="c-years">Total years of experience <span class="req">*</span></label>
-          <input type="number" id="c-years" name="YearsExperience" min="0" step="1" required>
-        </div>
-        <div class="field">
-          <label for="c-expected-ctc">Expected CTC</label>
-          <input type="text" id="c-expected-ctc" name="ExpectedCTC" placeholder="e.g. ₹14 LPA">
-        </div>
+      <div class="field">
+        <label for="c-years">Total years of experience <span class="req">*</span></label>
+        <input type="number" id="c-years" name="YearsExperience" min="0" step="1" required>
       </div>
 
       <button type="submit" id="submit-candidate-btn" class="btn btn-solid form-submit">Submit Application</button>
@@ -1036,8 +1040,9 @@
       </div>
       <div class="field-row">
         <div class="field">
-          <label for="e-phone">Primary Phone <span class="req">*</span></label>
-          <input type="tel" id="e-phone" name="Phone" required placeholder="+91 98765 43210">
+          <label for="e-phone">Primary Phone (10 digits) <span class="req">*</span></label>
+          <input type="tel" id="e-phone" name="Phone" maxlength="10" required placeholder="9876543210">
+          <span class="field-error">Enter a valid 10-digit number.</span>
         </div>
         <div class="field">
           <label for="e-title">Job title <span class="req">*</span></label>
@@ -1081,6 +1086,7 @@
             <option value="startup">Startup</option>
             <option value="corporate">Corporate</option>
             <option value="mnc">MNC</option>
+            <option value="other">Other</option>
           </select>
         </div>
       </div>
@@ -1439,6 +1445,28 @@
     openModal('candidate');
   };
 
+  // Toggle custom location inputs for candidate form
+  function setupCustomLocationToggle(selectId, customId) {
+    var sel = document.getElementById(selectId);
+    var cust = document.getElementById(customId);
+    if (sel && cust) {
+      sel.addEventListener('change', function(){
+        if (sel.value === 'Other') {
+          cust.style.display = 'block';
+          cust.setAttribute('required', 'true');
+        } else {
+          cust.style.display = 'none';
+          cust.value = '';
+          cust.removeAttribute('required');
+        }
+      });
+    }
+  }
+  setupCustomLocationToggle('c-location', 'c-location-custom');
+  setupCustomLocationToggle('c-pref-loc-1', 'c-pref-loc-1-custom');
+  setupCustomLocationToggle('c-pref-loc-2', 'c-pref-loc-2-custom');
+  setupCustomLocationToggle('c-pref-loc-3', 'c-pref-loc-3-custom');
+
   var recruiterLoginForm = document.getElementById('form-recruiter-login');
   var recruiterLoginStatus = document.getElementById('status-recruiter-login');
   var recLogoutBtn = document.getElementById('rec-logout-btn');
@@ -1660,9 +1688,12 @@
     form.querySelectorAll('[required]').forEach(function(input){
       var field = input.closest('.field');
       if (!field) return;
-      var ok;
+      var ok = true;
       if (input.type === 'file'){
         ok = input.files && input.files.length > 0;
+      } else if (input.id === 'c-phone' || input.id === 'e-phone') {
+        var val = input.value.trim();
+        ok = /^\d{10}$/.test(val);
       } else {
         var value = input.value.trim();
         ok = value.length > 0;
@@ -1675,6 +1706,16 @@
     });
     return valid;
   }
+
+  // Restrict phone inputs to numeric only and max 10 digits
+  ['c-phone', 'e-phone'].forEach(function(id){
+    var el = document.getElementById(id);
+    if (el) {
+      el.addEventListener('input', function(){
+        this.value = this.value.replace(/\D/g, '').slice(0, 10);
+      });
+    }
+  });
 
   function readFileAsBase64(file){
     return new Promise(function(resolve, reject){
@@ -1706,6 +1747,21 @@
         if (value instanceof File) return;
         data[key] = value;
       });
+
+      // Resolve custom locations if 'Other' was selected
+      if (data.LocationSelect === 'Other') {
+        data.Location = data.LocationCustom || 'Other';
+      } else {
+        data.Location = data.LocationSelect;
+      }
+      if (data.PrefLocation1Select === 'Other') data.PrefLocation1 = data.PrefLocation1Custom || 'Other';
+      else data.PrefLocation1 = data.PrefLocation1Select;
+
+      if (data.PrefLocation2Select === 'Other') data.PrefLocation2 = data.PrefLocation2Custom || 'Other';
+      else data.PrefLocation2 = data.PrefLocation2Select;
+
+      if (data.PrefLocation3Select === 'Other') data.PrefLocation3 = data.PrefLocation3Custom || 'Other';
+      else data.PrefLocation3 = data.PrefLocation3Select;
 
       data.sheet = "Candidates";
       data.feePaid = "None";
