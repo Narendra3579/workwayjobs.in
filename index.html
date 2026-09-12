@@ -207,7 +207,29 @@
   .board-foot { display: flex; justify-content: space-between; margin-top: 16px; font-family: 'JetBrains Mono'; font-size: 11px; color: #64748B; }
   @media(min-width: 768px) { .board-foot { margin-top: 20px; font-size: 11.5px; } }
 
-  .stats { background: var(--bg-card); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  /* Logo Marquee Ticker Styles */
+  .logo-ticker {
+    padding: 36px 0; background: var(--bg-card); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+    overflow: hidden; position: relative; width: 100%;
+  }
+  .ticker-wrap { width: 100%; overflow: hidden; white-space: nowrap; position: relative; }
+  .ticker-wrap::before, .ticker-wrap::after {
+    content: ""; position: absolute; top: 0; bottom: 0; width: 80px; z-index: 2; pointer-events: none;
+  }
+  .ticker-wrap::before { left: 0; background: linear-gradient(to right, var(--bg-card), transparent); }
+  .ticker-wrap::after { right: 0; background: linear-gradient(to left, var(--bg-card), transparent); }
+
+  .ticker-track { display: inline-flex; gap: 36px; animation: marqueeScroll 30s linear infinite; will-change: transform; }
+  .ticker-track:hover { animation-play-state: paused; }
+  @keyframes marqueeScroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+  .company-pill {
+    background: var(--bg-main); border: 1px solid var(--border-strong); padding: 12px 24px; border-radius: 10px;
+    font-weight: 800; font-size: 14.5px; color: var(--text-main); font-family: 'JetBrains Mono';
+    display: inline-flex; align-items: center; gap: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.02); flex: 0 0 auto;
+  }
+
+  .stats { background: var(--bg-card); border-bottom: 1px solid var(--border); }
   .stats .wrap { display: grid; grid-template-columns: 1fr; gap: 24px; padding: 32px 20px; }
   @media(min-width: 768px) { .stats .wrap { grid-template-columns: repeat(3, 1fr); padding: 40px 48px; gap: 0; } }
 
@@ -556,6 +578,38 @@
     <div style="display:flex; flex-direction:column; gap:10px; margin-top:auto; padding-top:20px; border-top:1px solid var(--border);">
       <button class="btn btn-ghost" data-open-modal="recruiter-login" style="width:100%; justify-content:center; font-size:11.5px;">Recruiter Login</button>
       <a href="#" class="btn btn-solid" data-open-modal="employer" style="width:100%; justify-content:center;">Post Job</a>
+    </div>
+  </div>
+</div>
+
+<!-- Auto-Scrolling Top Companies Marquee Ticker (Positioned at the top right under Header) -->
+<div class="logo-ticker">
+  <div class="wrap" style="text-align: center; margin-bottom: 20px;">
+    <p style="font-family: 'JetBrains Mono'; font-size: 11.5px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--text-muted); font-weight: 700;">Trusted by Top IT Giants, MNCs &amp; Healthcare Leaders Across India</p>
+  </div>
+  <div class="ticker-wrap">
+    <div class="ticker-track">
+      <div class="company-pill"><i class="fa-solid fa-bolt" style="color: var(--primary);"></i> TCS (TATA CONSULTANCY)</div>
+      <div class="company-pill"><i class="fa-solid fa-code" style="color: var(--accent);"></i> INFOSYS</div>
+      <div class="company-pill"><i class="fa-solid fa-globe" style="color: #3B82F6;"></i> WIPRO</div>
+      <div class="company-pill"><i class="fa-solid fa-laptop-code" style="color: #8B5CF6;"></i> ACCENTURE MNC</div>
+      <div class="company-pill"><i class="fa-solid fa-stethoscope" style="color: #EC4899;"></i> APOLLO HOSPITALS</div>
+      <div class="company-pill"><i class="fa-solid fa-pills" style="color: #10B981;"></i> SUN PHARMA</div>
+      <div class="company-pill"><i class="fa-solid fa-microchip" style="color: #F59E0B;"></i> COGNIZANT MNC</div>
+      <div class="company-pill"><i class="fa-solid fa-hospital" style="color: #06B6D4;"></i> FORTIS HEALTHCARE</div>
+      <div class="company-pill"><i class="fa-solid fa-database" style="color: #6366F1;"></i> HCL TECHNOLOGIES</div>
+      <div class="company-pill"><i class="fa-solid fa-network-wired" style="color: #3B82F6;"></i> TECH MAHINDRA</div>
+      <!-- Duplicate set for seamless infinite loop -->
+      <div class="company-pill"><i class="fa-solid fa-bolt" style="color: var(--primary);"></i> TCS (TATA CONSULTANCY)</div>
+      <div class="company-pill"><i class="fa-solid fa-code" style="color: var(--accent);"></i> INFOSYS</div>
+      <div class="company-pill"><i class="fa-solid fa-globe" style="color: #3B82F6;"></i> WIPRO</div>
+      <div class="company-pill"><i class="fa-solid fa-laptop-code" style="color: #8B5CF6;"></i> ACCENTURE MNC</div>
+      <div class="company-pill"><i class="fa-solid fa-stethoscope" style="color: #EC4899;"></i> APOLLO HOSPITALS</div>
+      <div class="company-pill"><i class="fa-solid fa-pills" style="color: #10B981;"></i> SUN PHARMA</div>
+      <div class="company-pill"><i class="fa-solid fa-microchip" style="color: #F59E0B;"></i> COGNIZANT MNC</div>
+      <div class="company-pill"><i class="fa-solid fa-hospital" style="color: #06B6D4;"></i> FORTIS HEALTHCARE</div>
+      <div class="company-pill"><i class="fa-solid fa-database" style="color: #6366F1;"></i> HCL TECHNOLOGIES</div>
+      <div class="company-pill"><i class="fa-solid fa-network-wired" style="color: #3B82F6;"></i> TECH MAHINDRA</div>
     </div>
   </div>
 </div>
