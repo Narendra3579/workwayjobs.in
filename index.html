@@ -97,7 +97,7 @@
   .nav-links a:hover::after { transform: scaleX(1); }
 
   .nav-cta { display: flex; align-items: center; gap: 8px; }
-  @media(min-width: 640px) { .nav-cta { gap: 12px; } }
+  @media(min-width: 640px) { .nav-cta { gap: 10px; } }
 
   .btn {
     font-family: 'Plus Jakarta Sans'; font-size: 12px; font-weight: 700;
@@ -105,8 +105,8 @@
     border: 1px solid transparent; display: inline-flex; align-items: center; gap: 6px;
     transition: all 0.2s ease; white-space: nowrap;
   }
-  @media(min-width: 640px) { .btn { font-size: 13px; padding: 9px 14px; gap: 8px; } }
-  @media(min-width: 768px) { .btn { font-size: 14px; padding: 11px 20px; } }
+  @media(min-width: 640px) { .btn { font-size: 13px; padding: 9px 12px; gap: 6px; } }
+  @media(min-width: 768px) { .btn { font-size: 14px; padding: 11px 16px; } }
   .btn:hover { transform: translateY(-2px); }
   .btn-solid { background: var(--primary); color: #fff; box-shadow: 0 4px 14px rgba(37,99,235,0.3); }
   .btn-solid:hover { background: var(--primary-dark); box-shadow: 0 6px 20px rgba(37,99,235,0.4); }
@@ -115,7 +115,6 @@
   .btn-ghost { background: var(--bg-card); border-color: var(--border-strong); color: var(--text-main); }
   .btn-ghost:hover { background: var(--bg-alt); border-color: var(--text-main); }
 
-  /* Mobile Menu Toggle */
   .mobile-menu-btn { display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; border-radius: var(--radius); border: 1px solid var(--border-strong); background: var(--bg-card); cursor: pointer; font-size: 16px; }
   @media(min-width: 640px) { .mobile-menu-btn { width: 40px; height: 40px; font-size: 18px; } }
   @media(min-width: 1024px) { .mobile-menu-btn { display: none; } }
@@ -132,7 +131,6 @@
   }
   .mobile-drawer.open .mobile-drawer-content { transform: translateX(0); }
 
-  /* Floating Action Button */
   .fab-register {
     position: fixed; bottom: 24px; right: 24px; z-index: 90;
     background: var(--yellow-btn); color: #0F172A; font-weight: 800; font-size: 13.5px;
@@ -534,8 +532,8 @@
       <li><a href="#employers">For employers</a></li>
     </ul>
     <div class="nav-cta">
-      <button class="btn btn-ghost" data-open-modal="recruiter-login" style="font-size: 11.5px; padding: 6px 10px;">Recruiter Login</button>
       <a href="#" class="btn btn-yellow" data-open-modal="candidate">Register for free</a>
+      <button class="btn btn-ghost" data-open-modal="recruiter-login" style="font-size: 11.5px; padding: 7px 10px;">Recruiter Login</button>
       <a href="#" class="btn btn-solid" data-open-modal="employer">Post Job</a>
       <button class="mobile-menu-btn" id="mobile-menu-toggle" aria-label="Open Menu">
         <i class="fa-solid fa-bars"></i>
@@ -558,8 +556,10 @@
       <li><a href="#employers" class="mobile-nav-link" style="font-size:16px; font-weight:700;">For employers</a></li>
     </ul>
     <div style="display:flex; flex-direction:column; gap:10px; margin-top:auto; padding-top:20px; border-top:1px solid var(--border);">
-      <button class="btn btn-ghost" data-open-modal="recruiter-login" style="width:100%; justify-content:center;">Recruiter Login</button>
-      <a href="#" class="btn btn-yellow" data-open-modal="candidate" style="width:100%; justify-content:center;">Register for free</a>
+      <div style="display:flex; gap:8px;">
+        <a href="#" class="btn btn-yellow" data-open-modal="candidate" style="flex:1; justify-content:center;">Register for free</a>
+        <button class="btn btn-ghost" data-open-modal="recruiter-login" style="flex:1; justify-content:center; font-size:11.5px;">Recruiter Login</button>
+      </div>
       <a href="#" class="btn btn-solid" data-open-modal="employer" style="width:100%; justify-content:center;">Post Job</a>
     </div>
   </div>
@@ -1473,7 +1473,14 @@
       var jobIds = matchedJobs.map(function(j){ return j.id; });
       var myApps = candidateApplications.filter(function(app){ return jobIds.indexOf(parseInt(app.JobId)) !== -1; });
       document.getElementById('dash-stat-applicants').textContent = myApps.length;
-      document.getElementById('dash-stat-cvs').textContent = 120;
+
+      var cvKey = 'ww_cv_views_' + email;
+      var remainingCvs = localStorage.getItem(cvKey);
+      if (remainingCvs === null) {
+        remainingCvs = 120;
+        localStorage.setItem(cvKey, remainingCvs);
+      }
+      document.getElementById('dash-stat-cvs').textContent = remainingCvs;
 
       var container = document.getElementById('dash-applicants-container');
       if (myApps.length === 0){
@@ -1489,7 +1496,7 @@
                        '<td>'+app.JobTitle+'</td>' +
                        '<td>'+app.Email+'<br><small class="mono">'+app.Phone+'</small></td>' +
                        '<td>'+app.YearsExperience+' yrs</td>' +
-                       '<td><a href="'+resumeLinkHtml+'" download="'+(app.ResumeFileName || 'Resume.pdf')+'" class="btn btn-solid" style="padding:5px 10px; font-size:11px; background:var(--accent);">Download CV</a></td></tr>';
+                       '<td><a href="'+resumeLinkHtml+'" download="'+(app.ResumeFileName || 'Resume.pdf')+'" class="btn btn-solid" style="padding:5px 10px; font-size:11px; background:var(--accent);" onclick="window.trackCvDownload(\''+email+'\')">Download CV</a></td></tr>';
         });
         tableHtml += '</tbody></table>';
         container.innerHTML = tableHtml;
@@ -1498,6 +1505,20 @@
       openModal('recruiter-dashboard');
     });
   }
+
+  window.trackCvDownload = function(email){
+    var cvKey = 'ww_cv_views_' + email;
+    var currentCvs = parseInt(localStorage.getItem(cvKey) || 120, 10);
+    if (currentCvs <= 0){
+      alert("You have 0 CV views remaining. Please upgrade your recruiter package.");
+      event.preventDefault();
+      return;
+    }
+    currentCvs--;
+    localStorage.setItem(cvKey, currentCvs);
+    var cvsEl = document.getElementById('dash-stat-cvs');
+    if (cvsEl) cvsEl.textContent = currentCvs;
+  };
 
   if (recLogoutBtn){
     recLogoutBtn.addEventListener('click', function(){
