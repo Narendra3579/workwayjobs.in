@@ -394,8 +394,8 @@
   .final .btn-solid { background: #38BDF8; color: #0F172A; }
   .final .btn-solid:hover { background: #7DD3FC; }
 
-  footer { border-top: 1px solid var(--border); padding: 48px 0 140px; background: var(--bg-card); }
-  @media(min-width: 768px) { footer { padding: 64px 0 150px; } }
+  footer { border-top: 1px solid var(--border); padding: 48px 0 160px; background: var(--bg-card); }
+  @media(min-width: 768px) { footer { padding: 64px 0 170px; } }
   .foot-grid { display: grid; grid-template-columns: 1fr; gap: 36px; margin-bottom: 40px; }
   @media(min-width: 768px) { .foot-grid { grid-template-columns: 1.5fr repeat(3, 1fr); gap: 48px; margin-bottom: 48px; } }
   .foot-brand p { font-size: 13.5px; color: var(--text-muted); margin-top: 12px; max-width: 280px; line-height: 1.6; }
@@ -540,10 +540,6 @@
 </head>
 <body>
 
-<button class="fab-register" data-open-modal="candidate">
-  Register for free
-</button>
-
 <div class="logo-ticker">
   <div class="wrap" style="text-align: center; margin-bottom: 16px;">
     <p style="font-family: 'JetBrains Mono'; font-size: 11px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--text-muted); font-weight: 700;">Trusted by Top IT Giants, MNCs &amp; Healthcare Leaders Across India</p>
@@ -562,7 +558,7 @@
       <div class="company-pill"><img src="https://www.google.com/s2/favicons?domain=amazon.com&sz=64" alt="Amazon"> Amazon India</div>
       <div class="company-pill"><img src="https://www.google.com/s2/favicons?domain=flipkart.com&sz=64" alt="Flipkart"> Flipkart</div>
       <div class="company-pill"><img src="https://www.google.com/s2/favicons?domain=zomato.com&sz=64" alt="Zomato"> Zomato</div>
-      <!-- Duplicate set for infinite loop -->
+      <!-- Duplicate set for seamless infinite loop -->
       <div class="company-pill"><img src="https://www.google.com/s2/favicons?domain=infosys.com&sz=64" alt="Infosys"> Infosys</div>
       <div class="company-pill"><img src="https://www.google.com/s2/favicons?domain=wipro.com&sz=64" alt="Wipro"> Wipro</div>
       <div class="company-pill"><img src="https://www.google.com/s2/favicons?domain=accenture.com&sz=64" alt="Accenture"> Accenture</div>
@@ -615,6 +611,10 @@
     </div>
   </div>
 </div>
+
+<button class="fab-register" data-open-modal="candidate">
+  Register for free
+</button>
 
 <section class="hero">
   <div class="wrap">
@@ -899,7 +899,7 @@
       <div class="foot-col">
         <h4>Employers</h4>
         <ul>
-          <li><a href="#" data-open-modal="employer">For Employer (Post Job &amp; Login)</a></li>
+          <li><a href="#" data-open-modal="employer">For Employer</a></li>
         </ul>
       </div>
       <div class="foot-col">
@@ -1036,14 +1036,14 @@
   </div>
 </div>
 
-<!-- EMPLOYER POST JOB MODAL -->
+<!-- EMPLOYER MODAL -->
 <div class="modal-overlay" id="modal-employer">
   <div class="modal modal-scroll" role="dialog" aria-modal="true" aria-labelledby="employer-title">
     <button class="modal-close" type="button" data-close-modal aria-label="Close">✕</button>
     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; flex-wrap:wrap; gap:10px;">
       <div>
         <span class="modal-tag">Employer Portal</span>
-        <h3 id="employer-title">Post Job or Login</h3>
+        <h3 id="employer-title">For Employer (Post Job or Login)</h3>
       </div>
       <button type="button" class="btn btn-ghost" data-open-modal="recruiter-login" style="padding:6px 12px; font-size:12px;">Recruiter Login</button>
     </div>
@@ -1305,8 +1305,8 @@
 
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-  import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-  import { getFirestore, collection, addDoc, getDocs, doc, deleteDoc, onSnapshot, query, setDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+  import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+  import { getFirestore, collection, addDoc, doc, deleteDoc, onSnapshot, query } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
   const appId = typeof __app_id !== 'undefined' ? __app_id : 'workway-jobs-india';
   const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : { apiKey: "mock", authDomain: "mock.firebaseapp.com", projectId: "mock" };
@@ -1320,15 +1320,21 @@
     console.error("Firebase init error:", e);
   }
 
-  window.liveJobs = [
+  const defaultLiveJobs = [
     { id: 'default_1', Company: "LUMEN STUDIO", ContactEmail: "hr@lumenstudio.in", JobTitle: "SR PRODUCT DESIGNER", Location: "VISAKHAPATNAM", SalaryRange: "₹24 LPA – ₹32 LPA", SalaryMin: 24, Description: "Design world-class interfaces for creative workflows.", Type: "Full-time", Exp: "5+", Dept: "design-product", Ind: "saas", Edu: "ug", CompanyType: "startup", Featured: true },
     { id: 'default_2', Company: "HARBOR LABS", ContactEmail: "careers@harborlabs.io", JobTitle: "BACKEND ENGINEER", Location: "BENGALURU", SalaryRange: "₹20 LPA – ₹28 LPA", SalaryMin: 20, Description: "Scale distributed databases and resilient APIs.", Type: "Full-time", Exp: "3-5", Dept: "it-software", Ind: "it-services", Edu: "ug", CompanyType: "mnc", Featured: false }
   ];
+
+  window.liveJobs = [].concat(defaultLiveJobs);
   window.pendingJobs = [];
   window.candidateApplications = [];
 
   async function initFirebase() {
-    if (!auth) return;
+    if (!auth) {
+      if (typeof window.renderJobs === 'function') window.renderJobs();
+      if (typeof window.renderSlider === 'function') window.renderSlider();
+      return;
+    }
     try {
       if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
         await signInWithCustomToken(auth, __initial_auth_token);
@@ -1339,13 +1345,14 @@
       setupRealtimeListeners();
     } catch(err) {
       console.error("Auth error:", err);
-      // Fallback anonymous sign-in if custom token fails
       try {
         await signInAnonymously(auth);
         currentUser = auth.currentUser;
         setupRealtimeListeners();
       } catch(e2) {
         console.error("Anonymous auth fallback failed:", e2);
+        if (typeof window.renderJobs === 'function') window.renderJobs();
+        if (typeof window.renderSlider === 'function') window.renderSlider();
       }
     }
   }
@@ -1359,9 +1366,11 @@
         snapshot.forEach((docSnap) => {
           fetched.push({ firebaseId: docSnap.id, ...docSnap.data() });
         });
-        if (fetched.length > 0) {
-          window.liveJobs = fetched;
-        }
+        
+        // Merge defaults with Firestore live jobs
+        const customLive = fetched.filter(f => !defaultLiveJobs.some(d => d.id === f.id || d.JobTitle === f.JobTitle));
+        window.liveJobs = [].concat(defaultLiveJobs, customLive);
+
         if (typeof window.renderJobs === 'function') window.renderJobs();
         if (typeof window.renderSlider === 'function') window.renderSlider();
         if (typeof window.renderAdminLiveJobs === 'function') window.renderAdminLiveJobs();
@@ -1392,7 +1401,6 @@
 
   window.saveJobToFirestore = async function(jobData, isPending) {
     if (!db) {
-      console.warn("Firestore not initialized. Saving locally.");
       if (isPending) {
         window.pendingJobs.push(jobData);
         if (typeof window.renderAdminPending === 'function') window.renderAdminPending();
@@ -1594,7 +1602,7 @@
     var html = '<table class="admin-table"><thead><tr><th>Company</th><th>Role</th><th>Location</th><th>Action</th></tr></thead><tbody>';
     live.forEach(function(job, index){
       html += '<tr><td>'+job.Company+'</td><td>'+job.JobTitle+'</td><td>'+job.Location+'</td><td>' +
-              '<button class="btn btn-ghost" style="padding:5px 10px; font-size:11px; color:var(--danger);" onclick="window.removeLiveJob(\''+(job.firebaseId||'')+'\', '+index+')">Remove Job</button>' +
+              '<button class="btn btn-ghost" style="padding:5px 10px; font-size:11px; color:var(--danger);" onclick="window.removeLiveJob(\''+(job.firebaseId||'')+'\', \''+(job.id||'')+'\', '+index+')">Remove Job</button>' +
               '</td></tr>';
     });
     html += '</tbody></table>';
@@ -1607,7 +1615,7 @@
     if (!j) return;
     
     var approvedJob = Object.assign({}, j);
-    approvedJob.id = Date.now();
+    if (!approvedJob.id) approvedJob.id = Date.now();
     delete approvedJob.firebaseId;
     
     if (typeof window.saveJobToFirestore === 'function') {
@@ -1622,12 +1630,12 @@
     }
   };
 
-  window.removeLiveJob = function(firebaseId, index){
+  window.removeLiveJob = function(firebaseId, jobId, index){
     if (confirm("Are you sure you want to remove this job from the website?")) {
       if (firebaseId && typeof window.removeFirestoreDoc === 'function') {
         window.removeFirestoreDoc('live_jobs', firebaseId);
       } else {
-        window.liveJobs.splice(index, 1);
+        window.liveJobs = window.liveJobs.filter(function(j){ return String(j.id) !== String(jobId); });
         renderJobs();
         renderSlider();
         renderAdminLiveJobs();
@@ -1649,7 +1657,7 @@
                     '<span class="job-company-badge">'+job.Company+'</span>' +
                     '<div style="display:flex; align-items:center; gap:6px;">' +
                       '<span class="job-loc">'+job.Location+'</span>' +
-                      '<button class="btn btn-ghost" style="padding:4px 7px; font-size:11px;" title="Share Job" onclick="window.shareJob(\''+job.JobTitle.replace(/'/g, "\\'")+'\', \''+job.Company.replace(/'/g, "\\'")+'\', \''+job.id+'\')"><i class="fa-solid fa-share-nodes"></i></button>' +
+                      '<button class="btn btn-ghost" style="padding:4px 7px; font-size:11px;" title="Share Job" onclick="window.shareJob(\''+(job.JobTitle||'').replace(/'/g, "\\'")+'\', \''+(job.Company||'').replace(/'/g, "\\'")+'\', \''+job.id+'\')"><i class="fa-solid fa-share-nodes"></i></button>' +
                     '</div>' +
                   '</div>' +
                   '<h3>'+job.JobTitle+'</h3>' +
@@ -1658,7 +1666,7 @@
                 '</div>' +
                 '<div class="job-card-foot">' +
                   '<span style="font-size:12.5px; color:var(--text-muted); font-weight:600;">'+job.Type+'</span>' +
-                  '<button class="btn btn-solid" style="padding:6px 14px; font-size:12px;" onclick="window.applyForJob(\''+job.id+'\', \''+job.JobTitle.replace(/'/g, "\\'")+'\', \''+job.Company.replace(/'/g, "\\'")+'\')">Apply</button>' +
+                  '<button class="btn btn-solid" style="padding:6px 14px; font-size:12px;" onclick="window.applyForJob(\''+job.id+'\', \''+(job.JobTitle||'').replace(/'/g, "\\'")+'\', \''+(job.Company||'').replace(/'/g, "\\'")+'\')">Apply</button>' +
                 '</div>' +
               '</div>';
     });
@@ -1683,7 +1691,7 @@
                     '<span class="job-company-badge">'+job.Company+'</span>' +
                     '<div style="display:flex; align-items:center; gap:6px;">' +
                       '<span class="job-loc">'+job.Location+'</span>' +
-                      '<button class="btn btn-ghost" style="padding:4px 7px; font-size:11px;" title="Share Job" onclick="window.shareJob(\''+job.JobTitle.replace(/'/g, "\\'")+'\', \''+job.Company.replace(/'/g, "\\'")+'\', \''+job.id+'\')"><i class="fa-solid fa-share-nodes"></i></button>' +
+                      '<button class="btn btn-ghost" style="padding:4px 7px; font-size:11px;" title="Share Job" onclick="window.shareJob(\''+(job.JobTitle||'').replace(/'/g, "\\'")+'\', \''+(job.Company||'').replace(/'/g, "\\'")+'\', \''+job.id+'\')"><i class="fa-solid fa-share-nodes"></i></button>' +
                     '</div>' +
                   '</div>' +
                   '<h3>'+job.JobTitle+'</h3>' +
@@ -1692,7 +1700,7 @@
                 '</div>' +
                 '<div class="job-card-foot">' +
                   '<span style="font-size:12.5px; color:var(--text-muted); font-weight:600;">'+job.Type+'</span>' +
-                  '<button class="btn btn-solid" style="padding:6px 14px; font-size:12px;" onclick="window.applyForJob(\''+job.id+'\', \''+job.JobTitle.replace(/'/g, "\\'")+'\', \''+job.Company.replace(/'/g, "\\'")+'\')">Apply</button>' +
+                  '<button class="btn btn-solid" style="padding:6px 14px; font-size:12px;" onclick="window.applyForJob(\''+job.id+'\', \''+(job.JobTitle||'').replace(/'/g, "\\'")+'\', \''+(job.Company||'').replace(/'/g, "\\'")+'\')">Apply</button>' +
                 '</div>' +
               '</div>';
     });
@@ -1731,13 +1739,13 @@
     var hash = window.location.hash;
     if (hash && hash.indexOf('#job-') === 0) {
       var jobIdStr = hash.replace('#job-', '');
-      var live = window.liveJobs || [];
-      var targetJob = live.find(function(j){ return String(j.id) === jobIdStr; });
-      if (targetJob) {
-        setTimeout(function(){
+      setTimeout(function(){
+        var live = window.liveJobs || [];
+        var targetJob = live.find(function(j){ return String(j.id) === jobIdStr; });
+        if (targetJob) {
           window.applyForJob(targetJob.id, targetJob.JobTitle, targetJob.Company);
-        }, 400);
-      }
+        }
+      }, 600);
     }
   }
 
@@ -1912,8 +1920,8 @@
 
     var live = window.liveJobs || [];
     var filtered = live.filter(function(j){
-      if (q && j.JobTitle.toLowerCase().indexOf(q) === -1 && j.Company.toLowerCase().indexOf(q) === -1 && j.Description.toLowerCase().indexOf(q) === -1) return false;
-      if (loc && j.Location.toLowerCase().indexOf(loc) === -1) return false;
+      if (q && (j.JobTitle||'').toLowerCase().indexOf(q) === -1 && (j.Company||'').toLowerCase().indexOf(q) === -1 && (j.Description||'').toLowerCase().indexOf(q) === -1) return false;
+      if (loc && (j.Location||'').toLowerCase().indexOf(loc) === -1) return false;
       if (dept && j.Dept !== dept) return false;
       if (exp && j.Exp !== exp) return false;
       if (ind && j.Ind !== ind) return false;
