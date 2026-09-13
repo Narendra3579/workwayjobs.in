@@ -1389,26 +1389,61 @@
   }
 
   window.saveJobToFirestore = async function(jobData, isPending) {
-    if (!db || !currentUser) return;
+    if (!db || !currentUser) {
+      console.warn("Firestore not initialized or user not signed in. Saving locally.");
+      if (isPending) {
+        window.pendingJobs.push(jobData);
+        if (typeof window.renderAdminPending === 'function') window.renderAdminPending();
+      } else {
+        window.liveJobs.push(jobData);
+        if (typeof window.renderJobs === 'function') window.renderJobs();
+        if (typeof window.renderSlider === 'function') window.renderSlider();
+      }
+      return;
+    }
     try {
       const colName = isPending ? 'pending_jobs' : 'live_jobs';
       await addDoc(collection(db, 'artifacts', appId, 'public', 'data', colName), jobData);
     } catch(e) {
-      console.error("Error saving job:", e);
+      console.error("Error saving job to Firestore:", e);
+      // Fallback local addition so user sees immediate response
+      if (isPending) {
+        window.pendingJobs.push(jobData);
+        if (typeof window.renderAdminPending === 'function') window.renderAdminPending();
+      } else {
+        window.liveJobs.push(jobData);
+        if (typeof window.renderJobs === 'function') window.renderJobs();
+        if (typeof window.renderSlider === 'function') window.renderSlider();
+      }
     }
   };
 
   window.saveApplicationToFirestore = async function(appData) {
-    if (!db || !currentUser) return;
+    if (!db || !currentUser) {
+      window.candidateApplications.push(appData);
+      return;
+    }
     try {
       await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'candidate_applications'), appData);
     } catch(e) {
       console.error("Error saving application:", e);
+      window.candidateApplications.push(appData);
     }
   };
 
   window.removeFirestoreDoc = async function(colName, firebaseId) {
-    if (!db || !currentUser || !firebaseId) return;
+    if (!db || !currentUser || !firebaseId) {
+      if (colName === 'pending_jobs') {
+        window.pendingJobs = window.pendingJobs.filter(j => j.firebaseId !== firebaseId);
+        if (typeof window.renderAdminPending === 'function') window.renderAdminPending();
+      } else if (colName === 'live_jobs') {
+        window.liveJobs = window.liveJobs.filter(j => j.firebaseId !== firebaseId);
+        if (typeof window.renderJobs === 'function') window.renderJobs();
+        if (typeof window.renderSlider === 'function') window.renderSlider();
+        if (typeof window.renderAdminLiveJobs === 'function') window.renderAdminLiveJobs();
+      }
+      return;
+    }
     try {
       await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', colName, firebaseId));
     } catch(e) {
