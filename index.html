@@ -51,7 +51,7 @@
   :focus-visible { outline: 2px solid var(--primary); outline-offset: 3px; }
 
   .logo-ticker {
-    padding: 20px 0; background: var(--bg-card); border-bottom: 1px solid var(--border);
+    padding: 16px 0; background: var(--bg-card); border-bottom: 1px solid var(--border);
     overflow: hidden; position: relative; width: 100%;
   }
   .ticker-wrap { width: 100%; overflow: hidden; white-space: nowrap; position: relative; }
@@ -344,7 +344,7 @@
   .foot-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
   .foot-col a { font-size: 14px; text-decoration: none; color: var(--text-main); font-weight: 500; transition: color 0.2s; }
   .foot-col a:hover { color: var(--primary); }
-  .foot-bottom { display: flex; flex-direction: column; gap: 4px; justify-content: flex-start; align-items: flex-start; padding-top: 28px; border-top: 1px solid var(--border); font-family: 'JetBrains Mono'; font-size: 11.5px; color: var(--text-muted); text-align: left; }
+  .foot-bottom { display: flex; flex-direction: column; gap: 6px; justify-content: flex-start; align-items: flex-start; padding-top: 28px; border-top: 1px solid var(--border); font-family: 'JetBrains Mono'; font-size: 11.5px; color: var(--text-muted); text-align: left; }
 
   .modal-overlay { position: fixed; inset: 0; background: rgba(15, 23, 42, 0.65); display: none; align-items: flex-end; justify-content: center; padding: 0; z-index: 300; overflow-y: auto; backdrop-filter: blur(8px); opacity: 0; transition: opacity 0.25s ease; }
   @media(min-width: 768px) { .modal-overlay { align-items: flex-start; padding: 40px 20px; } }
@@ -1179,16 +1179,28 @@
 </div>
 
 <script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-  import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-  import { getFirestore, collection, addDoc, doc, deleteDoc, setDoc, getDoc, onSnapshot, query, getDocs } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-analytics.js";
+  import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
+  import { getFirestore, collection, addDoc, doc, deleteDoc, onSnapshot, query, setDoc, getDocs } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
 
   const appId = typeof __app_id !== 'undefined' ? __app_id : 'workway-jobs-india';
-  const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : { apiKey: "mock", authDomain: "mock.firebaseapp.com", projectId: "mock" };
+  
+  // Your provided Firebase configuration
+  const firebaseConfig = {
+    apiKey: "AIzaSyCFeXSrudtb2Be3_hLgImb2YF3gdKF03kg",
+    authDomain: "work-way-jobs.firebaseapp.com",
+    projectId: "work-way-jobs",
+    storageBucket: "work-way-jobs.firebasestorage.app",
+    messagingSenderId: "714010609870",
+    appId: "1:714010609870:web:e6fbccc0e8bb484c94689f",
+    measurementId: "G-STL1GD2DQ1"
+  };
 
-  let app, db, auth, currentUser = null;
+  let app, db, auth, analytics, currentUser = null;
   try {
     app = initializeApp(firebaseConfig);
+    analytics = getAnalytics(app);
     db = getFirestore(app);
     auth = getAuth(app);
   } catch(e) {
@@ -1211,24 +1223,13 @@
       return;
     }
     try {
-      if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
-        await signInWithCustomToken(auth, __initial_auth_token);
-      } else {
-        await signInAnonymously(auth);
-      }
+      await signInAnonymously(auth);
       currentUser = auth.currentUser;
       setupRealtimeListeners();
     } catch(err) {
-      console.error("Auth error:", err);
-      try {
-        await signInAnonymously(auth);
-        currentUser = auth.currentUser;
-        setupRealtimeListeners();
-      } catch(e2) {
-        console.error("Anonymous auth fallback failed:", e2);
-        if (typeof window.renderJobs === 'function') window.renderJobs();
-        if (typeof window.renderSlider === 'function') window.renderSlider();
-      }
+      console.warn("Auth warning (Anonymous Auth may need to be enabled in Firebase Console):", err.message);
+      // Fallback: setup listeners even if anonymous sign-in fails or is not enabled yet
+      setupRealtimeListeners();
     }
   }
 
@@ -1289,14 +1290,6 @@
       await addDoc(collection(db, 'artifacts', appId, 'public', 'data', colName), jobData);
     } catch(e) {
       console.error("Error saving job to Firestore:", e);
-      if (isPending) {
-        window.pendingJobs.push(jobData);
-        if (typeof window.renderAdminPending === 'function') window.renderAdminPending();
-      } else {
-        window.liveJobs.push(jobData);
-        if (typeof window.renderJobs === 'function') window.renderJobs();
-        if (typeof window.renderSlider === 'function') window.renderSlider();
-      }
     }
   };
 
@@ -1309,23 +1302,11 @@
       await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'candidate_applications'), appData);
     } catch(e) {
       console.error("Error saving application:", e);
-      window.candidateApplications.push(appData);
     }
   };
 
   window.removeFirestoreDoc = async function(colName, firebaseId) {
-    if (!db || !firebaseId) {
-      if (colName === 'pending_jobs') {
-        window.pendingJobs = window.pendingJobs.filter(j => j.firebaseId !== firebaseId);
-        if (typeof window.renderAdminPending === 'function') window.renderAdminPending();
-      } else if (colName === 'live_jobs') {
-        window.liveJobs = window.liveJobs.filter(j => j.firebaseId !== firebaseId);
-        if (typeof window.renderJobs === 'function') window.renderJobs();
-        if (typeof window.renderSlider === 'function') window.renderSlider();
-        if (typeof window.renderAdminLiveJobs === 'function') window.renderAdminLiveJobs();
-      }
-      return;
-    }
+    if (!db || !firebaseId) return;
     try {
       await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', colName, firebaseId));
     } catch(e) {
@@ -1496,11 +1477,6 @@
     if (confirm("Are you sure you want to remove this job from the website?")) {
       if (firebaseId && typeof window.removeFirestoreDoc === 'function') {
         window.removeFirestoreDoc('live_jobs', firebaseId);
-      } else {
-        window.liveJobs = window.liveJobs.filter(function(j){ return String(j.id) !== String(jobId); });
-        renderJobs();
-        renderSlider();
-        renderAdminLiveJobs();
       }
     }
   };
