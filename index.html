@@ -144,7 +144,7 @@
 
   /* Logo Marquee Ticker Styles */
   .logo-ticker {
-    padding: 36px 0; background: var(--bg-card); border-bottom: 1px solid var(--border);
+    padding: 32px 0; background: var(--bg-card); border-bottom: 1px solid var(--border);
     overflow: hidden; position: relative; width: 100%;
   }
   .ticker-wrap { width: 100%; overflow: hidden; white-space: nowrap; position: relative; }
@@ -154,15 +154,16 @@
   .ticker-wrap::before { left: 0; background: linear-gradient(to right, var(--bg-card), transparent); }
   .ticker-wrap::after { right: 0; background: linear-gradient(to left, var(--bg-card), transparent); }
 
-  .ticker-track { display: inline-flex; gap: 36px; animation: marqueeScroll 30s linear infinite; will-change: transform; }
+  .ticker-track { display: inline-flex; gap: 40px; animation: marqueeScroll 32s linear infinite; will-change: transform; align-items: center; }
   .ticker-track:hover { animation-play-state: paused; }
   @keyframes marqueeScroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
   .company-pill {
-    background: var(--bg-main); border: 1px solid var(--border-strong); padding: 12px 24px; border-radius: 10px;
-    font-weight: 800; font-size: 14.5px; color: var(--text-main); font-family: 'JetBrains Mono';
+    background: var(--bg-main); border: 1px solid var(--border-strong); padding: 10px 22px; border-radius: 10px;
+    font-weight: 800; font-size: 14px; color: var(--text-main); font-family: 'JetBrains Mono';
     display: inline-flex; align-items: center; gap: 12px; box-shadow: 0 2px 6px rgba(0,0,0,0.02); flex: 0 0 auto;
   }
+  .company-pill img { width: 22px; height: 22px; object-fit: contain; border-radius: 4px; }
 
   .hero { padding: 48px 0; position: relative; }
   @media(min-width: 768px) { .hero { padding: 80px 0 60px; } }
@@ -581,32 +582,36 @@
 </div>
 
 <div class="logo-ticker">
-  <div class="wrap" style="text-align: center; margin-bottom: 20px;">
-    <p style="font-family: 'JetBrains Mono'; font-size: 11.5px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--text-muted); font-weight: 700;">Trusted by Top IT Giants, MNCs &amp; Healthcare Leaders Across India</p>
+  <div class="wrap" style="text-align: center; margin-bottom: 16px;">
+    <p style="font-family: 'JetBrains Mono'; font-size: 11px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--text-muted); font-weight: 700;">Trusted by Top IT Giants, MNCs &amp; Healthcare Leaders Across India</p>
   </div>
   <div class="ticker-wrap">
     <div class="ticker-track">
-      <div class="company-pill"><img src="https://www.google.com/s2/favicons?domain=infosys.com&sz=64" alt="Infosys" style="width:20px; height:20px; object-fit:contain;" onerror="this.style.display='none'"> INFOSYS</div>
-      <div class="company-pill"><img src="https://www.google.com/s2/favicons?domain=wipro.com&sz=64" alt="Wipro" style="width:20px; height:20px; object-fit:contain;" onerror="this.style.display='none'"> WIPRO</div>
-      <div class="company-pill"><img src="https://www.google.com/s2/favicons?domain=accenture.com&sz=64" alt="Accenture" style="width:20px; height:20px; object-fit:contain;" onerror="this.style.display='none'"> ACCENTURE</div>
-      <div class="company-pill"><img src="https://www.google.com/s2/favicons?domain=apollohospitals.com&sz=64" alt="Apollo" style="width:20px; height:20px; object-fit:contain;" onerror="this.style.display='none'"> APOLLO HOSPITALS</div>
-      <div class="company-pill"><img src="https://www.google.com/s2/favicons?domain=techmahindra.com&sz=64" alt="Tech Mahindra" style="width:20px; height:20px; object-fit:contain;" onerror="this.style.display='none'"> TECH MAHINDRA</div>
-      <div class="company-pill"><img src="https://www.google.com/s2/favicons?domain=ibm.com&sz=64" alt="IBM" style="width:20px; height:20px; object-fit:contain;" onerror="this.style.display='none'"> IBM INDIA</div>
-      <div class="company-pill"><img src="https://www.google.com/s2/favicons?domain=cognizant.com&sz=64" alt="Cognizant" style="width:20px; height:20px; object-fit:contain;" onerror="this.style.display='none'"> COGNIZANT</div>
-      <div class="company-pill"><img src="https://www.google.com/s2/favicons?domain=capgemini.com&sz=64" alt="Capgemini" style="width:20px; height:20px; object-fit:contain;" onerror="this.style.display='none'"> CAPGEMINI</div>
-      <div class="company-pill"><img src="https://www.google.com/s2/favicons?domain=deloitte.com&sz=64" alt="Deloitte" style="width:20px; height:20px; object-fit:contain;" onerror="this.style.display='none'"> DELOITTE</div>
-      <div class="company-pill"><img src="https://www.google.com/s2/favicons?domain=amazon.com&sz=64" alt="Amazon" style="width:20px; height:20px; object-fit:contain;" onerror="this.style.display='none'"> AMAZON INDIA</div>
-      <!-- Duplicate set for seamless infinite loop -->
-      <div class="company-pill"><img src="https://www.google.com/s2/favicons?domain=infosys.com&sz=64" alt="Infosys" style="width:20px; height:20px; object-fit:contain;" onerror="this.style.display='none'"> INFOSYS</div>
-      <div class="company-pill"><img src="https://www.google.com/s2/favicons?domain=wipro.com&sz=64" alt="Wipro" style="width:20px; height:20px; object-fit:contain;" onerror="this.style.display='none'"> WIPRO</div>
-      <div class="company-pill"><img src="https://www.google.com/s2/favicons?domain=accenture.com&sz=64" alt="Accenture" style="width:20px; height:20px; object-fit:contain;" onerror="this.style.display='none'"> ACCENTURE</div>
-      <div class="company-pill"><img src="https://www.google.com/s2/favicons?domain=apollohospitals.com&sz=64" alt="Apollo" style="width:20px; height:20px; object-fit:contain;" onerror="this.style.display='none'"> APOLLO HOSPITALS</div>
-      <div class="company-pill"><img src="https://www.google.com/s2/favicons?domain=techmahindra.com&sz=64" alt="Tech Mahindra" style="width:20px; height:20px; object-fit:contain;" onerror="this.style.display='none'"> TECH MAHINDRA</div>
-      <div class="company-pill"><img src="https://www.google.com/s2/favicons?domain=ibm.com&sz=64" alt="IBM" style="width:20px; height:20px; object-fit:contain;" onerror="this.style.display='none'"> IBM INDIA</div>
-      <div class="company-pill"><img src="https://www.google.com/s2/favicons?domain=cognizant.com&sz=64" alt="Cognizant" style="width:20px; height:20px; object-fit:contain;" onerror="this.style.display='none'"> COGNIZANT</div>
-      <div class="company-pill"><img src="https://www.google.com/s2/favicons?domain=capgemini.com&sz=64" alt="Capgemini" style="width:20px; height:20px; object-fit:contain;" onerror="this.style.display='none'"> CAPGEMINI</div>
-      <div class="company-pill"><img src="https://www.google.com/s2/favicons?domain=deloitte.com&sz=64" alt="Deloitte" style="width:20px; height:20px; object-fit:contain;" onerror="this.style.display='none'"> DELOITTE</div>
-      <div class="company-pill"><img src="https://www.google.com/s2/favicons?domain=amazon.com&sz=64" alt="Amazon" style="width:20px; height:20px; object-fit:contain;" onerror="this.style.display='none'"> AMAZON INDIA</div>
+      <div class="company-pill"><img src="https://www.google.com/s2/favicons?domain=infosys.com&sz=64" alt="Infosys"> Infosys</div>
+      <div class="company-pill"><img src="https://www.google.com/s2/favicons?domain=wipro.com&sz=64" alt="Wipro"> Wipro</div>
+      <div class="company-pill"><img src="https://www.google.com/s2/favicons?domain=accenture.com&sz=64" alt="Accenture"> Accenture</div>
+      <div class="company-pill"><img src="https://www.google.com/s2/favicons?domain=apollohospitals.com&sz=64" alt="Apollo Hospitals"> Apollo Hospitals</div>
+      <div class="company-pill"><img src="https://www.google.com/s2/favicons?domain=techmahindra.com&sz=64" alt="Tech Mahindra"> Tech Mahindra</div>
+      <div class="company-pill"><img src="https://www.google.com/s2/favicons?domain=ibm.com&sz=64" alt="IBM"> IBM India</div>
+      <div class="company-pill"><img src="https://www.google.com/s2/favicons?domain=cognizant.com&sz=64" alt="Cognizant"> Cognizant</div>
+      <div class="company-pill"><img src="https://www.google.com/s2/favicons?domain=capgemini.com&sz=64" alt="Capgemini"> Capgemini</div>
+      <div class="company-pill"><img src="https://www.google.com/s2/favicons?domain=deloitte.com&sz=64" alt="Deloitte"> Deloitte</div>
+      <div class="company-pill"><img src="https://www.google.com/s2/favicons?domain=amazon.com&sz=64" alt="Amazon"> Amazon India</div>
+      <div class="company-pill"><img src="https://www.google.com/s2/favicons?domain=flipkart.com&sz=64" alt="Flipkart"> Flipkart</div>
+      <div class="company-pill"><img src="https://www.google.com/s2/favicons?domain=zomato.com&sz=64" alt="Zomato"> Zomato</div>
+      <!-- Duplicate set for infinite loop -->
+      <div class="company-pill"><img src="https://www.google.com/s2/favicons?domain=infosys.com&sz=64" alt="Infosys"> Infosys</div>
+      <div class="company-pill"><img src="https://www.google.com/s2/favicons?domain=wipro.com&sz=64" alt="Wipro"> Wipro</div>
+      <div class="company-pill"><img src="https://www.google.com/s2/favicons?domain=accenture.com&sz=64" alt="Accenture"> Accenture</div>
+      <div class="company-pill"><img src="https://www.google.com/s2/favicons?domain=apollohospitals.com&sz=64" alt="Apollo Hospitals"> Apollo Hospitals</div>
+      <div class="company-pill"><img src="https://www.google.com/s2/favicons?domain=techmahindra.com&sz=64" alt="Tech Mahindra"> Tech Mahindra</div>
+      <div class="company-pill"><img src="https://www.google.com/s2/favicons?domain=ibm.com&sz=64" alt="IBM"> IBM India</div>
+      <div class="company-pill"><img src="https://www.google.com/s2/favicons?domain=cognizant.com&sz=64" alt="Cognizant"> Cognizant</div>
+      <div class="company-pill"><img src="https://www.google.com/s2/favicons?domain=capgemini.com&sz=64" alt="Capgemini"> Capgemini</div>
+      <div class="company-pill"><img src="https://www.google.com/s2/favicons?domain=deloitte.com&sz=64" alt="Deloitte"> Deloitte</div>
+      <div class="company-pill"><img src="https://www.google.com/s2/favicons?domain=amazon.com&sz=64" alt="Amazon"> Amazon India</div>
+      <div class="company-pill"><img src="https://www.google.com/s2/favicons?domain=flipkart.com&sz=64" alt="Flipkart"> Flipkart</div>
+      <div class="company-pill"><img src="https://www.google.com/s2/favicons?domain=zomato.com&sz=64" alt="Zomato"> Zomato</div>
     </div>
   </div>
 </div>
@@ -670,7 +675,7 @@
       </div>
     </div>
 
-    <div class="jobs-slider-wrap">
+    <div class="jobs-slider-wrap" id="jobs-slider-container">
       <div class="jobs-track" id="jobs-slider-track"></div>
     </div>
 
@@ -1298,24 +1303,126 @@
   </div>
 </div>
 
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+  import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+  import { getFirestore, collection, addDoc, getDocs, doc, deleteDoc, onSnapshot, query } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+  const appId = typeof __app_id !== 'undefined' ? __app_id : 'workway-jobs-india';
+  const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : { apiKey: "mock", authDomain: "mock.firebaseapp.com", projectId: "mock" };
+
+  let app, db, auth, currentUser = null;
+  try {
+    app = initializeApp(firebaseConfig);
+    db = getFirestore(app);
+    auth = getAuth(app);
+  } catch(e) {
+    console.error("Firebase init error:", e);
+  }
+
+  window.liveJobs = [
+    { id: 'default_1', Company: "LUMEN STUDIO", ContactEmail: "hr@lumenstudio.in", JobTitle: "SR PRODUCT DESIGNER", Location: "VISAKHAPATNAM", SalaryRange: "₹24 LPA – ₹32 LPA", SalaryMin: 24, Description: "Design world-class interfaces for creative workflows.", Type: "Full-time", Exp: "5+", Dept: "design-product", Ind: "saas", Edu: "ug", CompanyType: "startup", Featured: true },
+    { id: 'default_2', Company: "HARBOR LABS", ContactEmail: "careers@harborlabs.io", JobTitle: "BACKEND ENGINEER", Location: "BENGALURU", SalaryRange: "₹20 LPA – ₹28 LPA", SalaryMin: 20, Description: "Scale distributed databases and resilient APIs.", Type: "Full-time", Exp: "3-5", Dept: "it-software", Ind: "it-services", Edu: "ug", CompanyType: "mnc", Featured: false }
+  ];
+  window.pendingJobs = [];
+  window.candidateApplications = [];
+
+  async function initFirebase() {
+    if (!auth) return;
+    try {
+      if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+        await signInWithCustomToken(auth, __initial_auth_token);
+      } else {
+        await signInAnonymously(auth);
+      }
+      currentUser = auth.currentUser;
+      
+      onAuthStateChanged(auth, (user) => {
+        currentUser = user;
+        if (user) {
+          setupRealtimeListeners();
+        }
+      });
+    } catch(err) {
+      console.error("Auth error:", err);
+    }
+  }
+
+  function setupRealtimeListeners() {
+    if (!db || !currentUser) return;
+    try {
+      const publicLiveRef = collection(db, 'artifacts', appId, 'public', 'data', 'live_jobs');
+      onSnapshot(query(publicLiveRef), (snapshot) => {
+        let fetched = [];
+        snapshot.forEach((docSnap) => {
+          fetched.push({ firebaseId: docSnap.id, ...docSnap.data() });
+        });
+        if (fetched.length > 0) {
+          window.liveJobs = fetched;
+        }
+        if (typeof window.renderJobs === 'function') window.renderJobs();
+        if (typeof window.renderSlider === 'function') window.renderSlider();
+        if (typeof window.renderAdminLiveJobs === 'function') window.renderAdminLiveJobs();
+      }, (error) => { console.error("Live jobs listener error:", error); });
+
+      const publicPendingRef = collection(db, 'artifacts', appId, 'public', 'data', 'pending_jobs');
+      onSnapshot(query(publicPendingRef), (snapshot) => {
+        let fetched = [];
+        snapshot.forEach((docSnap) => {
+          fetched.push({ firebaseId: docSnap.id, ...docSnap.data() });
+        });
+        window.pendingJobs = fetched;
+        if (typeof window.renderAdminPending === 'function') window.renderAdminPending();
+      }, (error) => { console.error("Pending jobs listener error:", error); });
+
+      const publicAppsRef = collection(db, 'artifacts', appId, 'public', 'data', 'candidate_applications');
+      onSnapshot(query(publicAppsRef), (snapshot) => {
+        let fetched = [];
+        snapshot.forEach((docSnap) => {
+          fetched.push({ firebaseId: docSnap.id, ...docSnap.data() });
+        });
+        window.candidateApplications = fetched;
+      }, (error) => { console.error("Applications listener error:", error); });
+    } catch(e) {
+      console.error("Setup listeners error:", e);
+    }
+  }
+
+  window.saveJobToFirestore = async function(jobData, isPending) {
+    if (!db || !currentUser) return;
+    try {
+      const colName = isPending ? 'pending_jobs' : 'live_jobs';
+      await addDoc(collection(db, 'artifacts', appId, 'public', 'data', colName), jobData);
+    } catch(e) {
+      console.error("Error saving job:", e);
+    }
+  };
+
+  window.saveApplicationToFirestore = async function(appData) {
+    if (!db || !currentUser) return;
+    try {
+      await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'candidate_applications'), appData);
+    } catch(e) {
+      console.error("Error saving application:", e);
+    }
+  };
+
+  window.removeFirestoreDoc = async function(colName, firebaseId) {
+    if (!db || !currentUser || !firebaseId) return;
+    try {
+      await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', colName, firebaseId));
+    } catch(e) {
+      console.error("Error removing document:", e);
+    }
+  };
+
+  initFirebase();
+</script>
+
 <script>
 (function(){
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzHXhtI8xLZ4BD5PRfM3MMo1qBNyxjb76T7CUNRl7VdR7rsVJNh_opFiTxoEU53koH7/exec";
-
-  var liveJobs = JSON.parse(localStorage.getItem('ww_live_jobs')) || [
-    { id: 1, Company: "LUMEN STUDIO", ContactEmail: "hr@lumenstudio.in", JobTitle: "SR PRODUCT DESIGNER", Location: "VISAKHAPATNAM", SalaryRange: "₹24 LPA – ₹32 LPA", SalaryMin: 24, Description: "Design world-class interfaces for creative workflows.", Type: "Full-time", Exp: "5+", Dept: "design-product", Ind: "saas", Edu: "ug", CompanyType: "startup", PostedDaysAgo: 1, Featured: true },
-    { id: 2, Company: "HARBOR LABS", ContactEmail: "careers@harborlabs.io", JobTitle: "BACKEND ENGINEER", Location: "BENGALURU", SalaryRange: "₹20 LPA – ₹28 LPA", SalaryMin: 20, Description: "Scale distributed databases and resilient APIs.", Type: "Full-time", Exp: "3-5", Dept: "it-software", Ind: "it-services", Edu: "ug", CompanyType: "mnc", PostedDaysAgo: 2, Featured: false }
-  ];
-
-  var pendingJobs = JSON.parse(localStorage.getItem('ww_pending_jobs')) || [];
-  var candidateApplications = JSON.parse(localStorage.getItem('ww_candidate_apps')) || [];
-
-  function saveState(){
-    localStorage.setItem('ww_live_jobs', JSON.stringify(liveJobs));
-    localStorage.setItem('ww_pending_jobs', JSON.stringify(pendingJobs));
-    localStorage.setItem('ww_candidate_apps', JSON.stringify(candidateApplications));
-  }
 
   function openModal(id){
     var m = document.getElementById('modal-' + id);
@@ -1415,82 +1522,88 @@
     });
   }
 
-  function renderAdminConsole(){
+  window.renderAdminConsole = function(){
     renderAdminPending();
     renderAdminLiveJobs();
-  }
+  };
 
-  function renderAdminPending(){
+  window.renderAdminPending = function(){
     var container = document.getElementById('admin-pending-container');
     if (!container) return;
-    if (pendingJobs.length === 0){
+    var pending = window.pendingJobs || [];
+    if (pending.length === 0){
       container.innerHTML = '<p style="color:var(--text-muted); font-size:13px; padding:12px;">No pending jobs awaiting approval.</p>';
       return;
     }
     var html = '<table class="admin-table"><thead><tr><th>Company</th><th>Role</th><th>Package / UTR</th><th>Actions</th></tr></thead><tbody>';
-    pendingJobs.forEach(function(job, index){
+    pending.forEach(function(job, index){
       var feeBadge = job.ListingFee && job.ListingFee !== '₹0' ? '<span style="color:var(--primary); font-weight:700;">'+job.ListingFee+'</span><br><small class="mono">UTR: '+(job.UTR||'N/A')+'</small>' : 'Free (₹0)';
       html += '<tr><td>'+job.Company+'</td><td>'+job.JobTitle+'</td><td>'+feeBadge+'</td><td>' +
-              '<button class="btn btn-solid" style="padding:5px 10px; font-size:11px; background:var(--accent);" onclick="window.approveJob('+index+')">Approve</button> ' +
-              '<button class="btn btn-ghost" style="padding:5px 10px; font-size:11px; color:var(--danger);" onclick="window.rejectJob('+index+')">Reject</button>' +
+              '<button class="btn btn-solid" style="padding:5px 10px; font-size:11px; background:var(--accent);" onclick="window.approveJob(\''+job.firebaseId+'\', '+index+')">Approve</button> ' +
+              '<button class="btn btn-ghost" style="padding:5px 10px; font-size:11px; color:var(--danger);" onclick="window.rejectJob(\''+job.firebaseId+'\')">Reject</button>' +
               '</td></tr>';
     });
     html += '</tbody></table>';
     container.innerHTML = html;
-  }
+  };
 
-  function renderAdminLiveJobs(){
+  window.renderAdminLiveJobs = function(){
     var container = document.getElementById('admin-live-container');
     if (!container) return;
-    if (liveJobs.length === 0){
+    var live = window.liveJobs || [];
+    if (live.length === 0){
       container.innerHTML = '<p style="color:var(--text-muted); font-size:13px; padding:12px;">No active live jobs on website.</p>';
       return;
     }
     var html = '<table class="admin-table"><thead><tr><th>Company</th><th>Role</th><th>Location</th><th>Action</th></tr></thead><tbody>';
-    liveJobs.forEach(function(job, index){
+    live.forEach(function(job, index){
       html += '<tr><td>'+job.Company+'</td><td>'+job.JobTitle+'</td><td>'+job.Location+'</td><td>' +
-              '<button class="btn btn-ghost" style="padding:5px 10px; font-size:11px; color:var(--danger);" onclick="window.removeLiveJob('+index+')">Remove Job</button>' +
+              '<button class="btn btn-ghost" style="padding:5px 10px; font-size:11px; color:var(--danger);" onclick="window.removeLiveJob(\''+(job.firebaseId||'')+'\', '+index+')">Remove Job</button>' +
               '</td></tr>';
     });
     html += '</tbody></table>';
     container.innerHTML = html;
-  }
+  };
 
-  window.approveJob = function(index){
-    var j = pendingJobs.splice(index, 1)[0];
+  window.approveJob = function(firebaseId, index){
+    var pending = window.pendingJobs || [];
+    var j = pending.find(function(item){ return item.firebaseId === firebaseId; }) || pending[index];
+    if (!j) return;
+    
     j.id = Date.now();
-    if (j.Featured) {
-      liveJobs.unshift(j);
-    } else {
-      liveJobs.push(j);
+    delete j.firebaseId;
+    
+    if (typeof window.saveJobToFirestore === 'function') {
+      window.saveJobToFirestore(j, false);
+      if (firebaseId) window.removeFirestoreDoc('pending_jobs', firebaseId);
     }
-    saveState();
-    renderJobs();
-    renderSlider();
-    renderAdminConsole();
   };
 
-  window.rejectJob = function(index){
-    pendingJobs.splice(index, 1);
-    saveState();
-    renderAdminPending();
+  window.rejectJob = function(firebaseId){
+    if (firebaseId && typeof window.removeFirestoreDoc === 'function') {
+      window.removeFirestoreDoc('pending_jobs', firebaseId);
+    }
   };
 
-  window.removeLiveJob = function(index){
+  window.removeLiveJob = function(firebaseId, index){
     if (confirm("Are you sure you want to remove this job from the website?")) {
-      liveJobs.splice(index, 1);
-      saveState();
-      renderJobs();
-      renderSlider();
-      renderAdminLiveJobs();
+      if (firebaseId && typeof window.removeFirestoreDoc === 'function') {
+        window.removeFirestoreDoc('live_jobs', firebaseId);
+      } else {
+        window.liveJobs.splice(index, 1);
+        renderJobs();
+        renderSlider();
+        renderAdminLiveJobs();
+      }
     }
   };
 
-  function renderSlider(){
+  window.renderSlider = function(){
     var track = document.getElementById('jobs-slider-track');
     if (!track) return;
+    var live = window.liveJobs || [];
     var html = '';
-    var sortedJobs = [].concat(liveJobs).sort(function(a,b){ return (b.Featured ? 1 : 0) - (a.Featured ? 1 : 0); });
+    var sortedJobs = [].concat(live).sort(function(a,b){ return (b.Featured ? 1 : 0) - (a.Featured ? 1 : 0); });
     sortedJobs.slice(0, 6).forEach(function(job){
       var featClass = job.Featured ? ' job-card featured' : ' job-card';
       html += '<div class="'+featClass+'">' +
@@ -1499,7 +1612,7 @@
                     '<span class="job-company-badge">'+job.Company+'</span>' +
                     '<div style="display:flex; align-items:center; gap:6px;">' +
                       '<span class="job-loc">'+job.Location+'</span>' +
-                      '<button class="btn btn-ghost" style="padding:4px 7px; font-size:11px;" title="Share Job" onclick="window.shareJob(\''+job.JobTitle.replace(/'/g, "\\'")+'\', \''+job.Company.replace(/'/g, "\\'")+'\', '+job.id+')"><i class="fa-solid fa-share-nodes"></i></button>' +
+                      '<button class="btn btn-ghost" style="padding:4px 7px; font-size:11px;" title="Share Job" onclick="window.shareJob(\''+job.JobTitle.replace(/'/g, "\\'")+'\', \''+job.Company.replace(/'/g, "\\'")+'\', \''+job.id+'\')"><i class="fa-solid fa-share-nodes"></i></button>' +
                     '</div>' +
                   '</div>' +
                   '<h3>'+job.JobTitle+'</h3>' +
@@ -1508,17 +1621,18 @@
                 '</div>' +
                 '<div class="job-card-foot">' +
                   '<span style="font-size:12.5px; color:var(--text-muted); font-weight:600;">'+job.Type+'</span>' +
-                  '<button class="btn btn-solid" style="padding:6px 14px; font-size:12px;" onclick="window.applyForJob('+job.id+', \''+job.JobTitle.replace(/'/g, "\\'")+'\', \''+job.Company.replace(/'/g, "\\'")+'\')">Apply</button>' +
+                  '<button class="btn btn-solid" style="padding:6px 14px; font-size:12px;" onclick="window.applyForJob(\''+job.id+'\', \''+job.JobTitle.replace(/'/g, "\\'")+'\', \''+job.Company.replace(/'/g, "\\'")+'\')">Apply</button>' +
                 '</div>' +
               '</div>';
     });
     track.innerHTML = html;
-  }
+  };
 
-  function renderJobs(filteredList){
+  window.renderJobs = function(filteredList){
     var container = document.getElementById('jobs-grid-container');
     if (!container) return;
-    var list = filteredList || [].concat(liveJobs).sort(function(a,b){ return (b.Featured ? 1 : 0) - (a.Featured ? 1 : 0); });
+    var live = window.liveJobs || [];
+    var list = filteredList || [].concat(live).sort(function(a,b){ return (b.Featured ? 1 : 0) - (a.Featured ? 1 : 0); });
     if (list.length === 0){
       container.innerHTML = '<p style="grid-column:1/-1; text-align:center; padding:40px; color:var(--text-muted);">No gates match your selected filters.</p>';
       return;
@@ -1532,7 +1646,7 @@
                     '<span class="job-company-badge">'+job.Company+'</span>' +
                     '<div style="display:flex; align-items:center; gap:6px;">' +
                       '<span class="job-loc">'+job.Location+'</span>' +
-                      '<button class="btn btn-ghost" style="padding:4px 7px; font-size:11px;" title="Share Job" onclick="window.shareJob(\''+job.JobTitle.replace(/'/g, "\\'")+'\', \''+job.Company.replace(/'/g, "\\'")+'\', '+job.id+')"><i class="fa-solid fa-share-nodes"></i></button>' +
+                      '<button class="btn btn-ghost" style="padding:4px 7px; font-size:11px;" title="Share Job" onclick="window.shareJob(\''+job.JobTitle.replace(/'/g, "\\'")+'\', \''+job.Company.replace(/'/g, "\\'")+'\', \''+job.id+'\')"><i class="fa-solid fa-share-nodes"></i></button>' +
                     '</div>' +
                   '</div>' +
                   '<h3>'+job.JobTitle+'</h3>' +
@@ -1541,12 +1655,12 @@
                 '</div>' +
                 '<div class="job-card-foot">' +
                   '<span style="font-size:12.5px; color:var(--text-muted); font-weight:600;">'+job.Type+'</span>' +
-                  '<button class="btn btn-solid" style="padding:6px 14px; font-size:12px;" onclick="window.applyForJob('+job.id+', \''+job.JobTitle.replace(/'/g, "\\'")+'\', \''+job.Company.replace(/'/g, "\\'")+'\')">Apply</button>' +
+                  '<button class="btn btn-solid" style="padding:6px 14px; font-size:12px;" onclick="window.applyForJob(\''+job.id+'\', \''+job.JobTitle.replace(/'/g, "\\'")+'\', \''+job.Company.replace(/'/g, "\\'")+'\')">Apply</button>' +
                 '</div>' +
               '</div>';
     });
     container.innerHTML = html;
-  }
+  };
 
   window.shareJob = function(title, company, id){
     var shareUrl = window.location.origin + window.location.pathname + '#job-' + id;
@@ -1560,7 +1674,7 @@
       dummy.select();
       document.execCommand('copy');
       document.body.removeChild(dummy);
-      alert("Job link copied to clipboard! Anyone who opens it will be taken directly to apply.");
+      alert("Job link copied to clipboard!\n\nLink: " + shareUrl + "\n\nAnyone who opens this link will be taken directly to apply.");
     }
   };
 
@@ -1580,7 +1694,8 @@
     var hash = window.location.hash;
     if (hash && hash.indexOf('#job-') === 0) {
       var jobIdStr = hash.replace('#job-', '');
-      var targetJob = liveJobs.find(function(j){ return String(j.id) === jobIdStr; });
+      var live = window.liveJobs || [];
+      var targetJob = live.find(function(j){ return String(j.id) === jobIdStr; });
       if (targetJob) {
         setTimeout(function(){
           window.applyForJob(targetJob.id, targetJob.JobTitle, targetJob.Company);
@@ -1621,7 +1736,8 @@
       var email = document.getElementById('rec-login-email').value.trim().toLowerCase();
       if (!email) return;
 
-      var matchedJobs = liveJobs.filter(function(j){ return j.ContactEmail && j.ContactEmail.toLowerCase() === email; });
+      var live = window.liveJobs || [];
+      var matchedJobs = live.filter(function(j){ return j.ContactEmail && j.ContactEmail.toLowerCase() === email; });
       if (matchedJobs.length === 0){
         if (recruiterLoginStatus){
           recruiterLoginStatus.textContent = "No active listings found for this email address.";
@@ -1638,8 +1754,9 @@
       document.getElementById('dash-company-name').textContent = companyName + " Dashboard";
       document.getElementById('dash-stat-posts').textContent = matchedJobs.length;
 
-      var jobIds = matchedJobs.map(function(j){ return j.id; });
-      var myApps = candidateApplications.filter(function(app){ return jobIds.indexOf(parseInt(app.JobId)) !== -1; });
+      var jobIds = matchedJobs.map(function(j){ return String(j.id); });
+      var apps = window.candidateApplications || [];
+      var myApps = apps.filter(function(app){ return jobIds.indexOf(String(app.JobId)) !== -1; });
       document.getElementById('dash-stat-applicants').textContent = myApps.length;
 
       var cvKey = 'ww_cv_views_' + email;
@@ -1712,7 +1829,8 @@
       var track = document.getElementById('jobs-slider-track');
       if (!track) return;
       var cardWidth = track.querySelector('.job-card') ? track.querySelector('.job-card').offsetWidth + 20 : 360;
-      var maxSlide = Math.max(0, liveJobs.length - (window.innerWidth >= 768 ? 2 : 1));
+      var live = window.liveJobs || [];
+      var maxSlide = Math.max(0, live.length - (window.innerWidth >= 768 ? 2 : 1));
       currentSlide = Math.min(currentSlide + 1, maxSlide);
       track.style.transform = 'translateX(-' + (currentSlide * cardWidth) + 'px)';
     });
@@ -1755,7 +1873,8 @@
     var edu = eduEl ? eduEl.value : '';
     var ct = ctype ? ctype.value : '';
 
-    var filtered = liveJobs.filter(function(j){
+    var live = window.liveJobs || [];
+    var filtered = live.filter(function(j){
       if (q && j.JobTitle.toLowerCase().indexOf(q) === -1 && j.Company.toLowerCase().indexOf(q) === -1 && j.Description.toLowerCase().indexOf(q) === -1) return false;
       if (loc && j.Location.toLowerCase().indexOf(loc) === -1) return false;
       if (dept && j.Dept !== dept) return false;
@@ -1916,8 +2035,10 @@
           data.ResumeMimeType = file.type || 'application/octet-stream';
           data.ResumeBase64 = base64;
         }
-        candidateApplications.push(data);
-        saveState();
+        
+        if (typeof window.saveApplicationToFirestore === 'function') {
+          window.saveApplicationToFirestore(data);
+        }
 
         return fetch(GOOGLE_SCRIPT_URL, {
           method: 'POST', mode: 'no-cors',
@@ -1969,8 +2090,9 @@
       submitEmployerBtn.textContent = 'Submitting Job…';
     }
 
-    pendingJobs.push(data);
-    saveState();
+    if (typeof window.saveJobToFirestore === 'function') {
+      window.saveJobToFirestore(data, true);
+    }
 
     fetch(GOOGLE_SCRIPT_URL, {
       method: 'POST', mode: 'no-cors',
