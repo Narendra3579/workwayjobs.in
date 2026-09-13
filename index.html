@@ -132,14 +132,14 @@
   .mobile-drawer.open .mobile-drawer-content { transform: translateX(0); }
 
   .fab-register {
-    position: fixed; bottom: 104px; right: 24px; z-index: 90;
+    position: fixed; bottom: 120px; right: 24px; z-index: 90;
     background: var(--yellow-btn); color: #0F172A; font-weight: 800; font-size: 13.5px;
     padding: 12px 20px; border-radius: 50px; border: 2px solid #FFFFFF;
     box-shadow: 0 10px 25px rgba(234, 179, 8, 0.45);
     display: inline-flex; align-items: center; gap: 8px; cursor: pointer;
     transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
   }
-  @media(min-width: 768px) { .fab-register { bottom: 112px; right: 32px; font-size: 15px; padding: 14px 26px; } }
+  @media(min-width: 768px) { .fab-register { bottom: 130px; right: 32px; font-size: 15px; padding: 14px 26px; } }
   .fab-register:hover { background: var(--yellow-btn-hover); transform: translateY(-4px); box-shadow: 0 15px 30px rgba(234, 179, 8, 0.6); }
 
   /* Logo Marquee Ticker Styles */
@@ -394,8 +394,8 @@
   .final .btn-solid { background: #38BDF8; color: #0F172A; }
   .final .btn-solid:hover { background: #7DD3FC; }
 
-  footer { border-top: 1px solid var(--border); padding: 48px 0 120px; background: var(--bg-card); }
-  @media(min-width: 768px) { footer { padding: 64px 0 132px; } }
+  footer { border-top: 1px solid var(--border); padding: 48px 0 140px; background: var(--bg-card); }
+  @media(min-width: 768px) { footer { padding: 64px 0 150px; } }
   .foot-grid { display: grid; grid-template-columns: 1fr; gap: 36px; margin-bottom: 40px; }
   @media(min-width: 768px) { .foot-grid { grid-template-columns: 1.5fr repeat(3, 1fr); gap: 48px; margin-bottom: 48px; } }
   .foot-brand p { font-size: 13.5px; color: var(--text-muted); margin-top: 12px; max-width: 280px; line-height: 1.6; }
@@ -1306,7 +1306,7 @@
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
   import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-  import { getFirestore, collection, addDoc, getDocs, doc, deleteDoc, onSnapshot, query } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+  import { getFirestore, collection, addDoc, getDocs, doc, deleteDoc, onSnapshot, query, setDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
   const appId = typeof __app_id !== 'undefined' ? __app_id : 'workway-jobs-india';
   const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : { apiKey: "mock", authDomain: "mock.firebaseapp.com", projectId: "mock" };
@@ -1336,20 +1336,22 @@
         await signInAnonymously(auth);
       }
       currentUser = auth.currentUser;
-      
-      onAuthStateChanged(auth, (user) => {
-        currentUser = user;
-        if (user) {
-          setupRealtimeListeners();
-        }
-      });
+      setupRealtimeListeners();
     } catch(err) {
       console.error("Auth error:", err);
+      // Fallback anonymous sign-in if custom token fails
+      try {
+        await signInAnonymously(auth);
+        currentUser = auth.currentUser;
+        setupRealtimeListeners();
+      } catch(e2) {
+        console.error("Anonymous auth fallback failed:", e2);
+      }
     }
   }
 
   function setupRealtimeListeners() {
-    if (!db || !currentUser) return;
+    if (!db) return;
     try {
       const publicLiveRef = collection(db, 'artifacts', appId, 'public', 'data', 'live_jobs');
       onSnapshot(query(publicLiveRef), (snapshot) => {
@@ -1389,8 +1391,8 @@
   }
 
   window.saveJobToFirestore = async function(jobData, isPending) {
-    if (!db || !currentUser) {
-      console.warn("Firestore not initialized or user not signed in. Saving locally.");
+    if (!db) {
+      console.warn("Firestore not initialized. Saving locally.");
       if (isPending) {
         window.pendingJobs.push(jobData);
         if (typeof window.renderAdminPending === 'function') window.renderAdminPending();
@@ -1406,7 +1408,6 @@
       await addDoc(collection(db, 'artifacts', appId, 'public', 'data', colName), jobData);
     } catch(e) {
       console.error("Error saving job to Firestore:", e);
-      // Fallback local addition so user sees immediate response
       if (isPending) {
         window.pendingJobs.push(jobData);
         if (typeof window.renderAdminPending === 'function') window.renderAdminPending();
@@ -1419,7 +1420,7 @@
   };
 
   window.saveApplicationToFirestore = async function(appData) {
-    if (!db || !currentUser) {
+    if (!db) {
       window.candidateApplications.push(appData);
       return;
     }
@@ -1432,7 +1433,7 @@
   };
 
   window.removeFirestoreDoc = async function(colName, firebaseId) {
-    if (!db || !currentUser || !firebaseId) {
+    if (!db || !firebaseId) {
       if (colName === 'pending_jobs') {
         window.pendingJobs = window.pendingJobs.filter(j => j.firebaseId !== firebaseId);
         if (typeof window.renderAdminPending === 'function') window.renderAdminPending();
