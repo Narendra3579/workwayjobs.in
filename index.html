@@ -51,7 +51,7 @@
   :focus-visible { outline: 2px solid var(--primary); outline-offset: 3px; }
 
   .logo-ticker {
-    padding: 24px 0; background: var(--bg-card); border-bottom: 1px solid var(--border);
+    padding: 20px 0; background: var(--bg-card); border-bottom: 1px solid var(--border);
     overflow: hidden; position: relative; width: 100%;
   }
   .ticker-wrap { width: 100%; overflow: hidden; white-space: nowrap; position: relative; }
@@ -150,14 +150,14 @@
   .mobile-drawer.open .mobile-drawer-content { transform: translateX(0); }
 
   .fab-register {
-    position: fixed; bottom: 120px; right: 24px; z-index: 90;
+    position: fixed; bottom: 130px; right: 24px; z-index: 90;
     background: var(--yellow-btn); color: #0F172A; font-weight: 800; font-size: 13.5px;
     padding: 12px 20px; border-radius: 50px; border: 2px solid #FFFFFF;
     box-shadow: 0 10px 25px rgba(234, 179, 8, 0.45);
     display: inline-flex; align-items: center; gap: 8px; cursor: pointer;
     transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
   }
-  @media(min-width: 768px) { .fab-register { bottom: 130px; right: 32px; font-size: 15px; padding: 14px 26px; } }
+  @media(min-width: 768px) { .fab-register { bottom: 140px; right: 32px; font-size: 15px; padding: 14px 26px; } }
   .fab-register:hover { background: var(--yellow-btn-hover); transform: translateY(-4px); box-shadow: 0 15px 30px rgba(234, 179, 8, 0.6); }
 
   .hero { padding: 48px 0; position: relative; }
@@ -335,7 +335,7 @@
   .final .flap-line { justify-content: center; display: flex; font-size: 13px; margin-bottom: 24px; color: #38BDF8; font-family: 'JetBrains Mono'; }
   .final p { color: #94A3B8; max-width: 500px; margin: 0 auto 32px; font-size: 14.5px; line-height: 1.6; }
 
-  footer { border-top: 1px solid var(--border); padding: 48px 0 160px; background: var(--bg-card); }
+  footer { border-top: 1px solid var(--border); padding: 48px 0 160px; background: var(--bg-card); text-align: left; }
   @media(min-width: 768px) { footer { padding: 64px 0 170px; } }
   .foot-grid { display: grid; grid-template-columns: 1fr; gap: 36px; margin-bottom: 40px; }
   @media(min-width: 768px) { .foot-grid { grid-template-columns: 1.5fr repeat(3, 1fr); gap: 48px; margin-bottom: 48px; } }
@@ -349,7 +349,7 @@
   .modal-overlay { position: fixed; inset: 0; background: rgba(15, 23, 42, 0.65); display: none; align-items: flex-end; justify-content: center; padding: 0; z-index: 300; overflow-y: auto; backdrop-filter: blur(8px); opacity: 0; transition: opacity 0.25s ease; }
   @media(min-width: 768px) { .modal-overlay { align-items: flex-start; padding: 40px 20px; } }
   .modal-overlay.open { display: flex; opacity: 1; }
-  .modal { background: var(--bg-card); border-top-left-radius: 20px; border-top-right-radius: 20px; width: 100%; max-width: 760px; padding: 24px 16px; position: relative; transform: translateY(30px); transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1); box-shadow: 0 25px 60px -15px rgba(0,0,0,0.3); border: 1px solid var(--border); }
+  .modal { background: var(--bg-card); border-top-left-radius: 20px; border-top-right-radius: 20px; width: 100%; max-width: 760px; padding: 24px 16px; position: relative; transform: translateY(30px); transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1); box-shadow: 0 25px 60px -15px rgba(0,0,0,0.3); border: 1px solid var(--border); text-align: left; }
   @media(min-width: 768px) { .modal { border-radius: 16px; padding: 40px; transform: translateY(16px); } }
   .modal-overlay.open .modal { transform: translateY(0); }
   .modal-close { position: absolute; top: 18px; right: 18px; width: 32px; height: 32px; border-radius: 50%; border: 1px solid var(--border); background: var(--bg-alt); cursor: pointer; font-size: 15px; color: var(--text-main); display: flex; align-items: center; justify-content: center; transition: background 0.2s; }
@@ -357,20 +357,20 @@
   .modal h3 { font-size: 20px; margin-bottom: 6px; }
   @media(min-width: 768px) { .modal h3 { font-size: 26px; margin-bottom: 8px; } }
   .modal .modal-sub { font-size: 13px; color: var(--text-muted); margin-bottom: 20px; }
-  .field { margin-bottom: 14px; }
+  .field { margin-bottom: 14px; text-align: left; }
   @media(min-width: 768px) { .field { margin-bottom: 18px; } }
-  .field label { display: block; font-size: 12.5px; font-weight: 700; margin-bottom: 6px; color: var(--text-main); }
+  .field label { display: block; font-size: 12.5px; font-weight: 700; margin-bottom: 6px; color: var(--text-main); text-align: left; }
   .field .req { color: var(--danger); }
-  .field input, .field select, .field textarea { width: 100%; font-family: 'Plus Jakarta Sans'; font-size: 13.5px; color: var(--text-main); background: var(--bg-main); border: 1px solid var(--border-strong); border-radius: var(--radius); padding: 10px 12px; transition: all 0.2s; }
+  .field input, .field select, .field textarea { width: 100%; font-family: 'Plus Jakarta Sans'; font-size: 13.5px; color: var(--text-main); background: var(--bg-main); border: 1px solid var(--border-strong); border-radius: var(--radius); padding: 10px 12px; transition: all 0.2s; text-align: left; }
   .field input:focus, .field select:focus, .field textarea:focus { outline: none; border-color: var(--primary); background: #fff; box-shadow: 0 0 0 3px rgba(37,99,235,0.15); }
   .field textarea { resize: vertical; min-height: 90px; }
   .field-row { display: grid; grid-template-columns: 1fr; gap: 14px; }
   @media(min-width: 640px) { .field-row { grid-template-columns: 1fr 1fr; gap: 16px; } }
-  .field-error { font-size: 11.5px; color: var(--danger); margin-top: 5px; display: none; font-weight: 600; }
+  .field-error { font-size: 11.5px; color: var(--danger); margin-top: 5px; display: none; font-weight: 600; text-align: left; }
   .field.has-error input, .field.has-error select, .field.has-error textarea { border-color: var(--danger); }
   .field.has-error .field-error { display: block; }
   .form-submit { width: 100%; justify-content: center; margin-top: 6px; padding: 12px; font-size: 15px; }
-  .form-section { font-family: 'JetBrains Mono'; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--primary); margin: 18px 0 12px; padding-top: 14px; border-top: 1px dashed var(--border-strong); font-weight: 700; }
+  .form-section { font-family: 'JetBrains Mono'; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--primary); margin: 18px 0 12px; padding-top: 14px; border-top: 1px dashed var(--border-strong); font-weight: 700; text-align: left; }
   .form-section:first-of-type { margin-top: 0; padding-top: 0; border-top: none; }
   .modal.modal-scroll { max-height: 85vh; overflow-y: auto; }
   .form-status { font-size: 13px; margin-top: 12px; text-align: center; display: none; padding: 10px; border-radius: var(--radius); font-weight: 600; }
@@ -410,7 +410,7 @@
   .pay-details-box.active { display: block; }
   .qr-box { background: #fff; padding: 10px; border-radius: 8px; width: 140px; height: 140px; margin: 0 auto 10px; border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; }
   .qr-box img { width: 110px; height: 110px; object-fit: contain; }
-  table.admin-table { width: 100%; border-collapse: collapse; margin-top: 16px; font-size: 13px; }
+  table.admin-table { width: 100%; border-collapse: collapse; margin-top: 16px; font-size: 13px; text-align: left; }
   table.admin-table th, table.admin-table td { padding: 10px 12px; text-align: left; border-bottom: 1px solid var(--border); }
   table.admin-table th { font-family: 'JetBrains Mono'; font-size: 11px; text-transform: uppercase; color: var(--text-muted); font-weight: 700; }
 </style>
@@ -1181,7 +1181,7 @@
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
   import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-  import { getFirestore, collection, addDoc, doc, deleteDoc, onSnapshot, query, getDocs } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+  import { getFirestore, collection, addDoc, doc, deleteDoc, setDoc, getDoc, onSnapshot, query, getDocs } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
   const appId = typeof __app_id !== 'undefined' ? __app_id : 'workway-jobs-india';
   const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : { apiKey: "mock", authDomain: "mock.firebaseapp.com", projectId: "mock" };
